@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="svg-sprite">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/开发版本/includes/svg-sprite/svg-sprite.zip!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
