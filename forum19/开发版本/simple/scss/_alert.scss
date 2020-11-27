@@ -1,0 +1,44 @@
+.tt-alert{
+	font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0.01em;
+    padding: 6px 6px 7px 123px;
+    width: 100%;
+    &.tt-alert-default{
+        background-color: #d1e4f9;
+        border-left:2px solid #2172cd;
+        a{
+            color: #182730;
+            display: inline-block;
+            position: relative;
+            &:before{
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 5px;
+                width: 0%;
+                height: 1px;
+                margin: auto;
+                left: 0;
+                right: 0;
+                background-color: #182730;
+                transition: width $speed linear;
+            }
+            &:hover{
+                &:before{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    @media (max-width: 1229px){
+        padding: 6px 6px 7px 103px;
+    }
+    @media (max-width: 1024px){
+        padding-left: 23px;
+    }
+    @media (max-width: 370px){
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

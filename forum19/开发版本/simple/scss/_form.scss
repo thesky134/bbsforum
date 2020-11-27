@@ -1,0 +1,168 @@
+/*
+	Form
+*/
+
+/* form_placeholder */
+$form_placeholder:									#666f74;
+
+::-webkit-input-placeholder{color:$form_placeholder;}
+::-moz-placeholder      {color:$form_placeholder;}
+:-moz-placeholder       {color:$form_placeholder;}
+:-ms-input-placeholder  {color:$form_placeholder;}
+
+::-moz-placeholder, :-moz-placeholder {
+    opacity: 1;
+}
+
+input:focus::-webkit-input-placeholder{color:transparent;}
+input:focus:-moz-placeholder{color:transparent;}
+input:focus::-moz-placeholder{color:transparent;}
+input:focus:-ms-input-placeholder{color:transparent;}
+
+
+textarea:focus::-webkit-input-placeholder{color:transparent;}
+textarea:focus:-moz-placeholder{color:transparent;}
+textarea:focus::-moz-placeholder{color:transparent;}
+textarea:focus:-ms-input-placeholder{color:transparent;}
+
+/*
+    Default form
+*/
+.form-default{
+    .form-group{
+        margin-bottom: 13px;
+        label:not(.error){
+            font-size: 16px;
+            line-height: 26px;
+            font-weight: 600;
+            color: #182730;
+            padding-bottom: 14px;
+        }
+    }
+    .form-control{
+        font-family: $default_font;
+        background: #e2e7ea;
+        color: #666f74;
+        font-size: 16px;
+        line-height: 25px;
+        border: none;
+        box-shadow:none;
+        outline: none;
+        width: 100%;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        border-radius:3px;
+        border:1px solid #e2e7ea;
+        transition: border-color 0.2s linear;
+    }
+    .tt-note{
+        color: #666f74;
+        font-size: 14px;
+        margin-top: 5px;
+        letter-spacing: 0.01em;
+    }
+    .form-control:not(textarea){
+        padding:8px 12px 10px 13px;
+        height: 39px;
+    }
+    input.form-control,
+    textarea.form-control{
+        -webkit-appearance: none;
+    }
+    textarea.form-control{
+        padding:23px 30px 23px 30px;
+    }
+    select.form-control{
+        padding:8px 12px 10px 13px;
+        cursor: pointer;
+    }
+    .form-control.error{
+        border-color: red;
+    }
+    .form-control:focus{
+        border-color:#2172cd;
+    }
+    .pt-required{
+        display: inline-block;
+        float: right;
+        position: relative;
+        top: 4px;
+        color: #777777;
+        padding-left: 5px;
+        font-size: 14px;
+        line-height: 22px;
+    }
+    .tt-value-wrapper{
+        position: relative;
+        .tt-value-input{
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #666f74;
+            font-size: 14px;
+            line-height: 18px;
+            pointer-events: none;
+        }
+    }
+}
+/* checkbox-group */
+.checkbox-group{
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+    z-index: 1;
+    label{
+        padding-left: 29px;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 23px;
+        color: #666f74;
+        text-align: left;
+        position: relative;
+        transition:all $speed linear;
+        span{
+            display: block;
+            position: absolute;
+            left: 0;
+            -webkit-transition-duration: 0.12s;
+            -moz-transition-duration: 0.12s;
+            transition-duration: 0.12s;
+        }
+        .box{
+            background: #e2e7ea;
+            height: 20px;
+            width: 20px;
+            z-index: 2;
+        }
+        .check{
+            top: 0px;
+            left: 0px;
+            opacity: 0;
+            z-index: 10;
+            background: #e2e7ea;
+            width: 20px;
+            height: 20px;
+            line-height: 1;
+            transform: scale(0);
+            &:before{
+                display: block;
+                content: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTMiIHZpZXdCb3g9IjAgMCAxNiAxMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEgNS4xNjY2N0w2LjM4NDYyIDExTDE1IDEiIHN0cm9rZT0iIzE4MjczMCIgc3Ryb2tlLXdpZHRoPSIxLjYiLz4KPC9zdmc+Cg==');
+                position: relative;
+                left:2px;
+                top: 5px;
+            }
+        }
+    }
+    &:hover{
+        label{
+            color: $default_color;
+        }
+    }
+    input[type=checkbox]{
+        display: none;
+        &:checked ~ label .check{
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}

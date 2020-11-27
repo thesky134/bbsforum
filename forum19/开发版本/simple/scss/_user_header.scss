@@ -1,0 +1,50 @@
+/*
+    user-header(*page-single-user.html)
+*/
+.tt-user-header{
+	display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    padding: 29px 0 29px 15px;
+    .tt-col-avatar{
+    	padding-left: 15px;
+	    padding-right: 15px;
+	    width: 8.33333%;
+		.tt-icon{
+			width: 40px;
+			height: 40px;
+		}
+    }
+    .tt-col-title{
+    	display: flex;
+	    flex-direction: row;
+	    flex-wrap: nowrap;
+	    justify-content: flex-start;
+	    align-content: center;
+	    align-items: center;
+    	padding-left: 15px;
+    	padding-right: 15px;
+    	flex: 2 1 auto;
+    	.tt-title{
+    		color: #182730;
+			font-weight: 600;
+    		a{
+    			color: #182730;
+    			transition: color 0.2s linear;
+    			&:hover{
+    				color: #2172cd;
+    			}
+    		}
+    	}
+    	> *:not(:first-child){
+    		margin-left: 15px;
+    	}
+    }
+    .tt-col-btn{}
+    //objects
+    .tt-title{}
+    .tt-list-btn{}
+}
