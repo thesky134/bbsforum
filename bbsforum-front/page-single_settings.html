@@ -50,7 +50,6 @@
                     <nav>
                         <ul>
                             <li><a href="page-categories.html"><span>分类</span></a></li>
-                            <li><a href="page-tabs.html"><span>更多</span></a></li>
                             <li><a href="page-create-topic.html"><span>发帖</span></a></li>
                             <li>
                                 <a href="page-single-user.html"><span>分页</span></a>
@@ -58,111 +57,23 @@
                                     <li><a href="index.html">主页</a></li>
                                     <li><a href="page-single-topic.html">帖子</a></li>
                                     <li><a href="page-create-topic.html">发帖</a></li>
-                                    <li><a href="page-single-user.html">用户活跃</a></li>
                                     <li><a href="page-single_threads.html">用户帖子</a></li>
                                     <li><a href="page-single_replies.html">用户回复</a></li>
-                                    <li><a href="page-single_followers.html">用户粉丝</a></li>
-                                    <li><a href="page-single_categories.html">用户帖子分类</a></li>
                                     <li><a href="page-single_settings.html">个人设置</a></li>
                                     <li><a href="page-signup.html">注册</a></li>
                                     <li><a href="page-login.html">登录</a></li>
                                     <li><a href="page-categories.html">分类</a></li>
                                     <li><a href="page-categories-single.html">帖子分类详情</a></li>
-                                    <li><a href="page-tabs.html">关于</a></li>
-                                    <li><a href="page-tabs_guidelines.html">使用说明</a></li>
-                                    <li><a href="_demo_modal-advancedSearch.html">高级搜索</a></li>
                                     <li><a href="error404.html">Error 404</a></li>
-                                    <li><a href="_demo_modal-age-confirmation.html">年龄核实</a></li>
                                     <li><a href="_demo_modal-level-up.html">升级通知</a></li>
-                                    <li><a href="messages-page.html">消息</a></li>
-                                    <li><a href="messages-compose.html">消息</a></li>
+
                                 </ul>
                             </li>
                         </ul>
                     </nav>
                 </div>
                 <!-- /desctop menu -->
-                <!-- tt-search -->
-                <div class="tt-search">
-                    <!-- toggle -->
-                    <button class="tt-search-toggle" data-toggle="modal" data-target="#modalAdvancedSearch">
-                       <svg class="tt-icon">
-                          <use xlink:href="#icon-search"></use>
-                        </svg>
-                    </button>
-                    <!-- /toggle -->
-                    <form class="search-wrapper">
-                        <div class="search-form">
-                            <input type="text" class="tt-search__input" placeholder="搜索">
-                            <button class="tt-search__btn" type="submit">
-                               <svg class="tt-icon">
-                                  <use xlink:href="#icon-search"></use>
-                                </svg>
-                            </button>
-                             <button class="tt-search__close">
-                               <svg class="tt-icon">
-                                  <use xlink:href="#cancel"></use>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="search-results">
-                            <div class="tt-search-scroll">
-                                <ul>
-                                    <li>
-                                        <a href="page-single-topic.html">
-                                            <h6 class="tt-title">Rdr2 secret easter eggs</h6>
-                                            <div class="tt-description">
-                                               Here’s what I’ve found in Red Dead Redem..
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                       <a href="page-single-topic.html">
-                                            <h6 class="tt-title">Top 10 easter eggs in Red Dead Rede..</h6>
-                                            <div class="tt-description">
-                                                You can find these easter eggs in Red Dea..
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                       <a href="page-single-topic.html">
-                                            <h6 class="tt-title">Red Dead Redemtion: Arthur Morgan..</h6>
-                                            <div class="tt-description">
-                                                Here’s what I’ve found in Red Dead Redem..
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="page-single-topic.html">
-                                            <h6 class="tt-title">Rdr2 secret easter eggs</h6>
-                                            <div class="tt-description">
-                                               Here’s what I’ve found in Red Dead Redem..
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                       <a href="page-single-topic.html">
-                                            <h6 class="tt-title">Top 10 easter eggs in Red Dead Rede..</h6>
-                                            <div class="tt-description">
-                                                You can find these easter eggs in Red Dea..
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                       <a href="page-single-topic.html">
-                                            <h6 class="tt-title">Red Dead Redemtion: Arthur Morgan..</h6>
-                                            <div class="tt-description">
-                                                Here’s what I’ve found in Red Dead Redem..
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button type="button" class="tt-view-all" data-toggle="modal" data-target="#modalAdvancedSearch">Advanced Search</button>
-                        </div>
-                    </form>
-                </div>
-                <!-- /tt-search -->
+
             </div>
             <div class="col-auto ml-auto">
                  <div class="tt-user-info d-flex justify-content-center">
@@ -2594,61 +2505,39 @@
 		            </div>
 				</div>
 				<div class="col-auto ml-auto">
-					<a href="#" class="btn btn-primary">上传图片</a>
+					<a href="#" class="btn btn-primary">上传头像</a>
 				</div>
 			</div>
 		</div>
 		<div class="form-group">
 		    <label for="settingsUserName">用户名</label>
-		   <input type="text" name="name" class="form-control" id="settingsUserName" placeholder="azyrusmax">
+		   <input type="text" name="name" class="form-control" id="settingsUserName" placeholder="你的用户名">
 		</div>
 		<div class="form-group">
 		    <label for="settingsUserEmail">邮箱</label>
-		   <input type="text" name="name" class="form-control" id="settingsUserEmail" placeholder="Sample@sample.com">
+		   <input type="text" name="name" class="form-control" id="settingsUserEmail" placeholder="你的邮箱">
 		</div>
 		<div class="form-group">
 		    <label for="settingsUserPassword">密码</label>
-		   <input type="password" name="name" class="form-control" id="settingsUserPassword" placeholder="************">
+		   <input type="password" name="name" class="form-control" id="settingsUserPassword" placeholder="你的密码">
+		</div>
+        <div class="form-group">
+            <label for="settingsUserPhone">联系方式</label>
+            <input type="text" name="name" class="form-control" id="settingsUserPhone" placeholder="手机号码">
+        </div>
+        <div class="form-group">
+            <label for="settingsUserJob">工作性质</label>
+            <input type="text" name="name" class="form-control" id="settingsUserJob" placeholder="工作性质">
+        </div>
+		<div class="form-group">
+		    <label for="settingsUserLocation">工作地点</label>
+		   <input type="text" name="name" class="form-control" id="settingsUserLocation" placeholder="工作地点">
 		</div>
 		<div class="form-group">
-		    <label for="settingsUserLocation">位置</label>
-		   <input type="text" name="name" class="form-control" id="settingsUserLocation" placeholder="Slovakia">
+		    <label for="settingsUserAbout">个性签名</label>
+		    <textarea name="" placeholder="来点个性" class="form-control" id="settingsUserAbout"></textarea>
 		</div>
-		<div class="form-group">
-		    <label for="settingsUserWebsite">网站</label>
-		   <input type="text" name="name" class="form-control" id="settingsUserWebsite" placeholder="Sample.com">
-		</div>
-		<div class="form-group">
-		    <label for="settingsUserAbout">关于</label>
-		    <textarea name="" placeholder="Few words about you" class="form-control" id="settingsUserAbout"></textarea>
-		</div>
-		<div class="form-group">
-			<label for="settingsUserAbout">通过电子邮件通知我</label>
-			<div class="checkbox-group">
-		        <input type="checkbox" id="settingsCheckBox01" name="checkbox">
-		        <label for="settingsCheckBox01">
-		            <span class="check"></span>
-		            <span class="box"></span>
-                        <span class="tt-text">当有人回复我的帖子</span>
-		        </label>
-		    </div>
-		    <div class="checkbox-group">
-		        <input type="checkbox" id="settingsCheckBox02" name="checkbox">
-		        <label for="settingsCheckBox02">
-		            <span class="check"></span>
-		            <span class="box"></span>
-		            <span class="tt-text">当有人喜欢我的帖子或回复</span>
-		        </label>
-		    </div>
-		    <div class="checkbox-group">
-		        <input type="checkbox" id="settingsCheckBox03" name="checkbox">
-		        <label for="settingsCheckBox03">
-		            <span class="check"></span>
-		            <span class="box"></span>
-		            <span class="tt-text">当有人提起我</span>
-		        </label>
-		    </div>
-		</div>
+
 		<div class="form-group">
 			<a href="#" class="btn btn-secondary">保存</a>
 		</div>
