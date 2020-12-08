@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.thesky341.bbsforum.mapper.UserMapper">
+    <insert id="addUser" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user VALUE (
+            NULL, #{username}, #{email}, #{passwd}, #{salt},
+            NULL, NULL, NULL, NULL, NULL, #{chara.id}, 0, 0,
+            NOW(), NULL, 0, NULL
+            )
+    </insert>
+    <insert id="deleteUserById">
+        DELETE FROM user WHERE id = #{id}
+    </insert>
+    <select id="getUserById" resultMap="userMap">
+        SELECT id, username, email, passwd, salt,
+               phone, jobType, jobLocation, personalSignal,
+               picture, chara_id, score, todayScore, create_time,
+               last_login_time, is_disabled, other
+        FROM user WHERE id = #{id}
+    </select>
+    <select id="getUserByUsername" resultMap="userMap">
+        SELECT id, username, email, passwd, salt,
+               phone, jobType, jobLocation, personalSignal,
+               picture, chara_id, score, todayScore, create_time,
+               last_login_time, is_disabled, other
+        FROM user WHERE username = #{username}
+    </select>
+
+    <resultMap id="userMap" type="user">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="email" property="email"/>
+        <result column="passwd" property="passwd"/>
+        <result column="salt" property="salt"/>
+        <result column="phone" property="phone"/>
+        <result column="job_type" property="jobType"/>
+        <result column="job_location" property="jobLocation"/>
+        <result column="personal_signal" property="personalSignal"/>
+        <result column="picture" property="picture"/>
+        <result column="score" property="score"/>
+        <result column="todayScore" property="todayScore"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="is_disabled" property="disabled"/>
+        <result column="other" property="other"/>
+        <association column="chara_id" property="chara"
+                     javaType="chara"
+                     select="top.thesky341.bbsforum.mapper.CharaMapper.getCharaById"/>
+    </resultMap>
+</mapper>

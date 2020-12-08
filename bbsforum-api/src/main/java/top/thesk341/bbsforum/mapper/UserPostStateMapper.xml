@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.thesky341.bbsforum.mapper.UserPostStateMapper">
+    <insert id="addUserPostState" parameterType="userPostState">
+        INSERT INTO user_post_state VALUE (
+            NULL, #{user.id}, #{post.id}, #{state}
+            )
+    </insert>
+    <delete id="deleteUserPostStateById">
+        DELETE FROM user_post_state
+        WHERE id = #{id}
+    </delete>
+    <select id="getrUserPostStateById" resultMap="userPostStateMap">
+        SELECT id, user_id, post_id, state
+        WHERE id = #{id}
+    </select>
+
+    <resultMap id="userPostStateMap" type="userPostState">
+        <id column="id" property="id"/>
+        <result column="state" property="state"/>
+        <association column="user_id" property="user"
+                     javaType="user"
+                     select="top.thesky341.bbsforum.mapper.UserMapper.getUserById"
+        />
+        <association column="post_id" property="post"
+                     javaType="post"
+                     select="top.thesky341.bbsforum.mapper.PostMapper.getPostById"
+        />
+    </resultMap>
+</mapper>

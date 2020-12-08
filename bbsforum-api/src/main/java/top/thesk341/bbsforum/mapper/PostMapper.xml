@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.thesky341.bbsforum.mapper.PostMapper">
+    <insert id="addPost" parameterType="post" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO post VALUE (
+            NULL, #{title}, #{content}, NOW(),
+            NULL, #{user.id}, #{category.id},
+            #{hidden}, #{deleted}, #{excellent},
+            #{top}, #{reward}
+        )
+    </insert>
+    <delete id="deletePostById">
+        DELETE FROM post
+        WHERE id = #{id}
+    </delete>
+    <select id="getPostById" resultMap="postMap">
+        SELECT id, title, content, create_time,
+               modify_time, user_id, category_id,
+               is_hidden, is_deleted, is_excellent,
+               is_top, reward
+        FROM post WHERE id = #{id}
+    </select>
+    <select id="getPostByUserId" resultMap="postMap">
+        SELECT id, title, content, create_time,
+               modify_time, user_id, category_id,
+               is_hidden, is_deleted, is_excellent,
+               is_top, reward
+        FROM post WHERE user_id = #{userId}
+    </select>
+    <select id="getPostByCategoryId" resultMap="postMap">
+        SELECT id, title, content, create_time,
+               modify_time, user_id, category_id,
+               is_hidden, is_deleted, is_excellent,
+               is_top, reward
+        FROM post WHERE category_id = #{categoryId}
+    </select>
+
+    <resultMap id="postMap" type="post">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="is_hidden" property="hidden"/>
+        <result column="is_deleted" property="deleted"/>
+        <result column="is_excellent" property="excellent"/>
+        <result column="is_top" property="top"/>
+        <result column="reward" property="reward"/>
+        <association column="user_id" property="user"
+                     javaType="user"
+                     select="top.thesky341.bbsforum.mapper.UserMapper.getUserById"
+        />
+        <association column="category_id" property="category"
+                     javaType="category"
+                     select="top.thesky341.bbsforum.mapper.CategoryMapper.getCategoryById"
+        />
+    </resultMap>
+</mapper>
