@@ -100,3 +100,16 @@ CREATE TABLE user_comment_state (
     FOREIGN KEY(comment_id) REFERENCES comment(id)
 );
 
+#添加角色
+INSERT INTO chara (
+    NULL, "general", NOW()
+);
+INSERT INTO chara (
+    NULL, "admin", NOW()
+);
+INSERT INTO chara (
+    NULL, "superadmin", NOW()
+)
+
+
+
