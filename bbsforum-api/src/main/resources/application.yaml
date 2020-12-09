@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod
+    active: dev
 
 ---
 server:
@@ -33,4 +33,4 @@ mybatis:
   mapper-locations: classpath:top/thesky341/bbsforum/mapper/*.xml
 
 server:
-  port: 8085
+  port: 8083

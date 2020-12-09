@@ -11,6 +11,7 @@ CREATE TABLE chara (
     name VARCHAR(25) UNIQUE NOT NULL,
     create_time DATETIME NOT NULL
 );
+# user, admin, superadmin
 
 #创建用户表
 CREATE TABLE user (
