@@ -101,15 +101,15 @@ CREATE TABLE user_comment_state (
 );
 
 #添加角色
-INSERT INTO chara (
+INSERT INTO chara VALUE (
     NULL, "general", NOW()
 );
-INSERT INTO chara (
+INSERT INTO chara VALUE (
     NULL, "admin", NOW()
 );
-INSERT INTO chara (
+INSERT INTO chara VALUE (
     NULL, "superadmin", NOW()
-)
+);
 
 
 

@@ -20,10 +20,11 @@ public class MybatisTest {
     UserMapper userMapper;
 
     @Test
+    @Transactional
     public void mapperTest() {
         User user = new User();
-        user.setUsername("test1");
-        user.setEmail("123456@qq.com");
+        user.setUsername("test");
+        user.setEmail("12345@qq.com");
         user.setPasswd(MD5SaltEncryption.encrypt("abcd1234", "1234567890abcdef"));
         user.setSalt("1234567890abcdef");
         Chara chara = new Chara();

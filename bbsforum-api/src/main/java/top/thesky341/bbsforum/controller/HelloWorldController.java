@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class HelloWorldController {
-    @RequiresRoles("superadmin")
     @GetMapping("/hello")
     public String hello() {
         return "Hello, World";
