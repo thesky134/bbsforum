@@ -1,4 +1,4 @@
-package top.thesky341.bbsforum.entity;
+package top.thesky341.bbsforum.entity.groups;
 
 /**
  * @author thesky

@@ -34,6 +34,52 @@
                last_login_time, is_disabled, other
         FROM user WHERE email = #{email}
     </select>
+    <update id="updateLastLoginTime">
+        UPDATE user
+        SET last_login_time = NOW()
+        WHERE id = #{id}
+    </update>
+    <update id="updateDailyScore">
+        UPDATE user
+        SET score = #{score},
+            today_score = #{todayScore}
+        WHERE id = #{id}
+    </update>
+    <update id="updateUsername">
+        UPDATE user
+        SET username = #{username}
+        WHERE id = #{id}
+    </update>
+    <update id="updateEmail">
+        UPDATE user
+        SET email = #{email}
+        WHERE id = #{id}
+    </update>
+    <update id="updatePhone">
+        UPDATE user
+        SET phone = #{phone}
+        WHERE id = #{id}
+    </update>
+    <update id="updateJobType">
+        UPDATE user
+        SET job_type = #{jobType}
+        WHERE id = #{id}
+    </update>
+    <update id="updateJobLocation">
+        UPDATE user
+        SET job_location = #{jobLocation}
+        WHERE id = #{id}
+    </update>
+    <update id="updatePersonalSignal">
+        UPDATE user
+        SET personal_signal = #{personalSignal}
+        WHERE id = #{id}
+    </update>
+    <update id="updatePicture">
+        UPDATE user
+        SET picture = #{picture}
+        WHERE id = #{id}
+    </update>
 
     <resultMap id="userMap" type="user">
         <id column="id" property="id"/>
@@ -47,7 +93,7 @@
         <result column="personal_signal" property="personalSignal"/>
         <result column="picture" property="picture"/>
         <result column="score" property="score"/>
-        <result column="todayScore" property="todayScore"/>
+        <result column="today_score" property="todayScore"/>
         <result column="create_time" property="createTime"/>
         <result column="last_login_time" property="lastLoginTime"/>
         <result column="is_disabled" property="disabled"/>

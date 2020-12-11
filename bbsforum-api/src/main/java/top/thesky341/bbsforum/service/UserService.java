@@ -1,37 +1,24 @@
 package top.thesky341.bbsforum.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import top.thesky341.bbsforum.entity.Chara;
 import top.thesky341.bbsforum.entity.User;
-import top.thesky341.bbsforum.mapper.CharaMapper;
-import top.thesky341.bbsforum.mapper.UserMapper;
 
 /**
  * @author thesky
  * @date 2020/12/9
  */
-@Service
-public class UserService {
-    @Autowired
-    UserMapper userMapper;
-    @Autowired
-    CharaMapper charaMapper;
-
-    public User addUser(User user) {
-        Chara chara = charaMapper.getGeneralChara();
-        Assert.notNull(chara, "普通用户角色不存在");
-        user.setChara(chara);
-        userMapper.addUser(user);
-        return userMapper.getUserById(user.getId());
-    }
-
-    public User getUserByUsername(String username) {
-        return userMapper.getUserByUsername(username);
-    }
-
-    public User getUserByEmail(String email) {
-        return userMapper.getUserByEmail(email);
-    }
+public interface UserService {
+    User addUser(User user);
+    User getUserByUsername(String username);
+    User getUserByEmail(String email);
+    User getUserById(int id);
+    void checkIsTodayFirstLogin(User user);
+    void updateLastLoginTime(User user);
+    void updateUsername(User user);
+    void updateEmail(User user);
+    void updatePhone(User user);
+    void updateJobType(User user);
+    void updateJobLocation(User user);
+    void updatePersonalSignal(User user);
+    void updatePicture(User user);
 }

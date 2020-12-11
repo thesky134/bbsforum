@@ -4,6 +4,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -45,14 +46,16 @@ public class GlobleExceptionHandler {
             Result result = new Result(ResultCode.IllegalArgumentException);
             result.setMessage(e.getMessage());
             return result;
-        } else if(e instanceof UnknownAccountException) {
+        } else if(e instanceof UnknownAccountException) {   //账号不存在
             return new Result(ResultCode.UnknownAccountException);
-        } else if(e instanceof LockedAccountException) {
+        } else if(e instanceof LockedAccountException) {    //账号被锁定
             return new Result(ResultCode.LockedAccountException);
-        } else if(e instanceof IncorrectCredentialsException) {
+        } else if(e instanceof IncorrectCredentialsException) {   //密码错误
             return new Result(ResultCode.IncorrectCredentialsException);
-        } else if(e instanceof AuthenticationException) {
+        } else if(e instanceof AuthenticationException) {    //认证异常
             return new Result(ResultCode.AuthenticationException);
+        } else if(e instanceof UnauthenticatedException) {
+            return new Result((ResultCode.UnauthenticatedException));
         } else {
             return Result.error();
         }

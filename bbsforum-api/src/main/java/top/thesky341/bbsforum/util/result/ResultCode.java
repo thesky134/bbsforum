@@ -17,7 +17,9 @@ public enum ResultCode {
     AuthenticationException(134, "认证异常"),
     UnauthenticatedException(141, "用户没有登录"),
     UsernameAlreadyExist(151, "用户名已存在"),
-    EmailAlreadyExist(152, "邮箱已存在");
+    EmailAlreadyExist(152, "邮箱已存在"),
+    PictureFormatError(161, "图片格式应该为jpg, png 或 jpeg"),
+    PictureSavingError(162, "保存图片出错");
 
     /**
      * 状态码

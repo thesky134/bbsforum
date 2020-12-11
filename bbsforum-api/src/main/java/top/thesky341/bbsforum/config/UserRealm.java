@@ -27,6 +27,7 @@ public class UserRealm extends AuthorizingRealm {
      * 登录认证
      * @param token 保存有用户名、密码等信息
      * 这里用于获取 AuthenticationInfo, 之后还需要在另一个进行密码匹配
+     * 注意 Principal 存储用户 Id
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
@@ -38,7 +39,7 @@ public class UserRealm extends AuthorizingRealm {
             throw new LockedAccountException();
         } else {
             ByteSource salt = ByteSource.Util.bytes(user.getSalt());
-            AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(name, user.getPasswd(), salt, getName());
+            AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getId(), user.getPasswd(), salt, getName());
             return authenticationInfo;
         }
     }
