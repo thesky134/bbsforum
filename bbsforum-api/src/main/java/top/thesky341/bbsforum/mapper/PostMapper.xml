@@ -20,7 +20,7 @@
                modify_time, user_id, category_id,
                is_hidden, is_deleted, is_excellent,
                is_top, reward
-        FROM post WHERE id = #{id}
+        FROM post WHERE id = #{id} AND is_hidden = 0 AND is_deleted = 0
     </select>
     <select id="getPostByUserId" resultMap="postMap">
         SELECT id, title, content, create_time,
@@ -36,6 +36,53 @@
                is_top, reward
         FROM post WHERE category_id = #{categoryId}
     </select>
+    <select id="getAllPostSum">
+        SELECT COUNT(*) FROM post
+        WHERE is_hidden = 0 AND is_deleted = 0
+    </select>
+    <select id="getPostTopSum">
+        SELECT COUNT(*) FROM post
+        WHERE is_top = 1 AND is_hidden = 0 AND is_deleted = 0
+    </select>
+    <select id="getPostSumWithCategory">
+        SELECT COUNT(*) FROM post
+        WHERE is_hidden = 0 AND is_deleted = 0 AND category_id = #{categoryId}
+    </select>
+    <select id="getPostTopSumWithCategory">
+        SELECT COUNT(*) FROM post
+        WHERE is_top = 1 AND is_hidden = 0 AND is_deleted = 0 AND category_id = #{categoryId}
+    </select>
+
+    <select id="getPostTopListByPagination" resultMap="postMap">
+        SELECT id, title, create_time, is_excellent, is_top
+        FROM post
+        WHERE is_top = 1 AND is_hidden = 0 AND is_deleted = 0
+        ORDER BY create_date DESC
+        LIMIT #{from}, #{num}
+    </select>
+    <select id="getPostNotTopListByPagination" resultMap="postMap">
+        SELECT id, title, create_time, is_excellent, is_top
+        FROM post
+        WHERE is_top = 0 AND is_hidden = 0 AND is_deleted = 0
+        ORDER BY create_date DESC
+        LIMIT #{from}, #{num}
+    </select>
+
+    <select id="getPostTopListByPaginationWithCategory" resultMap="postMap">
+        SELECT id, title, create_time, is_excellent, is_top
+        FROM post
+        WHERE is_top = 1 AND is_hidden = 0 AND is_deleted = 0 AND category_id = #{categoryId}
+        ORDER BY create_date DESC
+        LIMIT #{from}, #{num}
+    </select>
+    <select id="getPostNotTopListByPaginationWithCategory" resultMap="postMap">
+        SELECT id, title, create_time, is_excellent, is_top
+        FROM post
+        WHERE is_top = 0 AND is_hidden = 0 AND is_deleted = 0 AND category_id = #{categoryId}
+        ORDER BY create_date DESC
+        LIMIT #{from}, #{num}
+    </select>
+
 
     <resultMap id="postMap" type="post">
         <id column="id" property="id"/>

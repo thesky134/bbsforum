@@ -16,6 +16,48 @@
         SELECT id, user_id, post_id, state
         WHERE id = #{id}
     </select>
+    <select id="getPostVisitSum">
+        SELECT COUNT(*)
+        FROM user_post_state
+        WHERE post_id = #{postId} AND state = 4
+    </select>
+    <select id="getPostGoodSum">
+        SELECT COUNT(*)
+        FROM user_post_state WHERE post_id = #{postId} AND state = 1
+    </select>
+    <select id="getPostBadSum">
+        SELECT COUNT(*)
+        FROM user_post_state WHERE post_id = #{postId} AND state = 2
+    </select>
+    <select id="getPostLikeSum">
+        SELECT COUNT(*)
+        FROM user_post_state WHERE post_id = #{postId} AND state = 3
+    </select>
+    <select id="getPostStateSum">
+        SELECT COUNT(*)
+        FROM user_post_state
+        WHERE post_id = #{postId} AND state = #{state}
+    </select>
+    <select id="getUserPostGoodState">
+        SELECT COUNT(*)
+        FROM user_post_state
+        WHERE post_id = #{postId} AND state = 1
+    </select>
+    <select id="getUserPostBadState">
+        SELECT COUNT(*)
+        FROM user_post_state
+        WHERE post_id = #{postId} AND state = 2
+    </select>
+    <select id="getUserPostLikeState">
+        SELECT COUNT(*)
+        FROM user_post_state
+        WHERE post_id = #{postId} AND state = 3
+    </select>
+    <select id="getUserPostStateState">
+        SELECT COUNT(*)
+        FROM user_post_state
+        WHERE post_id = #{postId} AND user_id = #{userId} AND state = #{state}
+    </select>
 
     <resultMap id="userPostStateMap" type="userPostState">
         <id column="id" property="id"/>

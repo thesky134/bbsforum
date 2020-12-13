@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import top.thesky341.bbsforum.entity.Category;
 
+import java.util.List;
+
 /**
  * @author thesky
  * @date 2020/12/8
@@ -14,4 +16,5 @@ public interface CategoryMapper {
     void addCategory(Category category);
     void deleteCategoryById(int id);
     Category getCategoryById(int id);
+    List<Category> getAllCategory();
 }

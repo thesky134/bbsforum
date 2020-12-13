@@ -12,8 +12,12 @@
         DELETE FROM category WHERE id = #{id}
     </delete>
     <select id="getCategoryById" resultMap="categoryMap">
-        SELECT id, name, introduction, create_time, modify_time
+        SELECT id, name, introduction
         FROM category WHERE id = #{id}
+    </select>
+    <select id="getAllCategory" resultMap="categoryMap">
+        SELECT id, name, introduction
+        FROM category
     </select>
 
     <resultMap id="categoryMap" type="category">

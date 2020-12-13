@@ -30,6 +30,12 @@
                is_hidden, is_deleted
         FROM comment WHERE post_id = #{postId}
     </select>
+    <select id="getCommentSumByPostId">
+        SELECT COUNT(*)
+        FROM comment
+        WHERE post_id = #{postId} AND is_hidden = 0 AND is_deleted = 0
+    </select>
+
     <resultMap id="commentMap" type="comment">
         <id column="id" property="id"/>
         <result column="content" property="content"/>
