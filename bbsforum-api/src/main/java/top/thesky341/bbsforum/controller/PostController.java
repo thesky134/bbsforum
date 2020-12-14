@@ -97,7 +97,7 @@ public class PostController {
         return Result.success("posts", postInfoVos);
     }
 
-    @GetMapping("/post/view/{id}")
+    @PostMapping("/post/view/{id}")
     public Result postView(@PathVariable int id) {
         Post post = postService.getPostById(id);
         Assert.notNull(post, "帖子不存在");
@@ -122,7 +122,7 @@ public class PostController {
      * 添加帖子, 注意帖子可能为积分悬赏分类的
      */
     @RequiresAuthentication
-    @PostMapping("/post/add")
+    @PostMapping("/post/manage/add")
     public Result addRewardPost(@Valid @RequestBody PostDto postDto) {
         int userId = (int)SecurityUtils.getSubject().getPrincipal();
         User user = userService.getUserById(userId);
@@ -132,12 +132,47 @@ public class PostController {
             if(postDto.getReward() <= 0) {
                 return new Result(ResultCode.RewardNotGreater0);
             }
+            if(user.getScore() < postDto.getReward()) {
+                return new Result(ResultCode.ScoreNotEnough);
+            }
         }
         Post post = new Post(postDto, user, category);
         postService.addPost(post);
+        if (category.getName().equals("积分悬赏")) {
+            user.setScore(user.getScore() - postDto.getReward());
+            userService.updateScore(user);
+        }
         return Result.success();
     }
 
-//    @RequiresAuthentication
-//    @PostMapping("/post/revise/normal")
+    @RequiresAuthentication
+    @PostMapping("/post/manage/revise")
+    public Result revisePost(@Valid @RequestBody PostDto postDto) {
+        int userId = (int) SecurityUtils.getSubject().getPrincipal();
+        Subject subject = SecurityUtils.getSubject();
+        int postId = postDto.getId();
+        Post oldPost = postService.getPostById(postId);
+        Assert.notNull(oldPost, "帖子不存在");
+        if(userId != oldPost.getUser().getId() && !(subject.hasRole("admin") || subject.hasRole("superadmin"))) {
+            return new Result(ResultCode.PermissionDenied);
+        }
+        User user = oldPost.getUser();
+        Category category = categoryService.getCategoryByName(postDto.getCategory());
+        Assert.notNull(category, "对应分类不存在");
+        if(category.getName().equals("积分悬赏")) {
+            if(postDto.getReward() <= 0) {
+                return new Result(ResultCode.RewardNotGreater0);
+            }
+            if(postDto.getReward() > oldPost.getReward() + user.getScore()) {
+                return new Result(ResultCode.ScoreNotEnough);
+            }
+        }
+        Post post = new Post(postDto, user, category);
+        postService.revisePost(post);
+        if (category.getName().equals("积分悬赏")) {
+            user.setScore(oldPost.getReward() + user.getScore() - postDto.getReward());
+            userService.updateScore(user);
+        }
+        return Result.success();
+    }
 }

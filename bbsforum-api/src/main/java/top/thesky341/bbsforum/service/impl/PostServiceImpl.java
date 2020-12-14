@@ -88,4 +88,10 @@ public class PostServiceImpl implements PostService {
         postMapper.addPost(post);
         return postMapper.getPostById(post.getId());
     }
+
+    @Override
+    public Post revisePost(Post post) {
+        postMapper.revisePost(post);
+        return postMapper.getPostById(post.getId());
+    }
 }

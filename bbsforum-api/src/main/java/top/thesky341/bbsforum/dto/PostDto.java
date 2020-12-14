@@ -1,6 +1,7 @@
 package top.thesky341.bbsforum.dto;
 
 import org.hibernate.validator.constraints.Length;
+import top.thesky341.bbsforum.dto.groups.RevisePost;
 
 import javax.validation.constraints.NotNull;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
  * @date 2020/12/14
  */
 public class PostDto {
+    @NotNull(message = "帖子id必须存在", groups = {RevisePost.class})
     private int id;
     @NotNull(message = "标题必须存在")
     @Length(min = 3, max = 60, message = "标题长度应该在3至60之间")

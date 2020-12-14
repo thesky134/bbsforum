@@ -80,6 +80,11 @@
         SET picture = #{picture}
         WHERE id = #{id}
     </update>
+    <update id="updateScore">
+        UPDATE user
+        SET score = #{score}
+        WHERE id = #{id}
+    </update>
 
     <resultMap id="userMap" type="user">
         <id column="id" property="id"/>
