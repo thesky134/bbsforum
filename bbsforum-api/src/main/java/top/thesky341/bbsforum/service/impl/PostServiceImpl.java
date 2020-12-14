@@ -82,4 +82,10 @@ public class PostServiceImpl implements PostService {
     public int getPostSumWithCategory(int categoryId) {
         return postMapper.getPostSumWithCategory(categoryId);
     }
+
+    @Override
+    public Post addPost(Post post) {
+        postMapper.addPost(post);
+        return postMapper.getPostById(post.getId());
+    }
 }

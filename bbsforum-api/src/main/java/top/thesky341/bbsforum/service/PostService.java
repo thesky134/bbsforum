@@ -15,4 +15,5 @@ public interface PostService {
     List<Post> getPostListByPagination(Pagination pagination);
     List<Post> getPostListByPaginationWithCategory(Pagination pagination);
     Post getPostById(int id);
+    Post addPost(Post post);
 }

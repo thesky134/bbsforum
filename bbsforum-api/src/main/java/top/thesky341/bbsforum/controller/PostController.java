@@ -1,20 +1,21 @@
 package top.thesky341.bbsforum.controller;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.thesky341.bbsforum.dto.PaginationDto;
+import top.thesky341.bbsforum.dto.PostDto;
 import top.thesky341.bbsforum.dto.groups.PaginationWithCategory;
 import top.thesky341.bbsforum.entity.Category;
 import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.entity.Post;
-import top.thesky341.bbsforum.service.CategoryService;
-import top.thesky341.bbsforum.service.CommentService;
-import top.thesky341.bbsforum.service.PostService;
-import top.thesky341.bbsforum.service.UserPostStateService;
+import top.thesky341.bbsforum.entity.User;
+import top.thesky341.bbsforum.service.*;
 import top.thesky341.bbsforum.util.result.Result;
+import top.thesky341.bbsforum.util.result.ResultCode;
 import top.thesky341.bbsforum.vo.PostInfoVo;
 import top.thesky341.bbsforum.vo.PostVo;
 
@@ -38,6 +39,8 @@ public class PostController {
     UserPostStateService userPostStateService;
     @Resource(name = "categoryServiceImpl")
     CategoryService categoryService;
+    @Resource(name = "userServiceImpl")
+    UserService userService;
 
     @PostMapping("/post/all/sum")
     public Result getAllPostSum() {
@@ -114,4 +117,27 @@ public class PostController {
         }
         return Result.success("post", postVo);
     }
+
+    /**
+     * 添加帖子, 注意帖子可能为积分悬赏分类的
+     */
+    @RequiresAuthentication
+    @PostMapping("/post/add")
+    public Result addRewardPost(@Valid @RequestBody PostDto postDto) {
+        int userId = (int)SecurityUtils.getSubject().getPrincipal();
+        User user = userService.getUserById(userId);
+        Category category = categoryService.getCategoryByName(postDto.getCategory());
+        Assert.notNull(category, "对应分类不存在");
+        if(category.getName().equals("积分悬赏")) {
+            if(postDto.getReward() <= 0) {
+                return new Result(ResultCode.RewardNotGreater0);
+            }
+        }
+        Post post = new Post(postDto, user, category);
+        postService.addPost(post);
+        return Result.success();
+    }
+
+//    @RequiresAuthentication
+//    @PostMapping("/post/revise/normal")
 }

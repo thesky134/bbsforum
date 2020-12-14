@@ -26,4 +26,9 @@ public class CategoryServiceImpl implements CategoryService {
     public Category getCategoryById(int id) {
         return categoryMapper.getCategoryById(id);
     }
+
+    @Override
+    public Category getCategoryByName(String name) {
+        return categoryMapper.getCategoryByName(name);
+    }
 }

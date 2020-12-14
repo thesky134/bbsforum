@@ -7,8 +7,8 @@
         INSERT INTO post VALUE (
             NULL, #{title}, #{content}, NOW(),
             NULL, #{user.id}, #{category.id},
-            #{hidden}, #{deleted}, #{excellent},
-            #{top}, #{reward}
+            #{hidden}, 0, 0,
+            0, #{reward}
         )
     </insert>
     <delete id="deletePostById">
