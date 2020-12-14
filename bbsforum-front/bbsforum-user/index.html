@@ -45,7 +45,7 @@
                     <!-- /toggle mobile menu -->
                     <!-- logo -->
                     <div class="tt-logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
+                        <a href="index.html"><img src="images/logo0.png" alt=""></a>
                     </div>
                     <!-- /logo -->
                     <!-- desctop menu -->
@@ -70,7 +70,6 @@
                                         <li><a href="page-categories-single.html">帖子分类详情</a></li>
                                         <li><a href="error404.html">Error 404</a></li>
                                         <li><a href="_demo_modal-level-up.html">升级通知</a></li>
-
                                     </ul>
                                 </li>
                             </ul>
@@ -79,14 +78,15 @@
                     <!-- /desctop menu -->
 
                 </div>
-                <div class="col-auto ml-auto">
+                <div class="col-auto ml-auto" id="entrances">
                     <div class="tt-account-btn">
                         <a href="../bbsforum-admin/login.html" class="btn btn-primary">管理员</a>
                         <a href="page-login.html" class="btn btn-primary">登录</a>
                         <a href="page-signup.html" class="btn btn-secondary">注册</a>
                     </div>
                 </div>
-                <!--<div class="col-auto ml-auto">
+                <!--检测登录状态，显示个人栏-->
+                <div class="col-auto ml-auto">
                     <div class="tt-user-info d-flex justify-content-center">
                         <a href="#" class="tt-btn-icon">
                             <i class="tt-icon"><svg><use xlink:href="#icon-notification"></use></svg></i>
@@ -102,7 +102,7 @@
                             </select>
                         </div>
                     </div>
-                </div>-->
+                </div>
             </div>
         </div>
     </header>
@@ -394,8 +394,14 @@
 
 <script src="js/bundle.js"></script>
 <script type="text/javascript">
+
     new Vue({
         el: '#topic',
+        data(){
+            return{
+                checkloginstate: null
+            }
+        },
         data() {
             return {
                 topics: null
@@ -403,6 +409,8 @@
         },
         mounted() {
             let url = 'data.json';
+            let url2 = 'http://192.168.43.155:8083/user/manage/checkloginstate';
+            // 获取帖子数据
             axios
                 .get(url)
                 .then(response => {
@@ -412,7 +420,15 @@
                 .catch(function (error) { // 请求失败处理
                     console.log(error);
                 });
-        }
+            // 获取登录状态
+
+        },
+
+    })
+    axios.post().then(response =>{
+
+    }).catch(()=>{
+
     })
 </script>
 <svg width="0" height="0" class="hidden">

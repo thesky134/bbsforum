@@ -10,47 +10,137 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
 </head>
 <body>
+<div id="login">
+    <main id="tt-pageContent" class="tt-offset-none">
+        <div class="container">
+            <div class="tt-loginpages-wrapper">
+                <div class="tt-loginpages">
+                    <a href="index.html" class="tt-block-title">
+                        <img src="images/logo.png" alt="">
+                        <div class="tt-title">
+                            欢迎来到19号论坛
+                        </div>
+                        <div class="tt-description">
+                            登录您的帐户来探索论坛吧。
+                        </div>
+                    </a>
+                    <div class="form-default">
+                        <div class="form-group">
+                            <label for="loginUserName">用户名</label><br>
+                            <input type="text" name="name" class="form-control"
+                                   v-model="vmodel_username" @blur="blur_username" id="loginUserName" placeholder="请输入用户名">
+                            <label v-show="vshow_username" style="font-size: 10px; color: #ff0000">{{username_msg}}</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginUserPassword">密码</label><br>
+                            <input type="password" name="name" class="form-control"
+                                   v-model="vmodel_password" @blur="blur_pwd" id="loginUserPassword" placeholder="请输入密码">
+                            <label v-show="vshow_pwd" style="font-size: 10px; color: red">{{pwd_msg}}</label>
+                        </div>
 
-<main id="tt-pageContent" class="tt-offset-none">
-    <div class="container">
-        <div class="tt-loginpages-wrapper">
-            <div class="tt-loginpages">
-                <a href="index.html" class="tt-block-title">
-                    <img src="images/logo.png" alt="">
-                    <div class="tt-title">
-                        欢迎来到19号论坛
-                    </div>
-                    <div class="tt-description">
-                        登录您的帐户来探索论坛吧。
-                    </div>
-                </a>
-                <form class="form-default">
-                    <div class="form-group">
-                        <label for="loginUserName">用户名</label>
-                        <input type="text" name="name" class="form-control" id="loginUserName" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="loginUserPassword">密码</label>
-                        <input type="password" name="name" class="form-control" id="loginUserPassword" placeholder="">
-                    </div>
+                        <div class="form-group">
+                            <button class="btn btn-secondary btn-block" onclick="login()">登 录</button>
+                        </div>
 
-                    <div class="form-group">
-                        <a href="#" class="btn btn-secondary btn-block">登录</a>
+                        <p>没有账号？ <a href="page-signup.html" class="tt-underline">点这注册</a></p>
+                        <div class="tt-notes">
+                            通过登录、注册或继续，我同意
+                            19论坛 <a href="#" class="tt-underline">使用条款</a> 和 <a href="#" class="tt-underline">隐私政策。</a>
+                        </div>
                     </div>
-
-                    <p>没有账号？ <a href="page-signup.html" class="tt-underline">点这注册</a></p>
-                    <div class="tt-notes">
-                        通过登录、注册或继续，我同意
-                        19论坛 <a href="#" class="tt-underline">使用条款</a> 和 <a href="#" class="tt-underline">隐私政策。</a>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
+</div>
 <script src="js/bundle.js"></script>
+<script>
+    new Vue({
+        el: '#login',
+        data: {
+            // 这里对应v-show
+            vshow_username:false,
+            vshow_pwd:false,
+            vshow_email:false,
+            // 这里对应错误信息
+            username_msg:'',
+            pwd_msg:'',
+            email_msg:'',
+            // 这里的变量对应v-model
+            vmodel_username:'',
+            vmodel_password:'',
+            vmodel_email:''
+        },
+        mounted(){
+
+        },
+        methods: {
+            blur_username: function (){
+                // 检验正则匹配
+                // let re_username = /^[a-zA-Z0-9_-]{5,20}$/;
+                let re_username = /^[^\s]{3,20}$/;
+                if(re_username.test(this.vmodel_username)){
+                    this.vshow_username = false;
+                }else {
+                    this.username_msg = '请输入正确的用户名！';
+                    this.vshow_username = true;
+                }
+            },
+            blur_pwd:function(){
+                // 检查正则匹配
+                let re_pwd = /^[^\s]{6,26}$/;
+                if(re_pwd.test(this.vmodel_password)){
+                    this.vshow_pwd = false;
+                }
+                else{
+                    this.pwd_msg = '密码有误！';
+                    this.vshow_pwd = true;
+                }
+            },
+            blur_email:function(){
+                // 检查正则
+                let re_email = /^\S+@\S+.\S+$/;
+                if(re_email.test(this.vmodel_email)){
+                    this.vshow_email = false;
+                }
+                else{
+                    this.email_msg = '邮箱格式有误！';
+                    this.vshow_email = true;
+                }
+            }
+        }
+    })
+    function login(){
+        console.log(123)
+        axios({
+            method: 'POST',
+            url: 'http://192.168.43.155:8083/user/manage/login',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                username: "test10",
+                passwd: "abcd1234"
+            }
+        }).then((response)=>{
+            console.log(response.data);
+            let result = response.data;
+            let code = result.code;
+            if (code === 0) {
+                location.href="index.html";
+            } else {
+                alert("用户名已存在！")
+            }
+        }).catch(()=>{
+            console.log("error")
+        })
+
+    }
+</script>
 <svg width="0" height="0" class="hidden">
 	 <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" id="facebook-f-brands">
     <path fill="currentColor" d="M215.8 85H264V3.6C255.7 2.5 227.1 0 193.8 0 124.3 0 76.7 42.4 76.7 120.3V192H0v91h76.7v229h94V283h73.6l11.7-91h-85.3v-62.7c0-26.3 7.3-44.3 45.1-44.3z"></path>
