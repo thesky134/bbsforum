@@ -10,7 +10,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
 </head>
 <body>
@@ -88,17 +88,15 @@
                 <!--检测登录状态，显示个人栏-->
                 <div class="col-auto ml-auto">
                     <div class="tt-user-info d-flex justify-content-center">
-                        <a href="#" class="tt-btn-icon">
-                            <i class="tt-icon"><svg><use xlink:href="#icon-notification"></use></svg></i>
-                        </a>
                         <div class="tt-avatar-icon tt-size-md">
-                            <i class="tt-icon"><svg><use xlink:href="#icon-ava-a"></use></svg></i>
+                            <a href="page-single_threads.html" class="tt-btn-icon">
+                                <i class="tt-icon"><svg><use xlink:href="#icon-ava-a"></use></svg></i>
+                            </a>
+
                         </div>
                         <div class="custom-select-01">
                             <select>
-                                <option value="Default Sorting">azyrusmax</option>
-                                <option value="value 01">value 01</option>
-                                <option value="value 02">value 02</option>
+                                <option value="Default Sorting">用户名</option>
                             </select>
                         </div>
                     </div>
@@ -118,31 +116,10 @@
                 </div>
             </div>
             <!-- 使用flex布局 -->
-            <div class="tt-topic-list flex" >
-                <!--例子-->
-                <div class="tt-item">
-                    <div class="tt-col-avatar">
-                        <svg class="tt-icon">
-                            <use xlink:href="#icon-ava-c"></use>
-                        </svg>
-                    </div>
-                    <div class="tt-col-description">
-                        <h6 class="tt-title">
-                            <!--置顶标志-->
-                            <svg class="tt-icon">
-                                <use xlink:href="#icon-pinned"></use>
-                            </svg>
-                            <a href="page-single-topic.html">本贴为静态例子</a>
-                        </h6>
-                    </div>
-                    <div class="tt-col-category"><span class="tt-color04 tt-badge">例子</span></div>
-                    <div class="tt-col-value tt-color-select  hide-mobile">123</div>
-                    <div class="tt-col-value  hide-mobile">123</div>
-                    <div class="tt-col-value hide-mobile">3 d</div>
-                </div>
+            <div class="tt-topic-list flex">
                 <!-- 动态读取帖子 -->
                 <!-- 当topic.top为true，绑定tt-itemselect，改变颜色；绑定top样式，实现置顶 -->
-                <div class="tt-item" v-for="topic in topics" v-bind:class="{'tt-itemselect top': topic.top}">
+                <div class="tt-item" v-for="topic in currentPageData" v-bind:class="{'tt-itemselect top': topic.top}">
                     <div class="tt-col-avatar">
                         <svg class="tt-icon">
                             <use xlink:href="#icon-ava-c"></use>
@@ -162,9 +139,15 @@
                     <div class="tt-col-value  hide-mobile">{{topic.view}}</div>
                     <div class="tt-col-value hide-mobile">{{topic.activity}}</div>
                 </div>
-
-
+                <div class="tt-row-btn">
+                    <button type="button" class="btn-icon js-topiclist-showmore" @click="nextPage()">
+                        <svg class="tt-icon">
+                            <use xlink:href="#icon-load_lore_icon"></use>
+                        </svg>
+                    </button>
+                </div>
             </div>
+
         </div>
 
     </main>
@@ -404,7 +387,11 @@
         },
         data() {
             return {
-                topics: null
+                topics: null,
+                totalPage: 1, // 统共页数，默认为1
+                currentPage: 1, //当前页数 ，默认为1
+                pageSize: 2, // 每页显示数量
+                currentPageData: [] //当前页显示内容
             }
         },
         mounted() {
@@ -416,6 +403,12 @@
                 .then(response => {
                     this.topics = response.data.topics;
                     console.log(response);
+                    // 计算一共有几页
+                    this.totalPage = Math.ceil(this.topics.length / this.pageSize);
+                    // 计算得0时设置为1
+                    this.totalPage = this.totalPage == 0 ? 1 : this.totalPage;
+                    this.sortTopics();
+                    this.setCurrentPageData();
                 })
                 .catch(function (error) { // 请求失败处理
                     console.log(error);
@@ -423,7 +416,43 @@
             // 获取登录状态
 
         },
+        methods: {
+            // 设置当前页面数据，对数组操作的截取规则为[0~10],[10~20]...,
+            sortTopics(){
+                console.log("sortTopics()函数被调用了")
+                var pointing = 0;
+                let temp = null;
+                for(let i=0; i<this.topics.length;i++){
+                    if(this.topics[i].top){
+                        temp = this.topics[pointing];
+                        this.topics[pointing] = this.topics[i];
+                        this.topics[i] = temp;
+                        pointing++;
+                    }
+                    console.log(this.topics[i]);
 
+                    console.log(pointing)
+                }
+            },
+            setCurrentPageData() {
+                // let begin = (this.currentPage - 1) * this.pageSize;
+                let begin = 0;
+                let end = this.currentPage * this.pageSize;
+                this.currentPageData = this.topics.slice(begin,end);
+                console.log("setCurrentPageData()函数被调用了");
+                console.log("当前页数："+this.currentPage);
+                console.log("currentPageData数组如下：")
+                console.log(this.currentPageData);
+            },
+            // 下一页
+            nextPage() {
+                if (this.currentPage == this.totalPage) return;
+
+                this.currentPage++;
+                this.setCurrentPageData();
+
+            }
+        }
     })
     axios.post().then(response =>{
 
