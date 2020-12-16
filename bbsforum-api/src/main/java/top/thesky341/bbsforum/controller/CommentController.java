@@ -70,12 +70,6 @@ public class CommentController {
         List<Comment> comments = commentService.getCommentListByPagination(pagination);
 
         List<PostInfoVo> postInfoVos = new ArrayList<>();
-//        for (Post post : posts) {
-//            int postId = post.getId();
-//            int commentSum = commentService.getCommentSumByPostId(postId);
-//            int visitSum = userPostStateService.getPostStateSum(postId, 4);
-//            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
-//        }
         return null;
     }
 }
