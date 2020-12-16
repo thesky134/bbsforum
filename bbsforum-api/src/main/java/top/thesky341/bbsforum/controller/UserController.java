@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import top.thesky341.bbsforum.config.shiro.UserSessionManager;
 import top.thesky341.bbsforum.entity.groups.*;
 import top.thesky341.bbsforum.entity.User;
 import top.thesky341.bbsforum.service.UserService;
@@ -71,7 +72,7 @@ public class UserController {
         user = userService.getUserByUsername(user.getUsername());
         userService.checkIsTodayFirstLogin(user);
         userService.updateLastLoginTime(user);
-        return Result.success();
+        return Result.success(UserSessionManager.OAUTH_TOKEN, subject.getSession().getId());
     }
 
     /**

@@ -1,8 +1,9 @@
-package top.thesky341.bbsforum.config;
+package top.thesky341.bbsforum.config.shiro;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import top.thesky341.bbsforum.config.RedisManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +31,6 @@ public class ShiroConfig {
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         String algorithmName = "MD5";
         int iterations = 3;
-
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
         credentialsMatcher.setHashAlgorithmName(algorithmName);
         credentialsMatcher.setHashIterations(iterations);
@@ -47,13 +48,30 @@ public class ShiroConfig {
         return userRealm;
     }
 
+    @Bean
+    public UserSessionManager userSessionManager(@Qualifier("userSessionDAO") UserSessionDAO userSessionDAO) {
+        UserSessionManager userSessionManager = new UserSessionManager();
+        userSessionManager.setSessionDAO(userSessionDAO);
+        return userSessionManager;
+    }
+
+
+    @Bean
+    public UserSessionDAO userSessionDAO(RedisManager redisManager) {
+        UserSessionDAO userSessionDAO = new UserSessionDAO();
+        userSessionDAO.setRedisManager(redisManager);
+        return userSessionDAO;
+    }
+
+
     /**
      * securityManager 设置 userRealm
      */
     @Bean
-    public SecurityManager securityManager(@Qualifier("userRealm") UserRealm userRealm) {
+    public SecurityManager securityManager(@Qualifier("userRealm") UserRealm userRealm, @Qualifier("userSessionManager") UserSessionManager userSessionManager) {
         DefaultSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(userRealm);
+        securityManager.setSessionManager(userSessionManager);
         return securityManager;
     }
 
@@ -99,6 +117,7 @@ public class ShiroConfig {
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+
         return authorizationAttributeSourceAdvisor;
     }
 }
