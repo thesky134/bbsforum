@@ -27,4 +27,5 @@ public interface UserMapper {
     void updateJobLocation(User user);
     void updatePersonalSignal(User user);
     void updatePicture(User user);
+    void updateScore(User user);
 }

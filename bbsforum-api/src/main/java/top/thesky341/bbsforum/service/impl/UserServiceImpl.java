@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateScore(User user) {
+        userMapper.updateScore(user);
+    }
+
+    @Override
     public void updateJobLocation(User user) {
         userMapper.updateJobLocation(user);
     }

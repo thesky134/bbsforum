@@ -11,6 +11,7 @@ public enum ResultCode {
     BindException(111, "参数校验失败"),
     IllegalArgumentException(112, "参数不合法"),
     NeedLogin(121, "该操作需要先登录"),
+    PermissionDenied(181, "用户没有权限"),
     IncorrectCredentialsException(131, "密码不正确"),
     UnknownAccountException(132, "此账号不存在"),
     LockedAccountException(133, "此账号已被锁定"),
@@ -19,8 +20,9 @@ public enum ResultCode {
     UsernameAlreadyExist(151, "用户名已存在"),
     EmailAlreadyExist(152, "邮箱已存在"),
     PictureFormatError(161, "图片格式应该为jpg, png 或 jpeg"),
-    PictureSavingError(162, "保存图片出错");
-
+    PictureSavingError(162, "保存图片出错"),
+    RewardNotGreater0(171, "积分奖励必须大于 0"),
+    ScoreNotEnough(172, "用户积分不足");
     /**
      * 状态码
      */

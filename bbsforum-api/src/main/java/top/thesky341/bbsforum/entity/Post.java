@@ -1,5 +1,13 @@
 package top.thesky341.bbsforum.entity;
 
+import org.hibernate.validator.constraints.Length;
+import top.thesky341.bbsforum.dto.PostDto;
+import top.thesky341.bbsforum.entity.groups.Login;
+import top.thesky341.bbsforum.entity.groups.Register;
+import top.thesky341.bbsforum.entity.groups.UpdateUsername;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
@@ -8,6 +16,7 @@ import java.util.Date;
  */
 public class Post {
     private int id;
+
     private String title;
     private String content;
     private Date createTime;
@@ -21,6 +30,16 @@ public class Post {
     private int reward;
 
     public Post() {
+    }
+
+    public Post(PostDto postDto, User user, Category category) {
+        this.id = postDto.getId();
+        this.title = postDto.getTitle();
+        this.content = postDto.getContent();
+        this.user = user;
+        this.category = category;
+        this.reward = postDto.getReward();
+        this.hidden = postDto.isHidden();
     }
 
     public int getId() {

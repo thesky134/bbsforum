@@ -7,10 +7,20 @@
         INSERT INTO post VALUE (
             NULL, #{title}, #{content}, NOW(),
             NULL, #{user.id}, #{category.id},
-            #{hidden}, #{deleted}, #{excellent},
-            #{top}, #{reward}
+            #{hidden}, 0, 0,
+            0, #{reward}
         )
     </insert>
+    <update id="revisePost" parameterType="post">
+        UPDATE post
+        SET title = #{title},
+            content = #{content},
+            category_id = #{category.id},
+            is_hidden = #{hidden},
+            reward = #{reward},
+            modify_time = NOW()
+        WHERE id = #{id}
+    </update>
     <delete id="deletePostById">
         DELETE FROM post
         WHERE id = #{id}
