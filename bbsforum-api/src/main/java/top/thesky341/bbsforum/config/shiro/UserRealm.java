@@ -1,4 +1,4 @@
-package top.thesky341.bbsforum.config;
+package top.thesky341.bbsforum.config.shiro;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
