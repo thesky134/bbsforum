@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.thesky341.bbsforum.mapper.CommentMapper">
+    <insert id="addComment" parameterType="comment">
+        INSERT INTO comment VALUE (
+            NULL, #{content}, NOW(), NULL, #{user.id},
+            #{post.id}, #{hidden}, #{deleted}
+            )
+    </insert>
+    <insert id="deleteCommentById">
+        DELETE FROM comment WHERE id = #{id}
+    </insert>
+    <select id="getCommentById" resultMap="commentMap">
+        SELECT id, content, create_time,
+               modify_time, user_id, post_id,
+               is_hidden, is_deleted
+        FROM comment WHERE id = #{id}
+    </select>
+    <select id="getCommentByUserId" resultMap="commentMap">
+        SELECT id, content, create_time,
+               modify_time, user_id, post_id,
+               is_hidden, is_deleted
+        FROM comment WHERE user_id = #{userId}
+    </select>
+    <select id="getCommentByPostId" resultMap="commentMap">
+        SELECT id, content, create_time,
+               modify_time, user_id, post_id,
+               is_hidden, is_deleted
+        FROM comment WHERE post_id = #{postId}
+    </select>
+    <select id="getCommentSumByPostId">
+        SELECT COUNT(*)
+        FROM comment
+        WHERE post_id = #{postId} AND is_hidden = 0 AND is_deleted = 0
+    </select>
+
+    <resultMap id="commentMap" type="comment">
+        <id column="id" property="id"/>
+        <result column="content" property="content"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="is_hidden" property="hidden"/>
+        <result column="is_deleted" property="deleted"/>
+        <association column="user_id" property="user"
+                     javaType="user"
+                     select="top.thesky341.bbsforum.mapper.UserMapper.getUserById"
+        />
+        <association column="post_id" property="post"
+                     javaType="post"
+                     select="top.thesky341.bbsforum.mapper.CategoryMapper.getCategoryById"
+        />
+    </resultMap>
+</mapper>
