@@ -14,24 +14,15 @@
         DELETE FROM user WHERE id = #{id}
     </insert>
     <select id="getUserById" resultMap="userMap">
-        SELECT id, username, email, passwd, salt,
-               phone, job_type, job_location, personal_signal,
-               picture, chara_id, score, today_score, create_time,
-               last_login_time, is_disabled, other
+        SELECT *
         FROM user WHERE id = #{id}
     </select>
     <select id="getUserByUsername" resultMap="userMap">
-        SELECT id, username, email, passwd, salt,
-               phone, job_type, job_location, personal_signal,
-               picture, chara_id, score, today_score, create_time,
-               last_login_time, is_disabled, other
+        SELECT *
         FROM user WHERE username = #{username}
     </select>
     <select id="getUserByEmail" resultMap="userMap">
-        SELECT id, username, email, passwd, salt,
-               phone, job_type, job_location, personal_signal,
-               picture, chara_id, score, today_score, create_time,
-               last_login_time, is_disabled, other
+        SELECT *
         FROM user WHERE email = #{email}
     </select>
     <update id="updateLastLoginTime">

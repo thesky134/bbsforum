@@ -15,6 +15,8 @@ import top.thesky341.bbsforum.util.result.Result;
 import top.thesky341.bbsforum.util.result.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author thesky
@@ -57,7 +59,11 @@ public class GlobleExceptionHandler {
         } else if(e instanceof UnauthenticatedException) {
             return new Result((ResultCode.UnauthenticatedException));
         } else {
-            return Result.error();
+            Result result = Result.error();
+            Map<String, String> data = new HashMap<>();
+            data.put("error", e.toString());
+            result.setData(data);
+            return result;
         }
     }
 }

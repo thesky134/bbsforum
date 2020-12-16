@@ -3,61 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.thesky341.bbsforum.mapper.UserPostStateMapper">
-    <insert id="addUserPostState" parameterType="userPostState">
-        INSERT INTO user_post_state VALUE (
-            NULL, #{user.id}, #{post.id}, #{state}
-            )
-    </insert>
     <delete id="deleteUserPostStateById">
         DELETE FROM user_post_state
         WHERE id = #{id}
     </delete>
-    <select id="getrUserPostStateById" resultMap="userPostStateMap">
-        SELECT id, user_id, post_id, state
+    <select id="getUserPostStateById" resultMap="userPostStateMap">
+        SELECT *
+        FROM user_post_state
         WHERE id = #{id}
     </select>
-    <select id="getPostVisitSum">
-        SELECT COUNT(*)
-        FROM user_post_state
-        WHERE post_id = #{postId} AND state = 4
-    </select>
-    <select id="getPostGoodSum">
-        SELECT COUNT(*)
-        FROM user_post_state WHERE post_id = #{postId} AND state = 1
-    </select>
-    <select id="getPostBadSum">
-        SELECT COUNT(*)
-        FROM user_post_state WHERE post_id = #{postId} AND state = 2
-    </select>
-    <select id="getPostLikeSum">
-        SELECT COUNT(*)
-        FROM user_post_state WHERE post_id = #{postId} AND state = 3
-    </select>
-    <select id="getPostStateSum">
+    <select id="getUserPostStateSum" resultType="integer">
         SELECT COUNT(*)
         FROM user_post_state
         WHERE post_id = #{postId} AND state = #{state}
+        <if test="userId != -1">
+            AND user_id = #{userId}
+        </if>
     </select>
-    <select id="getUserPostGoodState">
-        SELECT COUNT(*)
-        FROM user_post_state
-        WHERE post_id = #{postId} AND state = 1
-    </select>
-    <select id="getUserPostBadState">
-        SELECT COUNT(*)
-        FROM user_post_state
-        WHERE post_id = #{postId} AND state = 2
-    </select>
-    <select id="getUserPostLikeState">
-        SELECT COUNT(*)
-        FROM user_post_state
-        WHERE post_id = #{postId} AND state = 3
-    </select>
-    <select id="getUserPostStateState">
-        SELECT COUNT(*)
-        FROM user_post_state
-        WHERE post_id = #{postId} AND user_id = #{userId} AND state = #{state}
-    </select>
+    <insert id="addUserPostState" parameterType="userPostState" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_post_state VALUE (
+            NULL, #{user.id}, #{post.id}, #{state}
+            )
+    </insert>
 
     <resultMap id="userPostStateMap" type="userPostState">
         <id column="id" property="id"/>

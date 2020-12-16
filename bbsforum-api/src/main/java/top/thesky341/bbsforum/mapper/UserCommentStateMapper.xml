@@ -13,7 +13,7 @@
         WHERE id = #{id}
     </delete>
     <select id="getrUserCommentStateById" resultMap="userCommentStateMap">
-        SELECT id, user_id, comment_id, state
+        SELECT *
         WHERE id = #{id}
     </select>
 

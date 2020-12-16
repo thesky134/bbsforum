@@ -26,70 +26,54 @@
         WHERE id = #{id}
     </delete>
     <select id="getPostById" resultMap="postMap">
-        SELECT id, title, content, create_time,
-               modify_time, user_id, category_id,
-               is_hidden, is_deleted, is_excellent,
-               is_top, reward
+        SELECT *
         FROM post WHERE id = #{id} AND is_hidden = 0 AND is_deleted = 0
     </select>
     <select id="getPostByUserId" resultMap="postMap">
-        SELECT id, title, content, create_time,
-               modify_time, user_id, category_id,
-               is_hidden, is_deleted, is_excellent,
-               is_top, reward
+        SELECT *
         FROM post WHERE user_id = #{userId}
     </select>
-    <select id="getPostByCategoryId" resultMap="postMap">
-        SELECT id, title, content, create_time,
-               modify_time, user_id, category_id,
-               is_hidden, is_deleted, is_excellent,
-               is_top, reward
-        FROM post WHERE category_id = #{categoryId}
-    </select>
-    <select id="getAllPostSum">
+
+<!--    得到帖子的数量-->
+<!--    可以用于主页，具体分类的帖子列表，用户帖子列表数-->
+    <select id="getPostSum" resultType="integer">
         SELECT COUNT(*) FROM post
+        WHERE is_deleted = 0
+        <if test="categoryId != -1">
+            AND category_id = #{categoryId}
+        </if>
+        <choose>
+            <when test="userId == -1">
+                AND is_hidden = 0
+            </when>
+            <when test="userId != -1">
+                AND user_id = #{userId}
+            </when>
+        </choose>
+    </select>
+<!--    可以用于主页，具体分类的帖子列表-->
+    <select id="getPostTopSum" resultType="integer">
+        SELECT COUNT(*) FROM post
+        WHERE is_top = 1 AND is_hidden = 0 AND is_deleted = 0
+        <if test="categoryId != -1">
+            AND category_id = #{categoryId}
+        </if>
+    </select>
+
+    <select id="getPostListByPagination" resultMap="postMap">
+        SELECT *
+        FROM post
         WHERE is_hidden = 0 AND is_deleted = 0
-    </select>
-    <select id="getPostTopSum">
-        SELECT COUNT(*) FROM post
-        WHERE is_top = 1 AND is_hidden = 0 AND is_deleted = 0
-    </select>
-    <select id="getPostSumWithCategory">
-        SELECT COUNT(*) FROM post
-        WHERE is_hidden = 0 AND is_deleted = 0 AND category_id = #{categoryId}
-    </select>
-    <select id="getPostTopSumWithCategory">
-        SELECT COUNT(*) FROM post
-        WHERE is_top = 1 AND is_hidden = 0 AND is_deleted = 0 AND category_id = #{categoryId}
-    </select>
-
-    <select id="getPostTopListByPagination" resultMap="postMap">
-        SELECT id, title, create_time, is_excellent, is_top
-        FROM post
-        WHERE is_top = 1 AND is_hidden = 0 AND is_deleted = 0
-        ORDER BY create_date DESC
-        LIMIT #{from}, #{num}
-    </select>
-    <select id="getPostNotTopListByPagination" resultMap="postMap">
-        SELECT id, title, create_time, is_excellent, is_top
-        FROM post
-        WHERE is_top = 0 AND is_hidden = 0 AND is_deleted = 0
-        ORDER BY create_date DESC
-        LIMIT #{from}, #{num}
-    </select>
-
-    <select id="getPostTopListByPaginationWithCategory" resultMap="postMap">
-        SELECT id, title, create_time, is_excellent, is_top
-        FROM post
-        WHERE is_top = 1 AND is_hidden = 0 AND is_deleted = 0 AND category_id = #{categoryId}
-        ORDER BY create_date DESC
-        LIMIT #{from}, #{num}
-    </select>
-    <select id="getPostNotTopListByPaginationWithCategory" resultMap="postMap">
-        SELECT id, title, create_time, is_excellent, is_top
-        FROM post
-        WHERE is_top = 0 AND is_hidden = 0 AND is_deleted = 0 AND category_id = #{categoryId}
-        ORDER BY create_date DESC
+        <if test="categoryId != -1">
+            AND category_id = #{categoryId}
+        </if>
+        <if test="userId != -1">
+            AND user_id != #{userId}
+        </if>
+        <if test="top != -1">
+            AND is_top = #{top}
+        </if>
+        ORDER BY create_time DESC
         LIMIT #{from}, #{num}
     </select>
 

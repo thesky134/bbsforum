@@ -12,15 +12,15 @@
         DELETE FROM category WHERE id = #{id}
     </delete>
     <select id="getCategoryById" resultMap="categoryMap">
-        SELECT id, name, introduction
+        SELECT *
         FROM category WHERE id = #{id}
     </select>
     <select id="getCategoryByName" resultMap="categoryMap">
-        SELECT id, name, introduction
+        SELECT *
         FROM category WHERE name = #{name}
     </select>
     <select id="getAllCategory" resultMap="categoryMap">
-        SELECT id, name, introduction
+        SELECT *
         FROM category
     </select>
 

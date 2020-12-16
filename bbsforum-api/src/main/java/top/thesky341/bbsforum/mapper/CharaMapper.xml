@@ -12,11 +12,11 @@
         DELETE FROM chara WHERE id = #{id}
     </delete>
     <select id="getCharaById" resultMap="charaMap">
-        SELECT id, name, create_time
+        SELECT *
         FROM chara WHERE id = #{id}
     </select>
     <select id="getGeneralChara" resultMap="charaMap">
-        SELECT id, name, create_time
+        SELECT *
         FROM chara WHERE name = "general"
     </select>
 

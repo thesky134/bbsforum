@@ -9,17 +9,17 @@ package top.thesky341.bbsforum.entity;
 public class Pagination {
     private int from;
     private int num;
-    private Integer categoryId;
-    private boolean top;
+    private Integer categoryId = -1;
+    private Integer userId = -1;
+    private Integer postId = -1;
+    private Integer top = -1;
 
     public Pagination() {
     }
 
-    public Pagination(int from, int num, Integer categoryId, boolean top) {
+    public Pagination(int from, int num) {
         this.from = from;
         this.num = num;
-        this.categoryId = categoryId;
-        this.top = top;
     }
 
     public int getFrom() {
@@ -46,12 +46,12 @@ public class Pagination {
         this.categoryId = categoryId;
     }
 
-    public boolean isTop() {
-        return top;
+    public Integer getPostId() {
+        return postId;
     }
 
-    public void setTop(boolean top) {
-        this.top = top;
+    public void setPostId(Integer postId) {
+        this.postId = postId;
     }
 
     @Override
@@ -60,7 +60,26 @@ public class Pagination {
                 "from=" + from +
                 ", num=" + num +
                 ", categoryId=" + categoryId +
+                ", userId=" + userId +
+                ", postId=" + postId +
                 ", top=" + top +
                 '}';
     }
+
+    public Integer getTop() {
+        return top;
+    }
+
+    public void setTop(Integer top) {
+        this.top = top;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
 }

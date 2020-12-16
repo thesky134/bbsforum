@@ -7,7 +7,7 @@ import java.util.Date;
  * @date 2020/12/8
  */
 public class Category {
-    private int id;
+    private int id = -1;
     private String name;
     private String introduction;
     private Date createTime;

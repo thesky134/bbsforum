@@ -19,6 +19,13 @@ public class Comment {
     public Comment() {
     }
 
+    public Comment(String content, User user, Post post) {
+        this.content = content;
+        this.user = user;
+        this.post = post;
+        this.hidden = false;
+    }
+
     public int getId() {
         return id;
     }
