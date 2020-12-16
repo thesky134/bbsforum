@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b93bc5c2-5a97-4f4a-8cef-4be44574ad7d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/config/GlobleExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/config/GlobleExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/config/RedisManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/config/RedisManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/config/shiro/UserRealm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/config/shiro/UserRealm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/config/shiro/UserSessionDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/config/shiro/UserSessionDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/controller/HelloWorldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/controller/HelloWorldController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/controller/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/dto/PaginationDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/dto/PaginationDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/dto/groups/RevisePost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/dto/groups/RevisePost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/Pagination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/UserPostState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/entity/UserPostState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/CategoryMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/CategoryMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/CharaMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/CharaMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/CommentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/CommentMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/PostMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/PostMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/PostMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/PostMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/UserCommentStateMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/UserCommentStateMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/UserPostStateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/UserPostStateMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/UserPostStateMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/mapper/UserPostStateMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/CommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/UserPostStateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/UserPostStateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/impl/CommentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/impl/PostServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/impl/UserPostStateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/service/impl/UserPostStateServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/vo/PostInfoVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/top/thesky341/bbsforum/vo/PostInfoVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="forum: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="forum: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="chara: table" type="285a2a93:MysqlImplModel$Table" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1kpW5lXFNFLcnW1NEzNoQjao5cj" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../hsc/bbsforum/bbsforum-api" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="top.thesky341.bbsforum.config" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.BbsforumApplication (1)">
+    <configuration name="EncryptTest.randomGenerateSaltTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bbsforum-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="top.thesky341.bbsforum.dto.groups.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="top.thesky341.bbsforum" />
+      <option name="MAIN_CLASS_NAME" value="top.thesky341.bbsforum.EncryptTest" />
+      <option name="METHOD_NAME" value="randomGenerateSaltTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ImgTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bbsforum-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="top.thesky341.bbsforum.dto.groups.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="top.thesky341.bbsforum" />
+      <option name="MAIN_CLASS_NAME" value="top.thesky341.bbsforum.ImgTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ImgTest.imgPathTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bbsforum-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="top.thesky341.bbsforum.dto.groups.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="top.thesky341.bbsforum" />
+      <option name="MAIN_CLASS_NAME" value="top.thesky341.bbsforum.ImgTest" />
+      <option name="METHOD_NAME" value="imgPathTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShiroTest.roleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bbsforum-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="top.thesky341.bbsforum.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="top.thesky341.bbsforum" />
+      <option name="MAIN_CLASS_NAME" value="top.thesky341.bbsforum.ShiroTest" />
+      <option name="METHOD_NAME" value="roleTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BbsforumApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bbsforum-api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="top.thesk341.bbsforum.BbsforumApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BbsforumApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="bbsforum-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="top.thesky341.bbsforum.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="top.thesky341.bbsforum.BbsforumApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BbsforumApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="bbsforum-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="top.thesky341.bbsforum.dto.groups.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="top.thesky341.bbsforum.BbsforumApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.BbsforumApplication (1)" />
+        <item itemvalue="JUnit.ShiroTest.roleTest" />
+        <item itemvalue="JUnit.EncryptTest.randomGenerateSaltTest" />
+        <item itemvalue="JUnit.ImgTest.imgPathTest" />
+        <item itemvalue="JUnit.ImgTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b93bc5c2-5a97-4f4a-8cef-4be44574ad7d" name="Default Changelist" comment="" />
+      <created>1606397831500</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606397831500</updated>
+      <workItem from="1606397836621" duration="685000" />
+      <workItem from="1607404890980" duration="16999000" />
+      <workItem from="1607478742772" duration="1247000" />
+      <workItem from="1607480485084" duration="45328000" />
+      <workItem from="1607611240445" duration="14703000" />
+      <workItem from="1607746119924" duration="4649000" />
+      <workItem from="1607850411403" duration="6147000" />
+      <workItem from="1607923808852" duration="24957000" />
+      <workItem from="1608011646019" duration="6878000" />
+      <workItem from="1608083562403" duration="27888000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

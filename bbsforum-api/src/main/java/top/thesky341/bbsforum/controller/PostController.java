@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import top.thesky341.bbsforum.dto.PaginationDto;
 import top.thesky341.bbsforum.dto.PostDto;
 import top.thesky341.bbsforum.dto.groups.PaginationWithCategory;
-import top.thesky341.bbsforum.entity.Category;
-import top.thesky341.bbsforum.entity.Pagination;
-import top.thesky341.bbsforum.entity.Post;
-import top.thesky341.bbsforum.entity.User;
+import top.thesky341.bbsforum.entity.*;
 import top.thesky341.bbsforum.service.*;
 import top.thesky341.bbsforum.util.result.Result;
 import top.thesky341.bbsforum.util.result.ResultCode;
@@ -23,7 +20,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author hz
@@ -42,84 +38,9 @@ public class PostController {
     @Resource(name = "userServiceImpl")
     UserService userService;
 
-    @PostMapping("/post/all/sum")
-    public Result getAllPostSum() {
-        return Result.success("sum", postService.getAllPostSum());
-    }
-
-    /**
-     * 对需要返回的文章信息使用了 PostInfoVo 封装，并写在 posts 列表里
-     * @param paginationDto 包含了要获取的页数和大小
-     * @return 包含了获取的文章列表，元素为 PostInfoVo
-     */
-    @PostMapping("/post/all/list")
-    public Result getPostList(@Valid @RequestBody PaginationDto paginationDto) {
-        Pagination pagination = new Pagination();
-        pagination.setFrom(paginationDto.getPageSize() * (paginationDto.getPosition() - 1));
-        pagination.setNum(paginationDto.getPageSize());
-        List<Post> posts = postService.getPostListByPagination(pagination);
-        List<PostInfoVo> postInfoVos = new ArrayList<>();
-        for(Post post : posts) {
-            int postId = post.getId();
-            int commentSum = commentService.getCommentSumByPostId(postId);
-            int visitSum = userPostStateService.getPostStateSum(postId, 4);
-            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
-        }
-        return Result.success("posts", postInfoVos);
-    }
-
-    @PostMapping("/post/category/sum")
-    public Result getPostSumWithCategory(int id) {
-        Category category = categoryService.getCategoryById(id);
-        Assert.notNull(category, "分类不存在");
-        return Result.success("sum", postService.getPostSumWithCategory(id));
-    }
-
-    @PostMapping("/post/category/list")
-    public Result getPostListWithCategory(@Validated(PaginationWithCategory.class) @RequestBody PaginationDto paginationDto) {
-        Category category = categoryService.getCategoryById(paginationDto.getCategoryId());
-        Assert.notNull(category, "分类不存在");
-        Pagination pagination = new Pagination();
-        pagination.setFrom(paginationDto.getPageSize() * (paginationDto.getPosition() - 1));
-        pagination.setNum(paginationDto.getPageSize());
-        pagination.setCategoryId(paginationDto.getCategoryId());
-
-
-
-        List<Post> posts = postService.getPostListByPaginationWithCategory(pagination);
-        List<PostInfoVo> postInfoVos = new ArrayList<>();
-        for (Post post : posts) {
-            int postId = post.getId();
-            int commentSum = commentService.getCommentSumByPostId(postId);
-            int visitSum = userPostStateService.getPostStateSum(postId, 4);
-            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
-        }
-        return Result.success("posts", postInfoVos);
-    }
-
-    @PostMapping("/post/view/{id}")
-    public Result postView(@PathVariable int id) {
-        Post post = postService.getPostById(id);
-        Assert.notNull(post, "帖子不存在");
-        PostVo postVo = new PostVo();
-        postVo.parsePost(post);
-        postVo.setVisitSum(userPostStateService.getPostStateSum(id, 4));
-        postVo.setCommentSum(commentService.getCommentSumByPostId(id));
-        postVo.setGoodSum(userPostStateService.getPostStateSum(id, 1));
-        postVo.setBadSum(userPostStateService.getPostStateSum(id, 2));
-        postVo.setLikeSum(userPostStateService.getPostStateSum(id, 3));
-        Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()) {
-            int userId = (int)subject.getPrincipal();
-            postVo.setGood(userPostStateService.getUserPostStateState(id, userId, 1));
-            postVo.setBad(userPostStateService.getUserPostStateState(id, userId, 2));
-            postVo.setLike(userPostStateService.getUserPostStateState(id, userId, 3));
-        }
-        return Result.success("post", postVo);
-    }
-
     /**
      * 添加帖子, 注意帖子可能为积分悬赏分类的
+     * 发布积分悬赏帖子，会扣除用户的积分，用户积分应该不少于悬赏的积分
      */
     @RequiresAuthentication
     @PostMapping("/post/manage/add")
@@ -145,11 +66,16 @@ public class PostController {
         return Result.success();
     }
 
+    /**
+     * 修改帖子，当用户为帖子作者或者拥有管理员权限时才可以修改
+     * @param postDto
+     * @return
+     */
     @RequiresAuthentication
     @PostMapping("/post/manage/revise")
     public Result revisePost(@Valid @RequestBody PostDto postDto) {
-        int userId = (int) SecurityUtils.getSubject().getPrincipal();
         Subject subject = SecurityUtils.getSubject();
+        int userId = (int) subject.getPrincipal();
         int postId = postDto.getId();
         Post oldPost = postService.getPostById(postId);
         Assert.notNull(oldPost, "帖子不存在");
@@ -174,5 +100,81 @@ public class PostController {
             userService.updateScore(user);
         }
         return Result.success();
+    }
+
+    /**
+     * 获取所有帖子的数量
+     * @return
+     */
+    @PostMapping("/post/all/sum")
+    public Result getAllPostSum() {
+        return Result.success("sum", postService.getPostSum(-1, -1));
+    }
+
+    @PostMapping("/post/category/sum")
+    public Result getPostSumWithCategory(@RequestBody Category category) {
+        category = categoryService.getCategoryById(category.getId());
+        Assert.notNull(category, "分类不存在");
+        return Result.success("sum", postService.getPostSum(category.getId(), -1));
+    }
+
+    /**
+     * 对需要返回的文章信息使用了 PostInfoVo 封装，并写在 posts 列表里
+     * @param paginationDto 包含了要获取的页数和大小
+     * @return 包含了获取的文章列表，元素为 PostInfoVo
+     */
+    @PostMapping("/post/all/list")
+    public Result getPostList(@Valid @RequestBody PaginationDto paginationDto) {
+        Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
+                paginationDto.getPageSize());
+        return Result.success("posts", getPostInfoListByPagination(pagination));
+    }
+
+    @PostMapping("/post/category/list")
+    public Result getPostListWithCategory(@Validated(PaginationWithCategory.class) @RequestBody PaginationDto paginationDto) {
+        Category category = categoryService.getCategoryById(paginationDto.getCategoryId());
+        Assert.notNull(category, "分类不存在");
+        Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
+                paginationDto.getPageSize());
+        pagination.setCategoryId(paginationDto.getCategoryId());
+        return Result.success("posts", getPostInfoListByPagination(pagination));
+    }
+
+    @PostMapping("/post/view/{id}")
+    public Result postView(@PathVariable int id) {
+        Post post = postService.getPostById(id);
+        Assert.notNull(post, "帖子不存在");
+        PostVo postVo = new PostVo();
+        postVo.parsePost(post);
+        postVo.setVisitSum(userPostStateService.getPostStateSum(id, 4));
+        postVo.setCommentSum(commentService.getCommentSumByPostId(id));
+        postVo.setGoodSum(userPostStateService.getPostStateSum(id, 1));
+        postVo.setBadSum(userPostStateService.getPostStateSum(id, 2));
+        postVo.setLikeSum(userPostStateService.getPostStateSum(id, 3));
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            int userId = (int)subject.getPrincipal();
+            postVo.setGood(userPostStateService.getUserPostStateSum(id, userId, 1) != 0);
+            postVo.setBad(userPostStateService.getUserPostStateSum(id, userId, 2) != 0);
+            postVo.setLike(userPostStateService.getUserPostStateSum(id, userId, 3) != 0);
+            if (userPostStateService.getUserPostStateSum(id, userId, 4) == 0) {
+                User user = userService.getUserById(userId);
+                UserPostState userPostState = new UserPostState(post, user, 4);
+                userPostStateService.addUserPostState(userPostState);
+            }
+        }
+        return Result.success("post", postVo);
+    }
+
+    public List<PostInfoVo> getPostInfoListByPagination(Pagination pagination) {
+        List<Post> posts = postService.getPostListByPagination(pagination);
+        List<PostInfoVo> postInfoVos = new ArrayList<>();
+        for (Post post : posts) {
+            int postId = post.getId();
+            int commentSum = commentService.getCommentSumByPostId(postId);
+            int visitSum = userPostStateService.getPostStateSum(postId, 4);
+            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
+        }
+        return postInfoVos;
     }
 }

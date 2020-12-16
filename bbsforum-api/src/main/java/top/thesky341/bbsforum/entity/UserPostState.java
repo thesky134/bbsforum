@@ -13,7 +13,7 @@ public class UserPostState {
     public UserPostState() {
     }
 
-    public UserPostState(int id, User user, Post post, int state) {
+    public UserPostState(Post post, User user, int state) {
         this.id = id;
         this.user = user;
         this.post = post;

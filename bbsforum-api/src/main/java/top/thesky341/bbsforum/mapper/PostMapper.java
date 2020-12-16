@@ -20,12 +20,22 @@ public interface PostMapper {
     void deletePostById(int id);
     Post getPostById(int id);
     List<Post> getPostByUserId(int userId);
-    int getAllPostSum();
-    int getPostTopSum();
-    int getPostSumWithCategory(int categoryId);
-    int getPostTopSumWithCategory(int categoryId);
-    List<Post> getPostTopListByPagination(Pagination pagination);
-    List<Post> getPostNotTopListByPagination(Pagination pagination);
-    List<Post> getPostTopListByPaginationWithCategory(Pagination pagination);
-    List<Post> getPostNotTopListByPaginationWithCategory(Pagination pagination);
+
+    /**
+     * 获取帖子数量，可以用于主页，具体分类的帖子列表，用户帖子列表
+     * @param categoryId 分类，不指定时置为为-1
+     * @param userId 用户，不指定时置为-1
+     * @return
+     */
+    int getPostSum(int categoryId, int userId);
+    int getPostTopSum(int categoryId);
+
+    /**
+     * 根据分页获取文章列表
+     * 在主页和具体分类的帖子列表里面需要考虑置顶的问题
+     * 在用户个人信息里面就不需要考虑
+     * @param pagination
+     * @return
+     */
+    List<Post> getPostListByPagination(Pagination pagination);
 }

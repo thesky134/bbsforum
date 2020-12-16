@@ -2,10 +2,13 @@ package top.thesky341.bbsforum.config.shiro;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import top.thesky341.bbsforum.entity.Chara;
 import top.thesky341.bbsforum.entity.User;
+import top.thesky341.bbsforum.mapper.CharaMapper;
 import top.thesky341.bbsforum.mapper.UserMapper;
 
 import javax.annotation.Resource;
@@ -17,10 +20,16 @@ import javax.annotation.Resource;
 public class UserRealm extends AuthorizingRealm {
     @Resource
     UserMapper userMapper;
+    @Resource
+    CharaMapper charaMapper;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+        User user = userMapper.getUserById((int)principals.getPrimaryPrincipal());
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        System.out.println(user.getChara());
+        authorizationInfo.addRole(user.getChara().getName());
+        return authorizationInfo;
     }
 
     /**

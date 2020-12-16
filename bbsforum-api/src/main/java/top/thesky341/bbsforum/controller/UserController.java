@@ -49,13 +49,16 @@ public class UserController {
      */
     @PostMapping("/user/manage/register")
     public Result register(@Validated(Register.class) @RequestBody User user) {
+        //用户名已经存在 151
         if (userService.getUserByUsername(user.getUsername()) != null) {
             return new Result(ResultCode.UsernameAlreadyExist);
         }
+        //邮箱已经存在 152
         if (userService.getUserByEmail(user.getEmail()) != null) {
             return new Result(ResultCode.EmailAlreadyExist);
         }
         String passwd = user.getPasswd();
+        //生成盐值，加密密码
         String salt = RandomGenerateSalt.generateSalt();
         String encryptedPasswd = MD5SaltEncryption.encrypt(passwd, salt);
         user.setSalt(salt);
@@ -64,12 +67,18 @@ public class UserController {
         return Result.success();
     }
 
+    /**
+     * 用户登录，登录正确会返回 token
+     * @param user 需要包含 username 和 passwd
+     * @return 登录成功返回 token
+     */
     @PostMapping("/user/manage/login")
     public Result login(@Validated(Login.class) @RequestBody User user) {
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPasswd());
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         user = userService.getUserByUsername(user.getUsername());
+        //检查是否每天第一次登录，第一次登录积分加5
         userService.checkIsTodayFirstLogin(user);
         userService.updateLastLoginTime(user);
         return Result.success(UserSessionManager.OAUTH_TOKEN, subject.getSession().getId());
@@ -163,7 +172,7 @@ public class UserController {
      * 上传头像
      * @param picture 传入的头像，为 MultipartFile 类型
      * 首先判断了图片后缀是否为 .jpg 或 .png 或 .jpeg
-     * 然后使用用户id 和随机生成的 3 加上后缀生成新的图片名
+     * 然后使用用户id 和随机生成的 3个字符 加上后缀生成新的图片名
      * 后面便是保存并且把图片名写入数据库
      */
     @RequiresAuthentication

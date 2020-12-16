@@ -1,5 +1,6 @@
 package top.thesky341.bbsforum.dto;
 
+import top.thesky341.bbsforum.dto.groups.CommentList;
 import top.thesky341.bbsforum.dto.groups.PaginationWithCategory;
 
 import javax.validation.constraints.Min;
@@ -18,6 +19,8 @@ public class PaginationDto {
     private int position;
     @NotNull(message = "分类不允许为空", groups = {PaginationWithCategory.class})
     private int categoryId = -1;
+    @NotNull(message = "关联的帖子必须存在", groups = {CommentList.class})
+    private int postId = -1;
 
     public PaginationDto() {
     }
@@ -52,12 +55,21 @@ public class PaginationDto {
         this.categoryId = categoryId;
     }
 
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+
     @Override
     public String toString() {
         return "PaginationDto{" +
                 "pageSize=" + pageSize +
                 ", position=" + position +
                 ", categoryId=" + categoryId +
+                ", postId=" + postId +
                 '}';
     }
 }

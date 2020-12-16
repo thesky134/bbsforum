@@ -2,8 +2,12 @@ package top.thesky341.bbsforum.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.thesky341.bbsforum.entity.Comment;
+import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.mapper.CommentMapper;
 import top.thesky341.bbsforum.service.CommentService;
+
+import java.util.List;
 
 /**
  * @author hsc
@@ -17,5 +21,16 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public int getCommentSumByPostId(int postId) {
         return commentMapper.getCommentSumByPostId(postId);
+    }
+
+    @Override
+    public Comment addComment(Comment comment) {
+        commentMapper.addComment(comment);
+        return commentMapper.getCommentById(comment.getId());
+    }
+
+    @Override
+    public List<Comment> getCommentListByPagination(Pagination pagination) {
+        return null;
     }
 }

@@ -10,10 +10,8 @@ import java.util.List;
  * @date 2020/12/11
  */
 public interface PostService {
-    int getAllPostSum();
-    int getPostSumWithCategory(int categoryId);
+    int getPostSum(int categoryId, int userId);
     List<Post> getPostListByPagination(Pagination pagination);
-    List<Post> getPostListByPaginationWithCategory(Pagination pagination);
     Post getPostById(int id);
     Post addPost(Post post);
     Post revisePost(Post post);

@@ -15,7 +15,7 @@ public class PostInfoVo {
     private String category;
     private int commentSum;
     private int visitSum;
-    private Date createDate;
+    private Date createTime;
     private boolean excellent;
     private boolean top;
 
@@ -29,7 +29,7 @@ public class PostInfoVo {
         category = post.getCategory().getName();
         this.commentSum = commentSum;
         this.visitSum = visitSum;
-        createDate = post.getCreateTime();
+        createTime = post.getCreateTime();
         excellent = post.isExcellent();
         top = post.isTop();
     }
@@ -82,12 +82,12 @@ public class PostInfoVo {
         this.visitSum = visitSum;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public boolean isExcellent() {
@@ -114,7 +114,7 @@ public class PostInfoVo {
                 ", category='" + category + '\'' +
                 ", commentSum=" + commentSum +
                 ", visitSum=" + visitSum +
-                ", createDate=" + createDate +
+                ", createTime=" + createTime +
                 ", excellent=" + excellent +
                 ", top=" + top +
                 '}';

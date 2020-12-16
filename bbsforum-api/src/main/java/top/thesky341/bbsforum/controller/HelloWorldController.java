@@ -1,6 +1,8 @@
 package top.thesky341.bbsforum.controller;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,15 @@ public class HelloWorldController {
     @GetMapping("/hello")
     public String hello() {
         return "Hello, World";
+    }
+
+    @GetMapping("/role")
+    public Result roleTest() {
+        Subject subject = SecurityUtils.getSubject();
+        System.out.println(subject.isAuthenticated());
+        System.out.println(subject.hasRole("general"));
+        System.out.println(subject.hasRole("admin"));
+        return Result.success();
     }
 
     @PostMapping("/uploadimg")

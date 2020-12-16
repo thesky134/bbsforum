@@ -14,11 +14,11 @@ import java.util.Date;
 public class User {
     private int id;
     @NotNull(message = "用户名必须存在", groups = {Register.class, Login.class, UpdateUsername.class})
-    @Length(min = 3, max = 20, message = "用户名长度应该在3至20之间", groups = {Register.class, Login.class, UpdateUsername.class})
+    @Length(min = 1, max = 20, message = "用户名长度应该在1至20之间", groups = {Register.class, Login.class, UpdateUsername.class})
     @Pattern(regexp = "^[^\\s]+$", message = "用户名不能包含空白字符", groups = {Register.class, Login.class, UpdateUsername.class})
     private String username;
     @NotNull(message = "邮箱必须存在", groups = {Register.class, UpdateEmail.class})
-    @Pattern(regexp = "^\\S+@\\S+.\\S+$", message = "邮箱格式错误", groups = {Register.class, UpdateEmail.class})
+    @Pattern(regexp = "^\\S+@\\S+\\.\\S+$", message = "邮箱格式错误", groups = {Register.class, UpdateEmail.class})
     private String email;
     @NotNull(message = "密码必须存在", groups = {Register.class, Login.class})
     @Length(min = 6, max = 26, message = "密码长度应该在6至26之间", groups = {Register.class, Login.class})
