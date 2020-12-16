@@ -3639,6 +3639,24 @@ textarea:focus:-ms-input-placeholder {
       width: 18px;
       height: 18px;
       fill: #666f74; }
+  .form-default .form-control1 {
+  font-family: "Krub", sans-serif;
+  background: #e2e7ea;
+  color: #666f74;
+  font-size: 16px;
+  line-height: 35px;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  width: 81%;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border-radius: 3px;
+  border: 1px solid #e2e7ea;
+  -webkit-transition: border-color 0.2s linear;
+  transition: border-color 0.2s linear; }
+
 
 /* checkbox-group */
 .checkbox-group {
@@ -3942,6 +3960,38 @@ hr {
     .btn i svg {
       width: 16px;
       height: 15px; }
+.btn1 {
+  font-size: 16px;
+  padding: 4px 15px 5px;
+  line-height: 1;
+  font-weight: 500;
+  height: 39px;
+  letter-spacing: 0.01em;
+  border: none;
+  outline: none;
+  position: relative;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 3px;
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+  -webkit-box-shadow: none;
+  box-shadow: none; }
+  .btn1.btn-primary {
+  background-color: #e2e7ea;
+  color: #182730; }
+    .btn1.btn-primary:hover {
+  background-color: #333333;
+  color: #ffffff; }
 
 .btn-block {
   width: 100%; }

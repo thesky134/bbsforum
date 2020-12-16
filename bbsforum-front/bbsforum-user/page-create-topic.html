@@ -40,11 +40,11 @@
                     </svg>
                 </a>
                 <!-- /toggle mobile menu -->
-                <!-- logo -->
-                <div class="tt-logo">
-                    <a href="index.html"><img src="images/logo.png" alt=""></a>
-                </div>
-                <!-- /logo -->
+				<!-- logo -->
+				<div class="tt-logo">
+					<a href="index.html"><img src="images/logo0.png" alt=""></a>
+				</div>
+				<!-- /logo -->
                 <!-- desctop menu -->
 				<div class="tt-desktop-menu">
 					<nav>
@@ -106,104 +106,50 @@
                 <div class="form-group">
                     <label for="inputTopicTitle">帖子标题</label>
                     <div class="tt-value-wrapper">
-                        <input type="text" name="name" class="form-control" id="inputTopicTitle" placeholder="给你的帖子起个标题吧">
+                        <input type="text" name="name" class="form-control" id="inputTopicTitle"
+							   placeholder="给你的帖子起个标题吧！描述好你的帖子，同时尽量简短">
                         <span class="tt-value-input">99</span>
                     </div>
-                    <div class="tt-note">描述好你的帖子，同时尽量简短。</div>
                 </div>
                 <div class="form-group">
                     <label>帖子分类</label>
-                    <div class="tt-js-active-btn tt-wrapper-btnicon">
-                        <div class="row tt-w410-col-02">
-                            <div class="col-4 col-lg-3 col-xl-2">
-                                <a href="#" class="tt-button-icon">
-                                    <span class="tt-icon">
-                                        <svg>
-                                            <use xlink:href="#icon-discussion"></use>
-                                        </svg>
-                                    </span>
-                                    <span class="tt-text">帖子加精</span>
-                                </a>
-                            </div>
-                            <div class="col-4 col-lg-3 col-xl-2">
-                                <a href="#" class="tt-button-icon">
-                                    <span class="tt-icon">
-                                         <svg>
-                                            <use xlink:href="#Question"></use>
-                                        </svg>
-                                    </span>
-                                    <span class="tt-text">积分悬赏</span>
-                                </a>
-                            </div>
-                            <div class="col-4 col-lg-3 col-xl-2">
-                                <a href="#" class="tt-button-icon">
-                                    <span class="tt-icon">
-                                         <svg>
-                                            <use xlink:href="#Poll"></use>
-                                        </svg>
-                                    </span>
-                                    <span class="tt-text">投票</span>
-                                </a>
-                            </div>
-                            <div class="col-4 col-lg-3 col-xl-2">
-                                <a href="#" class="tt-button-icon">
-                                    <span class="tt-icon">
-                                         <svg>
-                                            <use xlink:href="#icon-gallery"></use>
-                                        </svg>
-                                    </span>
-                                    <span class="tt-text">画廊</span>
-                                </a>
-                            </div>
-                            <div class="col-4 col-lg-3 col-xl-2">
-                                <a href="#" class="tt-button-icon">
-                                    <span class="tt-icon">
-                                         <svg>
-                                            <use xlink:href="#Video"></use>
-                                        </svg>
-                                    </span>
-                                    <span class="tt-text">视频</span>
-                                </a>
-                            </div>
-                            <div class="col-4 col-lg-3 col-xl-2">
-                                <a href="#" class="tt-button-icon">
-                                    <span class="tt-icon">
-                                         <svg>
-                                            <use xlink:href="#Others"></use>
-                                        </svg>
-                                    </span>
-                                    <span class="tt-text">其他</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+					<select class="form-control" id="selectTopicCategories">
+						<option value="Select">帖子加精</option>
+						<option value="Value 01">积分悬赏</option>
+						<option value="Value 02">投票</option>
+						<option value="Value 02">画廊</option>
+						<option value="Value 02">视频</option>
+						<option value="Value 02">其他</option>
+					</select>
                 </div>
                 <div class="pt-editor">
                     <h6 class="pt-title">帖子正文</h6>
 
                     <div class="form-group">
-                        <textarea name="message" class="form-control" rows="5" placeholder="让我们开始吧"></textarea>
+                        <textarea name="message" class="form-control" rows="5"
+								  placeholder="让我们开始吧" id="inputTopcText"></textarea>
                     </div>
                     <div class="row">
 						<div class="col-md-4">
 							<div class="form-group">
-								<label for="inputTopicTitle">是否悬赏</label>
-
-								<select class="form-control">
-									<option value="Select">是否悬赏</option>
-									<option value="Value 01">是</option>
-									<option value="Value 02">否</option>
+								<label for="inputTopicTitle">是否发布</label>
+								<select class="form-control" id="hidden">
+									<option value="Select">是否发布</option>
+									<option value="Value 01">发布帖子</option>
+									<option value="Value 02">存为草稿</option>
 								</select>
 							</div>
 						</div>
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="inputTopicTags">悬赏积分设置</label>
-                                <input type="text" name="name" class="form-control" id="inputTopicTags"
-                                       placeholder="如果悬赏，请输入你悬赏的积分">
-                            </div>
-                        </div>
                     </div>
+					<div class="row">
+						<div class="col-md-8">
+							<div class="form-group">
+								<label for="inputTopicScore">悬赏积分设置</label>
+								<input type="text" name="name" class="form-control" id="inputTopicScore"
+									   placeholder="如果悬赏，请输入你悬赏的积分">
+							</div>
+						</div>
+					</div>
                      <div class="row">
                         <div class="col-auto ml-md-auto">
                             <a href="#" class="btn btn-secondary btn-width-lg">创建帖子</a>
@@ -213,8 +159,6 @@
                 </div>
             </form>
         </div>
-
-
         </div>
     </div>
 </main>
@@ -441,6 +385,32 @@
 	</div>
 </div>
 <script src="js/bundle.js"></script>
+<script>
+	let url = "http://192.168.43.155:8083/post/"
+	let title = document.getElementById("inputTopicTitle");
+	let category = document.getElementById("selectTopicCategories");
+	let content = document.getElementById("inputTopcText");
+	let hidden = document.getElementById("inputTopcText");
+	let score = document.getElementById("inputTopicScore");
+	axios({
+		method: 'POST',
+		url: url,
+		data: {
+			title: title,
+			category: category,
+			content: content,
+			hidden: hidden,
+			score: score
+		}
+	}).then(response =>{
+		if (hidden){
+
+		}
+		console.log(response.data)
+	}).catch(()=>{
+		console.log("error");
+	})
+</script>
 <svg width="0" height="0" class="hidden">
 	 <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" id="facebook-f-brands">
     <path fill="currentColor" d="M215.8 85H264V3.6C255.7 2.5 227.1 0 193.8 0 124.3 0 76.7 42.4 76.7 120.3V192H0v91h76.7v229h94V283h73.6l11.7-91h-85.3v-62.7c0-26.3 7.3-44.3 45.1-44.3z"></path>
