@@ -13,7 +13,7 @@ public class CommentVo {
     private String content;
     private Date createTime;
     private Date modifyTIme;
-    private User user;
+    private String user;
     private int goodSum;
     private int badSum;
     private int likeSum;
@@ -56,11 +56,11 @@ public class CommentVo {
         this.modifyTIme = modifyTIme;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 

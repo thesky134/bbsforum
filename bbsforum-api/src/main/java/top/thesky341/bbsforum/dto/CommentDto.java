@@ -9,20 +9,14 @@ import javax.validation.constraints.NotNull;
  * @date 2020/12/16
  */
 public class CommentDto {
-    private int id;
+    private int id = -1;
     @NotNull(message = "评论内容必须存在")
     @Length(min = 1, max = 1000, message = "帖子内容长度应该在1至1000之间")
     private String content;
-    @NotNull(message = "被评论的帖子必须存在")
-    private int postId;
+    private int postId = -1;
+    private int userId = -1;
 
     public CommentDto() {
-    }
-
-    public CommentDto(int id, @NotNull(message = "评论内容必须存在") @Length(min = 1, max = 1000, message = "帖子内容长度应该在1至1000之间") String content, @NotNull(message = "帖子id必须存在") int postId) {
-        this.id = id;
-        this.content = content;
-        this.postId = postId;
     }
 
     public int getId() {
@@ -49,12 +43,21 @@ public class CommentDto {
         this.postId = postId;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "CommentDto{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", postId=" + postId +
+                ", userId=" + userId +
                 '}';
     }
 }

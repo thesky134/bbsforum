@@ -3,11 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.thesky341.bbsforum.mapper.UserCommentStateMapper">
-    <insert id="addUserCommentState" parameterType="userCommentState">
-        INSERT INTO user_comment_state VALUE (
-            NULL, #{user.id}, #{comment.id}, #{state}
-            )
-    </insert>
+
     <delete id="deleteUserCommentStateById">
         DELETE FROM user_comment_state
         WHERE id = #{id}
@@ -16,6 +12,21 @@
         SELECT *
         WHERE id = #{id}
     </select>
+
+    <select id="getUserCommentStateSum" resultType="integer">
+        SELECT COUNT(*)
+        FROM user_comment_state
+        WHERE comment_id = #{commentId} AND state = #{state}
+        <if test="userId != -1">
+            AND user_id = #{userId}
+        </if>
+    </select>
+
+    <insert id="addUserCommentState" parameterType="userCommentState" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_comment_state VALUE (
+            NULL, #{user.id}, #{comment.id}, #{state}
+            )
+    </insert>
 
     <resultMap id="userCommentStateMap" type="userCommentState">
         <id column="id" property="id"/>
