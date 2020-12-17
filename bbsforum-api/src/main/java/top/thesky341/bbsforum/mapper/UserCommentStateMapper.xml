@@ -10,7 +10,13 @@
     </delete>
     <select id="getrUserCommentStateById" resultMap="userCommentStateMap">
         SELECT *
+        FROM user_comment_state
         WHERE id = #{id}
+    </select>
+    <select id="getUserCommentStateByCommentIdAndUserIdAndState" resultMap="userCommentStateMap">
+        SELECT *
+        FROM user_comment_state
+        WHERE comment_id = #{commentId} AND user_id = #{userId} AND state = #{state}
     </select>
 
     <select id="getUserCommentStateSum" resultType="integer">

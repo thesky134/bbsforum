@@ -26,9 +26,25 @@ public class UserCommentStateServiceImpl implements UserCommentStateService {
     }
 
     @Override
-    public UserCommentState addUserCommentState(UserCommentState userCommentState) {
+    public void addUserCommentState(UserCommentState userCommentState) {
+        if(userCommentStateMapper.getUserCommentStateSum(userCommentState.getComment().getId(),
+                userCommentState.getUser().getId(), userCommentState.getState()) != 0) {
+            return;
+        }
         userCommentStateMapper.addUserCommentState(userCommentState);
-        userCommentState = userCommentStateMapper.getUserCommentStateById(userCommentState.getId());
-        return userCommentState;
+    }
+
+    @Override
+    public void deleteUserCommentState(UserCommentState userCommentState) {
+        if(userCommentStateMapper.getUserCommentStateSum(userCommentState.getComment().getId(),
+                userCommentState.getUser().getId(), userCommentState.getState()) == 0) {
+            return;
+        }
+        userCommentState = userCommentStateMapper.getUserCommentStateByCommentIdAndUserIdAndState(
+                userCommentState.getComment().getId(),
+                userCommentState.getUser().getId(),
+                userCommentState.getState()
+        );
+        userCommentStateMapper.deleteUserCommentStateById(userCommentState.getId());
     }
 }

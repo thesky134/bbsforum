@@ -49,7 +49,7 @@
         />
         <association column="post_id" property="post"
                      javaType="post"
-                     select="top.thesky341.bbsforum.mapper.CategoryMapper.getCategoryById"
+                     select="top.thesky341.bbsforum.mapper.PostMapper.getPostById"
         />
     </resultMap>
 </mapper>

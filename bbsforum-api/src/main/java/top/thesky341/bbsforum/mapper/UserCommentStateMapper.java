@@ -15,6 +15,7 @@ import top.thesky341.bbsforum.entity.UserPostState;
 public interface UserCommentStateMapper {
     void deleteUserCommentStateById(int id);
     UserCommentState getUserCommentStateById(int id);
+    UserCommentState getUserCommentStateByCommentIdAndUserIdAndState(@Param("commentId") int commentId, @Param("userId") int userId, @Param("state") int state);
     int getUserCommentStateSum(@Param("commentId") int commentId, @Param("userId") int userId, @Param("state") int state);
     void addUserCommentState(UserCommentState userCommentState);
 }

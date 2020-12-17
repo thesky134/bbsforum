@@ -5,6 +5,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import top.thesky341.bbsforum.service.PostService;
 import top.thesky341.bbsforum.service.UserCommentStateService;
 import top.thesky341.bbsforum.service.UserService;
 import top.thesky341.bbsforum.util.result.Result;
+import top.thesky341.bbsforum.util.result.ResultCode;
 import top.thesky341.bbsforum.vo.CommentVo;
 import top.thesky341.bbsforum.vo.PostInfoVo;
 
@@ -107,5 +109,63 @@ public class CommentController {
             commentVos.add(commentVo);
         }
         return Result.success("comments", commentVos);
+    }
+
+    /**
+     * 用户给评论点赞，踩，喜欢
+     * 当赞或喜欢时，踩会被取消
+     * 当踩时，赞和喜欢会取消
+     * @param stateStr good, bad, like
+     * @param operateStr add, delete
+     * @param commentId
+     * @return
+     */
+    @RequiresAuthentication
+    @PostMapping("/comment/manage/{stateStr}/{operateStr}/{commentId}")
+    public Result changeCommentState(@PathVariable String stateStr, @PathVariable String operateStr, @PathVariable int commentId) {
+        Comment comment = commentService.getCommentById(commentId);
+        Assert.notNull(comment, "评论不存在");
+        Subject subject = SecurityUtils.getSubject();
+        User user = userService.getUserById((int)subject.getPrincipal());
+        if(operateStr.equals("add")) {
+            UserCommentState userCommentState;
+            if(stateStr.equals("good")) {
+                userCommentState = new UserCommentState(user, comment, 1);
+                userCommentStateService.addUserCommentState(userCommentState);
+                userCommentState.setState(2);
+                userCommentStateService.deleteUserCommentState(userCommentState);
+            } else if(stateStr.equals("bad")) {
+                userCommentState = new UserCommentState(user, comment, 2);
+                userCommentStateService.addUserCommentState(userCommentState);
+                userCommentState.setState(1);
+                userCommentStateService.deleteUserCommentState(userCommentState);
+                userCommentState.setState(3);
+                userCommentStateService.deleteUserCommentState(userCommentState);
+            } else if(stateStr.equals("like")) {
+                userCommentState = new UserCommentState(user, comment, 3);
+                userCommentStateService.addUserCommentState(userCommentState);
+                userCommentState.setState(2);
+                userCommentStateService.deleteUserCommentState(userCommentState);
+            } else {
+                return new Result(ResultCode.OperateNotExist);
+            }
+        } else if(operateStr.equals("delete")) {
+            UserCommentState userCommentState;
+            if(stateStr.equals("good")) {
+                userCommentState = new UserCommentState(user, comment, 1);
+                userCommentStateService.deleteUserCommentState(userCommentState);
+            } else if(stateStr.equals("bad")) {
+                userCommentState = new UserCommentState(user, comment, 2);
+                userCommentStateService.deleteUserCommentState(userCommentState);
+            } else if(stateStr.equals("like")) {
+                userCommentState = new UserCommentState(user, comment, 3);
+                userCommentStateService.deleteUserCommentState(userCommentState);
+            } else {
+                return new Result(ResultCode.OperateNotExist);
+            }
+        } else {
+            return new Result(ResultCode.OperateNotExist);
+        }
+        return Result.success();
     }
 }

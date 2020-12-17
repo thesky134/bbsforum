@@ -13,6 +13,12 @@ public class UserCommentState {
     public UserCommentState() {
     }
 
+    public UserCommentState(User user, Comment comment, int state) {
+        this.user = user;
+        this.comment = comment;
+        this.state = state;
+    }
+
     public int getId() {
         return id;
     }
