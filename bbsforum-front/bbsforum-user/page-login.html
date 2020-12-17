@@ -120,7 +120,7 @@
         let passwd = document.getElementById("loginUserPassword").value;
         axios({
             method: 'POST',
-            url: 'http://222.204.56.50:8083/user/manage/login',
+            url: 'http://192.168.43.155:8083/user/manage/login',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -137,7 +137,7 @@
                 let token = result.data["Oauth-Token"];
                 localStorage.token = token;
                 console.log(localStorage.token);
-                // location.href="index.html";
+                location.href="index.html";
             } else if(code === 1) {
                 alert("异常错误！");
             }else {
