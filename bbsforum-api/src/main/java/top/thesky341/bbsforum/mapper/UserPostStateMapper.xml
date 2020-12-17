@@ -25,6 +25,11 @@
             NULL, #{user.id}, #{post.id}, #{state}
             )
     </insert>
+    <select id="getUserPostStateByPostIdAndUserIdAndState" resultMap="userPostStateMap">
+        SELECT *
+        FROM user_post_state
+        WHERE post_id = #{postId} AND user_id = #{userId} AND state = #{state}
+    </select>
 
     <resultMap id="userPostStateMap" type="userPostState">
         <id column="id" property="id"/>

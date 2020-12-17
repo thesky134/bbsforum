@@ -12,7 +12,7 @@ import top.thesky341.bbsforum.entity.UserPostState;
 @Repository
 @Mapper
 public interface UserPostStateMapper {
-    void deleteUserPostState(int id);
+    void deleteUserPostStateById(int id);
     UserPostState getUserPostStateById(int id);
 
     /**
@@ -27,4 +27,6 @@ public interface UserPostStateMapper {
      * state字段：1表示赞，2表示踩，3表示喜欢，4表示浏览
      */
     void addUserPostState(UserPostState userPostState);
+
+    UserPostState getUserPostStateByPostIdAndUserIdAndState(@Param("postId") int postId, @Param("userId") int userId, @Param("state") int state);
 }

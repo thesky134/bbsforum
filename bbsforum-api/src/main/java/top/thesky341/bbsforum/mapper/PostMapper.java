@@ -16,6 +16,7 @@ import java.util.List;
 @Mapper
 public interface PostMapper {
     void addPost(Post post);
+    void batchAddPost(Post post);
     void revisePost(Post posr);
     void deletePostById(int id);
     Post getPostById(int id);
