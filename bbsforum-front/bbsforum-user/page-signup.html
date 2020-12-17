@@ -159,12 +159,13 @@
             console.log(response.data);
             let result = response.data;
             let code = result.code;
+            let message = result.message;
             if (code === 0) {
                 location.href="page-login.html";
-            } else if (code === 152){
-                alert("邮箱已存在！")
+            } else if (code === 101){
+                alert("用户名/邮箱已注册！")
             } else {
-                alert("用户名已存在！")
+                alert(message);
             }
         }).catch(() => {
             console.log("error")
