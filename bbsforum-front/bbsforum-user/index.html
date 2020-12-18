@@ -13,8 +13,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
 </head>
-<body>
-<div id="topic">
+<body onload="getTopics();checkLoginState()">
+<div>
     <!-- tt-mobile menu -->
     <nav class="panel-menu" id="mobile-menu">
         <ul>
@@ -34,7 +34,8 @@
     </nav>
     <header id="tt-header">
         <div class="container">
-            <div class="row tt-row no-gutters">
+            <div class="row tt-row no-gutters" id="tt-header-login">
+                <!--导航条-->
                 <div class="col-auto">
                     <!-- toggle mobile menu -->
                     <a class="toggle-mobile-menu" href="#">
@@ -78,29 +79,6 @@
                     <!-- /desctop menu -->
 
                 </div>
-                <div class="col-auto ml-auto" id="entrances">
-                    <div class="tt-account-btn">
-                        <a href="../bbsforum-admin/login.html" class="btn btn-primary">管理员</a>
-                        <a href="page-login.html" class="btn btn-primary">登录</a>
-                        <a href="page-signup.html" class="btn btn-secondary">注册</a>
-                    </div>
-                </div>
-                <!--检测登录状态，显示个人栏-->
-                <div class="col-auto ml-auto">
-                    <div class="tt-user-info d-flex justify-content-center">
-                        <div class="tt-avatar-icon tt-size-md">
-                            <a href="page-single_threads.html" class="tt-btn-icon">
-                                <i class="tt-icon"><svg><use xlink:href="#icon-ava-a"></use></svg></i>
-                            </a>
-
-                        </div>
-                        <div class="custom-select-01">
-                            <select>
-                                <option value="Default Sorting">用户名</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </header>
@@ -112,42 +90,20 @@
                     <div class="tt-col-category">分类</div>
                     <div class="tt-col-value hide-mobile">回复</div>
                     <div class="tt-col-value hide-mobile">浏览</div>
-                    <div class="tt-col-value">发布时间</div>
+                    <div class="tt-col-category">发布时间</div>
                 </div>
             </div>
-            <!-- 使用flex布局 -->
-            <div class="tt-topic-list flex">
-                <!-- 动态读取帖子 -->
-                <!-- 当topic.top为true，绑定tt-itemselect，改变颜色；绑定top样式，实现置顶 -->
-                <div class="tt-item" v-for="topic in currentPageData" v-bind:class="{'tt-itemselect top': topic.top}">
-                    <div class="tt-col-avatar">
-                        <svg class="tt-icon">
-                            <use xlink:href="#icon-ava-c"></use>
-                        </svg>
-                    </div>
-                    <div class="tt-col-description">
-                        <h6 class="tt-title">
-                            <!--置顶标志-->
-                            <svg class="tt-icon" v-show="topic.top">
-                                <use xlink:href="#icon-pinned"></use>
-                            </svg>
-                            <a href="page-single-topic.html">{{topic.title}}</a>
-                        </h6>
-                    </div>
-                    <div class="tt-col-category"><span class="tt-color04 tt-badge">{{topic.category}}</span></div>
-                    <div class="tt-col-value tt-color-select  hide-mobile">{{topic.reply}}</div>
-                    <div class="tt-col-value  hide-mobile">{{topic.view}}</div>
-                    <div class="tt-col-value hide-mobile">{{topic.activity}}</div>
-                </div>
-                <div class="tt-row-btn">
-                    <button type="button" class="btn-icon js-topiclist-showmore" @click="nextPage()">
-                        <svg class="tt-icon">
-                            <use xlink:href="#icon-load_lore_icon"></use>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+            <!--显示帖子-->
+            <div class="tt-topic-list flex" id="topicList">
 
+            </div>
+            <div class="tt-row-btn">
+                <button type="button" class="btn-icon js-topiclist-showmore" id="nextPage" value="0" onclick="getTopics()">
+                    <svg class="tt-icon">
+                        <use xlink:href="#icon-load_lore_icon"></use>
+                    </svg>
+                </button>
+            </div>
         </div>
 
     </main>
@@ -377,88 +333,209 @@
 
 <script src="js/bundle.js"></script>
 <script type="text/javascript">
-
-    new Vue({
-        el: '#topic',
-        data(){
-            return{
-                checkloginstate: null
-            }
+    // 将token添加至请求头
+    axios.interceptors.request.use(
+        function (config){
+            config.headers['Oauth-Token'] = localStorage.token;
+            return config;
         },
-        data() {
-            return {
-                topics: null,
-                totalPage: 1, // 统共页数，默认为1
-                currentPage: 1, //当前页数 ，默认为1
-                pageSize: 2, // 每页显示数量
-                currentPageData: [] //当前页显示内容
-            }
-        },
-        mounted() {
-            let url = 'data.json';
-            let url2 = 'http://192.168.43.155:8083/user/manage/checkloginstate';
-            // 获取帖子数据
-            axios
-                .get(url)
-                .then(response => {
-                    this.topics = response.data.topics;
-                    console.log(response);
-                    // 计算一共有几页
-                    this.totalPage = Math.ceil(this.topics.length / this.pageSize);
-                    // 计算得0时设置为1
-                    this.totalPage = this.totalPage == 0 ? 1 : this.totalPage;
-                    this.sortTopics();
-                    this.setCurrentPageData();
-                })
-                .catch(function (error) { // 请求失败处理
-                    console.log(error);
-                });
-            // 获取登录状态
-
-        },
-        methods: {
-            // 设置当前页面数据，对数组操作的截取规则为[0~10],[10~20]...,
-            sortTopics(){
-                console.log("sortTopics()函数被调用了")
-                var pointing = 0;
-                let temp = null;
-                for(let i=0; i<this.topics.length;i++){
-                    if(this.topics[i].top){
-                        temp = this.topics[pointing];
-                        this.topics[pointing] = this.topics[i];
-                        this.topics[i] = temp;
-                        pointing++;
-                    }
-                    console.log(this.topics[i]);
-
-                    console.log(pointing)
-                }
-            },
-            setCurrentPageData() {
-                // let begin = (this.currentPage - 1) * this.pageSize;
-                let begin = 0;
-                let end = this.currentPage * this.pageSize;
-                this.currentPageData = this.topics.slice(begin,end);
-                console.log("setCurrentPageData()函数被调用了");
-                console.log("当前页数："+this.currentPage);
-                console.log("currentPageData数组如下：")
-                console.log(this.currentPageData);
-            },
-            // 下一页
-            nextPage() {
-                if (this.currentPage == this.totalPage) return;
-
-                this.currentPage++;
-                this.setCurrentPageData();
-
-            }
+        function (error){
+            return Promise.reject(error);
         }
-    })
-    axios.post().then(response =>{
+    )
+    // 判断登录状态
+    function checkLoginState() {
+        let username = null;
+        let loginState = false;
+        let loginHeader = document.getElementById("tt-header-login");
+        axios({
+            method: 'POST',
+            url: 'http://192.168.43.155:8083/user/manage/checkloginstate',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response)=>{
+            let result = response.data;
+            loginState = result.data.loginState;
+            console.log(result);
+            if(loginState){
+                username = result.data.username;
+                let userTab = document.createElement("div");
+                userTab.className = "col-auto ml-auto";
+                userTab.innerHTML = `<div class="tt-user-info d-flex justify-content-center">
+                        <div class="tt-avatar-icon tt-size-md">
+                            <a href="page-single_threads.html" class="tt-btn-icon">
+                                <i class="tt-icon"><svg><use xlink:href="#icon-ava-a"></use></svg></i>
+                            </a>
+                        </div>
+                        <div class="">
+                            <a href="page-single_threads.html" class="btn btn-primary">`+username+`</a>
+                            <a href="page-login.html" class="btn btn-secondary" onclick="logout()">退出</a>
+                        </div>`;
+                loginHeader.appendChild(userTab);
+            }else{
+                let loginEntrances = document.createElement("div");
+                loginEntrances.className = "col-auto ml-auto";
+                loginEntrances.innerHTML = `<div class="tt-account-btn">
+                        <a href="../bbsforum-admin/login.html" class="btn btn-primary">管理员</a>
+                        <a href="page-login.html" class="btn btn-primary">登录</a>
+                        <a href="page-signup.html" class="btn btn-secondary">注册</a>
+                    </div>`;
+                loginHeader.appendChild(loginEntrances);
+            }
+        }).catch(()=>{
+            console.log("error");
+        })
+    }
+    // 获取下一页位置
+    function getPosition(){
+        console.log("getPosition()函数被调用了")
+        let position = parseInt(document.getElementById("nextPage").value);
+        position ++;
+        document.getElementById("nextPage").value = position;
+        console.log(position);
+        return position;
+    }
+    // 获取一页帖子
+    function getTopics(){
+        console.log("getTopics()函数被调用了")
+        let positon = getPosition();
+        let url = 'http://192.168.43.155:8083/post/all/list'
+        axios({
+            method: 'GET',
+            url: url,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                pageSize: 5,
+                position: positon
+            }
+        }).then((response)=>{
+            let result = response.data;
+            let topics = result.data.posts;
+            console.log(topics);
+            let topicList = document.getElementById("topicList");
+            for(let i=0; i<topics.length; i++){
+                let topic = document.createElement("div");
+                let picture = topics[i].picture;
+                let headPic = ''+picture;
+                let createTime = topics[i].createTime;
+                let showTime = createTime.slice(0, createTime.indexOf('T'));
+                if(topics[i].top){
+                    if(topics[i].excellent){
+                        topic.className = "tt-item tt-itemselect";
+                        topic.innerHTML = `<div class="tt-col-avatar">
+                                                <div class="headPicContainer">
+                                                    <img class="`+headPic+`headPic" src="images/head.jpg"/>
+                                                </div>
+                                        </div>
+                                        <div class="tt-col-description">
+                                            <h6 class="tt-title">
+                                                <svg class="tt-icon">
+                                                    <use xlink:href="#icon-pinned"></use>
+                                                </svg>
+                                                <svg class="tt-icon">
+                                                    <use xlink:href="#icon-locked"></use>
+                                                </svg>
+                                                <a href="page-single-topic.html">`+topics[i].title+`</a>
+                                            </h6>
+                                        </div>
+                                        <div class="tt-col-category"><span class="tt-color04 tt-badge">`+topics[i].category+`</span></div>
+                                        <div class="tt-col-value tt-color-select hide-mobile">`+topics[i].commentSum+`</div>
+                                        <div class="tt-col-value hide-mobile">`+topics[i].visitSum+`</div>
+                                        <div class="tt-col-category hide-mobile">`+showTime+`</div>`;
+                    }else{
+                        topic.className = "tt-item tt-itemselect";
+                        topic.innerHTML = `<div class="tt-col-avatar">
+                                            <svg class="tt-icon">
+                                                <use xlink:href="#icon-ava-c"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="tt-col-description">
+                                            <h6 class="tt-title">
+                                                <svg class="tt-icon">
+                                                    <use xlink:href="#icon-pinned"></use>
+                                                </svg>
+                                                <a href="page-single-topic.html">`+topics[i].title+`</a>
+                                            </h6>
+                                        </div>
+                                        <div class="tt-col-category"><span class="tt-color04 tt-badge">`+topics[i].category+`</span></div>
+                                        <div class="tt-col-value tt-color-select hide-mobile">`+topics[i].commentSum+`</div>
+                                        <div class="tt-col-value hide-mobile">`+topics[i].visitSum+`</div>
+                                        <div class="tt-col-category hide-mobile">`+showTime+`</div>`;
+                    }
 
-    }).catch(()=>{
+                }else{
+                    if(topics[i].excellent){
+                        topic.className = "tt-item";
+                        topic.innerHTML = `<div class="tt-col-avatar">
+                                            <svg class="tt-icon">
+                                                <use xlink:href="#icon-ava-c"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="tt-col-description">
+                                            <h6 class="tt-title">
+                                                <svg class="tt-icon">
+                                                    <use xlink:href="#icon-locked"></use>
+                                                </svg>
+                                                <a href="page-single-topic.html">`+topics[i].title+`</a>
+                                            </h6>
+                                        </div>
+                                        <div class="tt-col-category"><span class="tt-color04 tt-badge">`+topics[i].category+`</span></div>
+                                        <div class="tt-col-value tt-color-select hide-mobile">`+topics[i].commentSum+`</div>
+                                        <div class="tt-col-value hide-mobile">`+topics[i].visitSum+`</div>
+                                        <div class="tt-col-category hide-mobile">`+showTime+`</div>`;
+                    }else {
+                        topic.className = "tt-item";
+                        topic.innerHTML = `<div class="tt-col-avatar">
+                                            <svg class="tt-icon">
+                                                <use xlink:href="#icon-ava-c"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="tt-col-description">
+                                            <h6 class="tt-title">
+                                                <a href="page-single-topic.html">`+topics[i].title+`</a>
+                                            </h6>
+                                        </div>
+                                        <div class="tt-col-category"><span class="tt-color04 tt-badge">`+topics[i].category+`</span></div>
+                                        <div class="tt-col-value tt-color-select hide-mobile">`+topics[i].commentSum+`</div>
+                                        <div class="tt-col-value hide-mobile">`+topics[i].visitSum+`</div>
+                                        <div class="tt-col-category hide-mobile">`+showTime+`</div>`;
+                    }
+                }
+                topicList.appendChild(topic);
+            }
+                /*
 
-    })
+                `<div class="tt-col-avatar">
+                        <svg class="tt-icon">
+                            <use xlink:href="#icon-ava-c"></use>
+                        </svg>
+                    </div>
+                    <div class="tt-col-description">
+                        <h6 class="tt-title">
+                            <!--置顶标志-->
+                            <svg class="tt-icon">
+                                <use xlink:href="#icon-pinned"></use>
+                            </svg>
+                            <a href="page-single-topic.html">`+topic[i].title+`</a>
+                        </h6>
+                    </div>
+                    <div class="tt-col-category"><span class="tt-color04 tt-badge">`+topics[i].category+`</span></div>
+                    <div class="tt-col-value tt-color-select  hide-mobile">`+topics[i].commentSum`</div>
+                    <div class="tt-col-value  hide-mobile">`+topics[i].visitSum`</div>
+                    <div class="tt-col-value hide-mobile">`+showTime+`</div>`;
+                 */
+
+        }).catch(()=>{
+            console.log("error");
+        })
+    }
+    // 退出登录
+    function logout(){
+        localStorage.removeItem("token");
+    }
 </script>
 <svg width="0" height="0" class="hidden">
     <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" id="facebook-f-brands">

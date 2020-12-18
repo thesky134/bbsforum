@@ -40,39 +40,21 @@ const menu = [
         "icon": "&#xe609;",
         "url": "",
         "hidden": false,
-        "list": [{
-            "name": "分类管理",
-            "url": "type_index.html"
-        }, {
+        "list": [ {
             "name": "帖子管理",
             "url": "article_index.html"
         }]
     },
-    // {
-    //     "name": "系统设置",
-    //     "icon": "&#xe620;",
-    //     "url": "",
-    //     "hidden": false,
-    //     "list": [{
-    //         "name": "网站设置",
-    //         "url": "web_index.html"
-    //     }, {
-    //         "name": "友情连接",
-    //         "url": "flink_index.html"
-    //     }, {
-    //         "name": "导航管理",
-    //         "url": "nav_index.html"
-    //     }, {
-    //         "name": "修改密码",
-    //         "url": "web_pwd.html"
-    //     }, {
-    //         "name": "清除缓存",
-    //         "url": "web_cache.html"
-    //     }, {
-    //         "name": "登录页",
-    //         "url": "login.html"
-    //     }]
-    // },
+    {
+        "name": "分类管理",
+        "icon": "&#xe620;",
+        "url": "",
+        "hidden": false,
+        "list": [{
+            "name": "分类管理",
+            "url": "type_index.html"
+        }]
+    },
     // {
     //     "name": "数据库",
     //     "icon": "&#xe857;",

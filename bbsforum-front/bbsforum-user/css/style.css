@@ -7920,11 +7920,16 @@ html.ie.gecko body.modal-open {
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg); }
 
-  /*flex ÑשÊ½*/
-  .flex{
-    display: flex;
-    flex-direction: column;
-  }
-  .top{
-    order: -1;
-  }
+.headPicContainer {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.headPic {
+  max-height: 100%;
+}
