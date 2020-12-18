@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script src="./config.js"></script>
 </head>
-<body>
+<body onload="getCategories()">
 <!-- tt-mobile menu -->
 <nav class="panel-menu" id="mobile-menu">
     <ul>
@@ -113,7 +114,8 @@
         </div>
     </div>
     <div class="tt-categories-list">
-        <div class="row">
+        <!--分类列表-->
+        <div class="row" id="categoriesList">
             <div class="col-md-6 col-lg-4">
                 <div class="tt-item">
                     <div class="tt-item-header">
@@ -138,58 +140,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="tt-item">
-                    <div class="tt-item-header">
-                        <ul class="tt-list-badge">
-                            <li><a href="#"><span class="tt-color02 tt-badge">积分悬赏</span></a></li>
-                        </ul>
-                        <h6 class="tt-title"><a href="page-categories-single.html">帖子 - 368</a></h6>
-                    </div>
-                    <div class="tt-item-layout">
-                        <div class="tt-innerwrapper">
-                            在这里发布你的需求信息
-                        </div>
-
-                        <div class="tt-innerwrapper">
-                            <a href="#" class="tt-btn-icon">
-                                <i class="tt-icon">
-                                    <svg>
-                                        <use xlink:href="#icon-favorite"></use>
-                                    </svg>
-                                </i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="tt-item">
-                    <div class="tt-item-header">
-                        <ul class="tt-list-badge">
-                            <li><a href="#"><span class="tt-color03 tt-badge">电影</span></a></li>
-                        </ul>
-                        <h6 class="tt-title"><a href="page-categories-single.html">帖子 - 381</a></h6>
-                    </div>
-                    <div class="tt-item-layout">
-                        <div class="tt-innerwrapper">
-                            电影讨论区
-                        </div>
-
-                        <div class="tt-innerwrapper">
-                            <a href="#" class="tt-btn-icon">
-                                <i class="tt-icon">
-                                    <svg>
-                                        <use xlink:href="#icon-favorite"></use>
-                                    </svg>
-                                </i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
     </div>
 </main>
@@ -423,26 +373,47 @@
 </div>
 <script src="js/bundle.js"></script>
 <script>
-    new Vue({
-        el: '#categories',
-        data() {
-            return {
-                categories: null
+    // 获取帖子分类 all
+    function getCategories(){
+        console.log("getCategories()函数被调用了");
+        let categoriesList = document.getElementById("categoriesList");
+        axios({
+            method: 'POST',
+            url: 'http://222.204.56.50:8083/category/all',
+            headers: {
+                'Content-Type': 'application/json'
             }
-        },
-        mounted() {
-            let url = 'data.json';
-            axios
-                .get(url)
-                .then(response => {
-                    this.categories = response.data.categories;
-                    console.log(response);
-                })
-                .catch(function (error) { // 请求失败处理
-                    console.log(error);
-                });
-        }
-    })
+        }).then((response)=>{
+            let result = response.data;
+            let categories = result.data.categorys;
+            for(let i=0;i<categories.length;i++){
+                let category = document.createElement("div");
+                category.className = "col-md-6 col-lg-4";
+                category.innerHTML = `<div class="tt-item">
+                    <div class="tt-item-header">
+                        <ul class="tt-list-badge">
+                            <li><a href="page-categories-single.html" id="`+categories[i].id+`" onclick="setCategoryId(this.id)">
+                            <span class="tt-color01 tt-badge">`+categories[i].name+`</span></a>
+                            </li>
+                        </ul>
+                        <h6 class="tt-title"><a href="#">帖子 - `+categories[i].sum+`</a></h6>
+                    </div>
+                    <div class="tt-item-layout">
+                        <div class="innerwrapper">`+categories[i].introduction+`</div>
+                    </div>
+                </div>`
+                categoriesList.appendChild(category);
+            }
+        }).catch(()=>{
+            console.log("error");
+        })
+    }
+    // 根据localStorage.cid访问相应数据
+    function setCategoryId(id){
+        let cid = document.getElementById(id).id;
+        localStorage.cid = cid;
+        console.log(cid);
+    }
 </script>
 <svg width="0" height="0" class="hidden">
     <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg"

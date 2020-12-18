@@ -10,8 +10,11 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script src="./config.js"></script>
 </head>
-<body>
+<body onload="showInfo()">
 <!-- tt-mobile menu -->
 <nav class="panel-menu" id="mobile-menu">
     <ul>
@@ -2496,13 +2499,14 @@
 		</a>
 	</div>
 	<form class="form-default">
+        <!--上传头像-->
 		<div class="tt-form-upload">
 			<div class="row no-gutter">
 				<div class="col-auto">
 					<div class="tt-avatar">
-		                <svg>
-		                  <use xlink:href="#icon-ava-d"></use>
-		                </svg>
+                        <div class="headPicContainer">
+                            <img class="headPic" src="" id="headPic"/>
+                        </div>
 		            </div>
 				</div>
 				<div class="col-auto ml-auto">
@@ -2511,48 +2515,53 @@
 				</div>
 			</div>
 		</div>
+        <!--个人积分-->
         <div class="form-group">
             <label for="settingsUserName">个人积分：</label>
             <label for="settingsUserName">26</label>
         </div>
+        <!--用户名-->
 		<div class="form-group">
 		    <label for="settingsUserName">用户名</label><br>
-		   <input type="text" name="name" class="form-control1" id="settingsUserName" placeholder="你的用户名">
+		   <input type="text" name="name" class="form-control1" id="settingsUserName" placeholder="你的用户名" value="">
             <a href="#" class="btn1 btn-primary">保存</a>
 		</div>
-		<div class="form-group">
+        <!--邮箱-->
+		<div class="form-group" id="email">
 		    <label for="settingsUserEmail">邮箱</label><br>
 		   <input type="text" name="name" class="form-control1" id="settingsUserEmail" placeholder="你的邮箱">
-            <a href="#" class="btn1 btn-primary">保存</a>
+            <a href="#" class="btn1 btn-primary" onclick="updateInfo()">保存</a>
+<!--            <label style="font-size: 10px; color: #ff0000">修改成功！</label>-->
 		</div>
+        <!--密码-->
 		<div class="form-group">
 		    <label for="settingsUserPassword">密码</label><br>
 		   <input type="password" name="name" class="form-control1" id="settingsUserPassword" placeholder="你的密码">
             <a href="#" class="btn1 btn-primary">保存</a>
 		</div>
+        <!--联系方式-->
         <div class="form-group">
             <label for="settingsUserPhone">联系方式</label><br>
             <input type="text" name="name" class="form-control1" id="settingsUserPhone" placeholder="手机号码">
             <a href="#" class="btn1 btn-primary">保存</a>
         </div>
+        <!--工作性质-->
         <div class="form-group">
             <label for="settingsUserJob">工作性质</label><br>
             <input type="text" name="name" class="form-control1" id="settingsUserJob" placeholder="工作性质">
             <a href="#" class="btn1 btn-primary">保存</a>
         </div>
+        <!--工作地点-->
 		<div class="form-group">
 		    <label for="settingsUserLocation">工作地点</label><br>
 		   <input type="text" name="name" class="form-control1" id="settingsUserLocation" placeholder="工作地点">
             <a href="#" class="btn1 btn-primary">保存</a>
 		</div>
+        <!--个性签名-->
 		<div class="form-group">
 		    <label for="settingsUserAbout">个性签名</label><br>
 		    <textarea name="" placeholder="来点个性" class="form-control" id="settingsUserAbout"></textarea><br>
             <a href="#" class="btn1 btn-primary">保存</a>
-		</div>
-
-		<div class="form-group">
-			<a href="#" class="btn btn-secondary">全部保存</a>
 		</div>
 		</form>
 </div>
@@ -2691,6 +2700,86 @@
 </div>
 <script src="js/bundle.js"></script>
 <script>
+    const baseURL = window.config.ip;
+    let username = null;
+    // 将token添加至请求头
+    axios.interceptors.request.use(
+        function (config){
+            config.headers['Oauth-Token'] = localStorage.token;
+            return config;
+        },
+        function (error){
+            return Promise.reject(error);
+        }
+    )
+    // 展示个人信息
+    function showInfo(){
+        axios({
+            method: 'POST',
+            url: baseURL+'/user/manage/info',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response)=>{
+            let result = response.data;
+            let user = result.data.user;
+            let picture = user.picture;
+            let headPic = baseURL+'/image/' + picture;
+            let username = user.username;
+            let email = user.email;
+            let phone = user.phone;
+            let jobType = user.jobType;
+            let jobLocation = user.jobLocation;
+            let personalSignal = user.personalSignal;
+            document.getElementById("headPic").src = headPic;
+            document.getElementById("settingsUserName").value = username;
+            document.getElementById("settingsUserEmail").value = email;
+            document.getElementById("settingsUserPhone").value = phone;
+            document.getElementById("settingsUserJob").value = jobType;
+            document.getElementById("settingsUserLocation").value = jobLocation;
+            document.getElementById("settingsUserAbout").value = personalSignal;
+            console.log(username);
+        }).catch(()=>{
+            console.log("error");
+        })
+    }
+    // 更新个人信息
+    function updateInfo(){
+        let email = document.getElementById("settingsUserEmail").value;
+        console.log(email);
+        axios({
+            method: 'POST',
+            url: baseURL+'/user/manage/update/email',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                email: eamil
+            }
+        }).then((response)=>{
+            let result = response.data;
+            let message = result.message;
+            // <label v-show="vshow_email" style="font-size: 10px; color: #ff0000">{{email_msg}}</label>
+            let email = document.getElementById("email");
+            if(document.getElementById("showMessage")){
+                email.removeChild(document.getElementById("showMessage"));
+                let showMessage = document.createElement("label");
+                showMessage.id = "showMessage";
+                showMessage.style.cssText = "font-size: 10px; color: #ff0000";
+                showMessage.innerText = message;
+                email.appendChild(showMessage);
+            }else{
+                let showMessage = document.createElement("label");
+                showMessage.id = "showMessage";
+                showMessage.style.cssText = "font-size: 10px; color: #ff0000";
+                showMessage.innerText = message;
+                email.appendChild(showMessage);
+            }
+            console.log(result);
+        }).catch(()=>{
+            console.log("error");
+        })
+    }
 (function(){
     $('#js-settings-btn').trigger('click');
 })();
