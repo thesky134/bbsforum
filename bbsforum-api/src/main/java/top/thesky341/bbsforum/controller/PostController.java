@@ -13,13 +13,16 @@ import top.thesky341.bbsforum.entity.*;
 import top.thesky341.bbsforum.service.*;
 import top.thesky341.bbsforum.util.result.Result;
 import top.thesky341.bbsforum.util.result.ResultCode;
+import top.thesky341.bbsforum.vo.CategoryVo;
 import top.thesky341.bbsforum.vo.PostInfoVo;
 import top.thesky341.bbsforum.vo.PostVo;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hz
@@ -137,7 +140,11 @@ public class PostController {
         Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
                 paginationDto.getPageSize());
         pagination.setCategoryId(paginationDto.getCategoryId());
-        return Result.success("posts", getPostInfoListByPagination(pagination));
+        CategoryVo categoryVo = new CategoryVo(category, postService.getPostSum(category.getId(), -1));
+        Map<String, Object> data = new HashMap<>();
+        data.put("category", categoryVo);
+        data.put("posts", getPostInfoListByPagination(pagination));
+        return Result.success(data);
     }
 
     @PostMapping("/post/view/{id}")

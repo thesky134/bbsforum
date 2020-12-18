@@ -53,6 +53,7 @@ public class UserController {
     @Resource(name = "userPostStateServiceImpl")
     UserPostStateService userPostStateService;
 
+
     /**
      * 用户注册，会生成16位的随机字符串作为盐值
      * 加密使用 MD5盐值加密，加密次数为3
