@@ -11,6 +11,14 @@
             0, #{reward}
         )
     </insert>
+    <insert id="batchAddPost" parameterType="post" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO post VALUE (
+            NULL, #{title}, #{content}, NOW(),
+            NULL, #{user.id}, #{category.id},
+            #{hidden}, #{deleted}, #{excellent},
+            #{top}, #{reward}
+            )
+    </insert>
     <update id="revisePost" parameterType="post">
         UPDATE post
         SET title = #{title},

@@ -177,4 +177,63 @@ public class PostController {
         }
         return postInfoVos;
     }
+
+    /**
+     * 用户给帖子点赞，踩，喜欢
+     * 当赞或喜欢时，踩会被取消
+     * 当踩时，赞和喜欢会取消
+     *
+     * @param stateStr good, bad, like
+     * @param operateStr add, delete
+     * @param postId
+     * @return
+     */
+    @RequiresAuthentication
+    @PostMapping("/post/manage/{stateStr}/{operateStr}/{postId}")
+    public Result changePostState(@PathVariable String stateStr, @PathVariable String operateStr, @PathVariable int postId) {
+        Post post = postService.getPostById(postId);
+        Assert.notNull(post, "帖子不存在");
+        Subject subject = SecurityUtils.getSubject();
+        User user = userService.getUserById((int) subject.getPrincipal());
+        if (operateStr.equals("add")) {
+            UserPostState userPostState;
+            if (stateStr.equals("good")) {
+                userPostState = new UserPostState(post, user, 1);
+                userPostStateService.addUserPostState(userPostState);
+                userPostState.setState(2);
+                userPostStateService.deleteUserPostState(userPostState);
+            } else if (stateStr.equals("bad")) {
+                userPostState = new UserPostState(post, user, 2);
+                userPostStateService.addUserPostState(userPostState);
+                userPostState.setState(1);
+                userPostStateService.deleteUserPostState(userPostState);
+                userPostState.setState(3);
+                userPostStateService.deleteUserPostState(userPostState);
+            } else if (stateStr.equals("like")) {
+                userPostState = new UserPostState(post, user, 3);
+                userPostStateService.addUserPostState(userPostState);
+                userPostState.setState(2);
+                userPostStateService.deleteUserPostState(userPostState);
+            } else {
+                return new Result(ResultCode.OperateNotExist);
+            }
+        } else if (operateStr.equals("delete")) {
+            UserPostState userPostState;
+            if (stateStr.equals("good")) {
+                userPostState = new UserPostState(post, user, 1);
+                userPostStateService.deleteUserPostState(userPostState);
+            } else if (stateStr.equals("bad")) {
+                userPostState = new UserPostState(post, user, 2);
+                userPostStateService.deleteUserPostState(userPostState);
+            } else if (stateStr.equals("like")) {
+                userPostState = new UserPostState(post, user, 3);
+                userPostStateService.deleteUserPostState(userPostState);
+            } else {
+                return new Result(ResultCode.OperateNotExist);
+            }
+        } else {
+            return new Result(ResultCode.OperateNotExist);
+        }
+        return Result.success();
+    }
 }

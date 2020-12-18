@@ -14,7 +14,6 @@ public class UserPostState {
     }
 
     public UserPostState(Post post, User user, int state) {
-        this.id = id;
         this.user = user;
         this.post = post;
         this.state = state;

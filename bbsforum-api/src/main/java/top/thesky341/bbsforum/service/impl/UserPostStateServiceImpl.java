@@ -27,9 +27,22 @@ public class UserPostStateServiceImpl implements UserPostStateService {
     }
 
     @Override
-    public UserPostState addUserPostState(UserPostState userPostState) {
+    public void addUserPostState(UserPostState userPostState) {
+        if(userPostStateMapper.getUserPostStateSum(userPostState.getPost().getId(),
+            userPostState.getUser().getId(), userPostState.getState()) != 0) {
+            return;
+        }
         userPostStateMapper.addUserPostState(userPostState);
-        userPostState = userPostStateMapper.getUserPostStateById(userPostState.getId());
-        return userPostState;
+    }
+
+    @Override
+    public void deleteUserPostState(UserPostState userPostState) {
+        if(userPostStateMapper.getUserPostStateSum(userPostState.getPost().getId(),
+                userPostState.getUser().getId(), userPostState.getState()) == 0) {
+            return;
+        }
+        userPostState = userPostStateMapper.getUserPostStateByPostIdAndUserIdAndState(userPostState.getPost().getId(),
+                userPostState.getUser().getId(), userPostState.getState());
+        userPostStateMapper.deleteUserPostStateById(userPostState.getId());
     }
 }
