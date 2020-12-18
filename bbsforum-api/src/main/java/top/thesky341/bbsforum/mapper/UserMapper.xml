@@ -86,6 +86,11 @@
         SET score = #{score}
         WHERE id = #{id}
     </update>
+    <update id="updatePasswd">
+        UPDATE user
+        SET passwd = #{passwd}
+        WHERE id = #{id}
+    </update>
 
     <resultMap id="userMap" type="user">
         <id column="id" property="id"/>
