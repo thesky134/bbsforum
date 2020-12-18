@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import top.thesky341.bbsforum.config.shiro.UserSessionManager;
 import top.thesky341.bbsforum.entity.groups.*;
 import top.thesky341.bbsforum.entity.User;
+import top.thesky341.bbsforum.service.PostService;
 import top.thesky341.bbsforum.service.UserService;
 import top.thesky341.bbsforum.util.common.RandomGenerateString;
 import top.thesky341.bbsforum.util.common.UserUtil;
@@ -40,6 +41,7 @@ public class UserController {
 
     @Resource( name = "userServiceImpl")
     UserService userService;
+
 
     /**
      * 用户注册，会生成16位的随机字符串作为盐值
