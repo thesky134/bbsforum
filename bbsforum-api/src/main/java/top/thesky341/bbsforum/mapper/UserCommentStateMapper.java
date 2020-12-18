@@ -1,8 +1,10 @@
 package top.thesky341.bbsforum.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import top.thesky341.bbsforum.entity.UserCommentState;
+import top.thesky341.bbsforum.entity.UserPostState;
 
 /**
  * @author thesky
@@ -11,8 +13,9 @@ import top.thesky341.bbsforum.entity.UserCommentState;
 @Mapper
 @Repository
 public interface UserCommentStateMapper {
+    void deleteUserCommentStateById(int id);
+    UserCommentState getUserCommentStateById(int id);
+    UserCommentState getUserCommentStateByCommentIdAndUserIdAndState(@Param("commentId") int commentId, @Param("userId") int userId, @Param("state") int state);
+    int getUserCommentStateSum(@Param("commentId") int commentId, @Param("userId") int userId, @Param("state") int state);
     void addUserCommentState(UserCommentState userCommentState);
-    void deleteUserCommentState(int id);
-    UserCommentState getUserCommentState(int id);
-
 }

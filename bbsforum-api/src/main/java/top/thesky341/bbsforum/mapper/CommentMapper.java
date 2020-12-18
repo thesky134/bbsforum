@@ -15,6 +15,7 @@ import java.util.List;
 public interface CommentMapper {
     void addComment(Comment comment);
     void deleteCommentById(int id);
+    void updateContent(Comment comment);
     Comment getCommentById(int id);
     List<Comment> getCommentByUserId(int userId);
     List<Comment> getCommentByPostId(int postId);

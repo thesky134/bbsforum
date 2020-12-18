@@ -12,6 +12,12 @@
     <insert id="deleteCommentById">
         DELETE FROM comment WHERE id = #{id}
     </insert>
+    <update id="updateContent">
+        UPDATE comment
+        SET content = #{content},
+            modify_time = NOW()
+        WHERE id = #{id}
+    </update>
     <select id="getCommentById" resultMap="commentMap">
         SELECT *
         FROM comment WHERE id = #{id}
@@ -43,7 +49,7 @@
         />
         <association column="post_id" property="post"
                      javaType="post"
-                     select="top.thesky341.bbsforum.mapper.CategoryMapper.getCategoryById"
+                     select="top.thesky341.bbsforum.mapper.PostMapper.getPostById"
         />
     </resultMap>
 </mapper>

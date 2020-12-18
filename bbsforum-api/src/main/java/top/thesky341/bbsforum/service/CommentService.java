@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface CommentService {
     int getCommentSumByPostId(int postId);
+    Comment getCommentById(int id);
     Comment addComment(Comment comment);
+    void updateContent(Comment comment);
     List<Comment> getCommentListByPagination(Pagination pagination);
 }
