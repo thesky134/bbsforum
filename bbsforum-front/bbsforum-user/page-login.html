@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script src="./config.js"></script>
 </head>
 <body>
 <div id="login">
@@ -59,6 +60,7 @@
 </div>
 <script src="js/bundle.js"></script>
 <script>
+    const baseURL = window.config.ip;
     new Vue({
         el: '#login',
         data: {
@@ -120,7 +122,7 @@
         let passwd = document.getElementById("loginUserPassword").value;
         axios({
             method: 'POST',
-            url: 'http://192.168.43.155:8083/user/manage/login',
+            url: baseURL+'/user/manage/login',
             headers: {
                 'Content-Type': 'application/json'
             },

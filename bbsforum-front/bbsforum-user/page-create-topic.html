@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 	<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+	<script src="./config.js"></script>
 </head>
 <body onload="getCategories()">
 <!-- tt-mobile menu -->
@@ -383,6 +384,7 @@
 </div>
 <script src="js/bundle.js"></script>
 <script>
+	const baseURL = window.config.ip;
 	// 请求头中添加token
 	axios.interceptors.request.use(
 			function (config){
@@ -398,7 +400,7 @@
 		console.log("getCategories()函数被调用了")
 		axios({
 			method: 'POST',
-			url: 'http://222.204.56.50:8083/category/all',
+			url: baseURL+'/category/all',
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -443,7 +445,7 @@
 		console.log("createTopic()函数被调用了")
 		axios({
 			method: 'POST',
-			url: 'http://222.204.56.50:8083/post/manage/add',
+			url: baseURL+'/post/manage/add',
 			headers: {
 				'Content-Type': 'application/json'
 			},
