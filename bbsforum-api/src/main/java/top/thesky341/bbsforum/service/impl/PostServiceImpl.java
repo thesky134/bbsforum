@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService {
                 return postMapper.getPostListByPagination(pagination);
             }
         } else {
-            return null;
+            return postMapper.getPostListByPagination(pagination);
         }
     }
 
@@ -76,5 +76,15 @@ public class PostServiceImpl implements PostService {
     public Post revisePost(Post post) {
         postMapper.revisePost(post);
         return postMapper.getPostById(post.getId());
+    }
+
+    @Override
+    public void updatePostHiddenState(int postId, int state) {
+        postMapper.updatePostHiddenState(postId, state);
+    }
+
+    @Override
+    public void setPostDeleted(int postId) {
+        postMapper.setPostDeleted(postId);
     }
 }

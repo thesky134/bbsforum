@@ -166,6 +166,42 @@ public class PostController {
         return Result.success("post", postVo);
     }
 
+    @RequiresAuthentication
+    @PostMapping("/post/manage/hidden/{stateStr}/{postId}")
+    public Result setPostHidden(@PathVariable String stateStr, @PathVariable int postId) {
+        Subject subject = SecurityUtils.getSubject();
+        int userId = (int) subject.getPrincipal();
+        Post post = postService.getPostById(postId);
+        Assert.notNull(post, "帖子不存在");
+        if(userId != post.getUser().getId() && !(subject.hasRole("admin") || subject.hasRole("superadmin"))) {
+            return new Result(ResultCode.PermissionDenied);
+        }
+        int state = -1;
+        if(stateStr.equals("true")) {
+            state = 1;
+        } else if(stateStr.equals("false")) {
+            state = 0;
+        } else {
+            return new Result(ResultCode.OperateNotExist);
+        }
+        postService.updatePostHiddenState(postId, state);
+        return Result.success();
+    }
+
+    @RequiresAuthentication
+    @PostMapping("/post/manage/delete/{postId}")
+    public Result setPostDeleted(@PathVariable int postId) {
+        Subject subject = SecurityUtils.getSubject();
+        int userId = (int) subject.getPrincipal();
+        Post post = postService.getPostById(postId);
+        Assert.notNull(post, "帖子不存在");
+        if(userId != post.getUser().getId() && !(subject.hasRole("admin") || subject.hasRole("superadmin"))) {
+            return new Result(ResultCode.PermissionDenied);
+        }
+        postService.setPostDeleted(postId);
+        return Result.success();
+    }
+
     public List<PostInfoVo> getPostInfoListByPagination(Pagination pagination) {
         List<Post> posts = postService.getPostListByPagination(pagination);
         List<PostInfoVo> postInfoVos = new ArrayList<>();

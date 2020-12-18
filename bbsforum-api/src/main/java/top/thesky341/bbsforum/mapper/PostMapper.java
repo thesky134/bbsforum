@@ -1,6 +1,7 @@
 package top.thesky341.bbsforum.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import top.thesky341.bbsforum.dto.PaginationDto;
 import top.thesky341.bbsforum.entity.Pagination;
@@ -19,6 +20,8 @@ public interface PostMapper {
     void batchAddPost(Post post);
     void revisePost(Post posr);
     void deletePostById(int id);
+    void updatePostHiddenState(@Param("id") int id, @Param("state") int state);
+    void setPostDeleted(int id);
     Post getPostById(int id);
     List<Post> getPostByUserId(int userId);
 

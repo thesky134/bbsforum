@@ -7,14 +7,17 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.thesky341.bbsforum.config.shiro.UserSessionManager;
+import top.thesky341.bbsforum.dto.PaginationDto;
+import top.thesky341.bbsforum.entity.Pagination;
+import top.thesky341.bbsforum.entity.Post;
 import top.thesky341.bbsforum.entity.groups.*;
 import top.thesky341.bbsforum.entity.User;
+import top.thesky341.bbsforum.service.CommentService;
+import top.thesky341.bbsforum.service.PostService;
+import top.thesky341.bbsforum.service.UserPostStateService;
 import top.thesky341.bbsforum.service.UserService;
 import top.thesky341.bbsforum.util.common.RandomGenerateString;
 import top.thesky341.bbsforum.util.common.UserUtil;
@@ -22,11 +25,14 @@ import top.thesky341.bbsforum.util.encrypt.MD5SaltEncryption;
 import top.thesky341.bbsforum.util.encrypt.RandomGenerateSalt;
 import top.thesky341.bbsforum.util.result.Result;
 import top.thesky341.bbsforum.util.result.ResultCode;
+import top.thesky341.bbsforum.vo.PostInfoVo;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +46,12 @@ public class UserController {
 
     @Resource( name = "userServiceImpl")
     UserService userService;
+    @Resource(name = "postServiceImpl")
+    PostService postService;
+    @Resource(name = "commentServiceImpl")
+    CommentService commentService;
+    @Resource(name = "userPostStateServiceImpl")
+    UserPostStateService userPostStateService;
 
     /**
      * 用户注册，会生成16位的随机字符串作为盐值
@@ -218,5 +230,37 @@ public class UserController {
     @RequestMapping("/shiro/login")
     public Result shiroLogin() {
         return new Result(ResultCode.NeedLogin);
+    }
+
+    @RequiresAuthentication
+    @PostMapping("/user/post/sum")
+    public Result getUserPostSum() {
+        Subject subject = SecurityUtils.getSubject();
+        int userId = (int)subject.getPrincipal();
+        int sum = postService.getPostSum(-1, userId);
+        return Result.success("sum", sum);
+    }
+
+    @RequiresAuthentication
+    @PostMapping("/user/post/list")
+    public Result getUserPostList(@Valid @RequestBody PaginationDto paginationDto) {
+        Subject subject = SecurityUtils.getSubject();
+        int userId = (int)subject.getPrincipal();
+        Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
+                paginationDto.getPageSize());
+        pagination.setUserId(userId);
+        return Result.success("posts", getPostInfoListByPagination(pagination));
+    }
+
+    public List<PostInfoVo> getPostInfoListByPagination(Pagination pagination) {
+        List<Post> posts = postService.getPostListByPagination(pagination);
+        List<PostInfoVo> postInfoVos = new ArrayList<>();
+        for (Post post : posts) {
+            int postId = post.getId();
+            int commentSum = commentService.getCommentSumByPostId(postId);
+            int visitSum = userPostStateService.getPostStateSum(postId, 4);
+            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
+        }
+        return postInfoVos;
     }
 }
