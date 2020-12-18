@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.thesky341.bbsforum.config.shiro.UserSessionManager;
 import top.thesky341.bbsforum.dto.PaginationDto;
+import top.thesky341.bbsforum.dto.PasswdDto;
 import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.entity.Post;
 import top.thesky341.bbsforum.entity.groups.*;
@@ -26,6 +27,7 @@ import top.thesky341.bbsforum.util.encrypt.RandomGenerateSalt;
 import top.thesky341.bbsforum.util.result.Result;
 import top.thesky341.bbsforum.util.result.ResultCode;
 import top.thesky341.bbsforum.vo.PostInfoVo;
+import top.thesky341.bbsforum.vo.UserVo;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -222,6 +224,47 @@ public class UserController {
         user.setPicture(newPictureName);
         userService.updatePicture(user);
         return Result.success();
+    }
+
+    @RequiresAuthentication
+    @PostMapping("/user/manage/update/passwd")
+    public Result updatePasswd(@Valid @RequestBody PasswdDto passwdDto) {
+        Subject subject = SecurityUtils.getSubject();
+        User user = userService.getUserById((int)subject.getPrincipal());
+        String encryptedOldPasswd = MD5SaltEncryption.encrypt(passwdDto.getOldPasswd(),
+                user.getSalt());
+        System.out.println(user);
+        System.out.println(encryptedOldPasswd);
+        if(!encryptedOldPasswd.equals(user.getPasswd())) {
+            return new Result(ResultCode.IncorrectCredentialsException);
+        }
+        String encryptedNewPasswd = MD5SaltEncryption.encrypt(passwdDto.getNewPasswd(),
+                user.getSalt());
+        user.setPasswd(encryptedNewPasswd);
+        userService.updatePasswd(user);
+        subject.logout();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), passwdDto.getNewPasswd());
+        subject.login(token);
+        System.out.println(subject);
+        user = userService.getUserByUsername(user.getUsername());
+        //检查是否每天第一次登录，第一次登录积分加5
+        userService.checkIsTodayFirstLogin(user);
+        userService.updateLastLoginTime(user);
+        return Result.success(UserSessionManager.OAUTH_TOKEN, subject.getSession().getId());
+    }
+
+
+    @RequiresAuthentication
+    @PostMapping("/user/manage/info")
+    public Result getUserInfo() {
+        Subject subject = SecurityUtils.getSubject();
+        int userId = (int)subject.getPrincipal();
+        User user = userService.getUserById(userId);
+        user.setChara(null);
+        user.setOther(null);
+        user.setTodayScore(-1);
+        user.setCreateTime(null);
+        return Result.success("user", new UserVo(user));
     }
 
     /**

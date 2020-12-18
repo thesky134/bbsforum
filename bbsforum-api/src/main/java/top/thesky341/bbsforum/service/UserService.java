@@ -22,4 +22,5 @@ public interface UserService {
     void updatePersonalSignal(User user);
     void updatePicture(User user);
     void updateScore(User user);
+    void updatePasswd(User user);
 }
