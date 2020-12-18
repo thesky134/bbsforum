@@ -1,7 +1,10 @@
 package top.thesky341.bbsforum.service;
 
 import org.springframework.stereotype.Service;
+import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.entity.User;
+
+import java.util.List;
 
 /**
  * @author thesky
@@ -12,6 +15,8 @@ public interface UserService {
     User getUserByUsername(String username);
     User getUserByEmail(String email);
     User getUserById(int id);
+    List<User> getUserListByPagination(Pagination pagination);
+    int getUserSum();
     void checkIsTodayFirstLogin(User user);
     void updateLastLoginTime(User user);
     void updateUsername(User user);

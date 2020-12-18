@@ -13,6 +13,16 @@
     <insert id="deleteUserById">
         DELETE FROM user WHERE id = #{id}
     </insert>
+    <select id="getUserSum" resultType="integer">
+        SELECT COUNT(*)
+        FROM user
+    </select>
+    <select id="getUserListByPagination" resultMap="userMap">
+        SELECT *
+        FROM user
+        ORDER BY create_time DESC
+        LIMIT #{from}, #{num}
+    </select>
     <select id="getUserById" resultMap="userMap">
         SELECT *
         FROM user WHERE id = #{id}

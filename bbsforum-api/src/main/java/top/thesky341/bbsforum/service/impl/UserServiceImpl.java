@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import top.thesky341.bbsforum.entity.Chara;
+import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.entity.User;
 import top.thesky341.bbsforum.mapper.CharaMapper;
 import top.thesky341.bbsforum.mapper.UserMapper;
 import top.thesky341.bbsforum.service.UserService;
 import top.thesky341.bbsforum.util.common.UserUtil;
+
+import java.util.List;
 
 /**
  * @author thesky
@@ -21,12 +24,23 @@ public class UserServiceImpl implements UserService {
     @Autowired
     CharaMapper charaMapper;
 
+    @Override
     public User addUser(User user) {
         Chara chara = charaMapper.getGeneralChara();
         Assert.notNull(chara, "普通用户角色不存在");
         user.setChara(chara);
         userMapper.addUser(user);
         return userMapper.getUserById(user.getId());
+    }
+
+    @Override
+    public List<User> getUserListByPagination(Pagination pagination) {
+        return userMapper.getUserListByPagination(pagination);
+    }
+
+    @Override
+    public int getUserSum() {
+        return userMapper.getUserSum();
     }
 
     @Override
