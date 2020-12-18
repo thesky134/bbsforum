@@ -25,6 +25,16 @@
         DELETE FROM post
         WHERE id = #{id}
     </delete>
+    <update id="updatePostHiddenState">
+        UPDATE post
+        SET is_hidden = #{state}
+        WHERE id = #{id}
+    </update>
+    <update id="setPostDeleted">
+        UPDATE post
+        SET is_deleted = 1
+        WHERE id = #{id}
+    </update>
     <select id="getPostById" resultMap="postMap">
         SELECT *
         FROM post WHERE id = #{id} AND is_hidden = 0 AND is_deleted = 0
@@ -63,15 +73,17 @@
     <select id="getPostListByPagination" resultMap="postMap">
         SELECT *
         FROM post
-        WHERE is_hidden = 0 AND is_deleted = 0
+        WHERE is_deleted = 0
         <if test="categoryId != -1">
             AND category_id = #{categoryId}
+            AND is_hidden = 0
         </if>
         <if test="userId != -1">
             AND user_id != #{userId}
         </if>
         <if test="top != -1">
             AND is_top = #{top}
+            AND is_hidden = 0
         </if>
         ORDER BY create_time DESC
         LIMIT #{from}, #{num}

@@ -18,6 +18,7 @@ public class PostInfoVo {
     private Date createTime;
     private boolean excellent;
     private boolean top;
+    private boolean hidden;
 
     public PostInfoVo() {
     }
@@ -32,6 +33,7 @@ public class PostInfoVo {
         createTime = post.getCreateTime();
         excellent = post.isExcellent();
         top = post.isTop();
+        hidden = post.isHidden();
     }
 
     public int getId() {
@@ -106,10 +108,19 @@ public class PostInfoVo {
         this.top = top;
     }
 
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
     @Override
     public String toString() {
         return "PostInfoVo{" +
-                "picture='" + picture + '\'' +
+                "id=" + id +
+                ", picture='" + picture + '\'' +
                 ", title='" + title + '\'' +
                 ", category='" + category + '\'' +
                 ", commentSum=" + commentSum +
@@ -117,6 +128,7 @@ public class PostInfoVo {
                 ", createTime=" + createTime +
                 ", excellent=" + excellent +
                 ", top=" + top +
+                ", hidden=" + hidden +
                 '}';
     }
 }

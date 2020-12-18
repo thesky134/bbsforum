@@ -15,4 +15,6 @@ public interface PostService {
     Post getPostById(int id);
     Post addPost(Post post);
     Post revisePost(Post post);
+    void updatePostHiddenState(int postId, int state);
+    void setPostDeleted(int postId);
 }
