@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
-    <script src="./config.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/global_functions.js"></script>
 </head>
-<body onload="getTopics();checkLoginState()">
+<body onload="getTopics();checkLoginState();addToken()">
 <div>
     <!-- tt-mobile menu -->
     <nav class="panel-menu" id="mobile-menu">
@@ -78,6 +79,7 @@
                         </nav>
                     </div>
                     <!-- /desctop menu -->
+                    <!--此处显示登录入口或个人栏-->
 
                 </div>
             </div>
@@ -339,6 +341,7 @@
     // 将token添加至请求头
     axios.interceptors.request.use(
         function (config){
+            console.log("addToken2")
             config.headers['Oauth-Token'] = localStorage.token;
             return config;
         },
@@ -346,9 +349,43 @@
             return Promise.reject(error);
         }
     )
-    // 判断登录状态
+
+
+
+    // 获取用户头像
+    function getHeadPic(){
+        axios({
+            method: 'POST',
+            url: baseURL+'/user/manage/info',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response)=>{
+            let result = response.data;
+            let picture = result.data.user.picture;
+            let headPicSrc = baseURL+'/image/'+picture;
+            let headPicDiv = document.getElementById("headPicDiv");
+            if (document.getElementById("headPicContainer")){
+                headPicDiv.removeChild(document.getElementById("headPicContainer"));
+            }
+            console.log(headPicSrc);
+            let headPicContainer = document.createElement("div");
+            headPicContainer.className = "headPicContainer";
+            headPicContainer.id = "headPicContainer";
+            headPicContainer.onclick = toSingleCenter();
+            headPicContainer.innerHTML = `<img class="headPic" src=`+headPicSrc+`>`;
+            headPicDiv.appendChild(headPicContainer);
+        }).catch(()=>{
+            console.log("error");
+        })
+    }
+
+    // 判断登录状态展示状态栏
     function checkLoginState() {
         let username = null;
+        let picture = getHeadPic();
+        let headPic = baseURL+'/image/' + picture;
+        console.log(headPic);
         let loginState = false;
         let loginHeader = document.getElementById("tt-header-login");
         axios({
@@ -356,7 +393,7 @@
             url: baseURL+'/user/manage/checkloginstate',
             headers: {
                 'Content-Type': 'application/json'
-            },
+            }
         }).then((response)=>{
             let result = response.data;
             loginState = result.data.loginState;
@@ -366,16 +403,15 @@
                 let userTab = document.createElement("div");
                 userTab.className = "col-auto ml-auto";
                 userTab.innerHTML = `<div class="tt-user-info d-flex justify-content-center">
-                        <div class="tt-avatar-icon tt-size-md">
-                            <a href="page-single_threads.html" class="tt-btn-icon">
-                                <i class="tt-icon"><svg><use xlink:href="#icon-ava-a"></use></svg></i>
-                            </a>
-                        </div>
-                        <div class="">
-                            <a href="page-single_threads.html" class="btn btn-primary">`+username+`</a>
-                            <a href="page-login.html" class="btn btn-secondary" onclick="logout()">退出</a>
-                        </div>`;
+                                     <div class="tt-col-avatar" id="headPicDiv">
+
+                                     </div>
+                                    <div class="">
+                                        <a href="page-single_threads.html" class="btn btn-primary">`+username+`</a>
+                                        <a href="page-login.html" class="btn btn-secondary" onclick="logout()">退出</a>
+                                    </div>`;
                 loginHeader.appendChild(userTab);
+                getHeadPic();
             }else{
                 let loginEntrances = document.createElement("div");
                 loginEntrances.className = "col-auto ml-auto";
@@ -390,15 +426,7 @@
             console.log("error");
         })
     }
-    // 获取下一页位置
-    function getPosition(){
-        console.log("getPosition()函数被调用了")
-        let position = parseInt(document.getElementById("nextPage").value);
-        position ++;
-        document.getElementById("nextPage").value = position;
-        console.log(position);
-        return position;
-    }
+
     // 获取一页帖子
     function getTopics(){
         console.log("getTopics()函数被调用了")
@@ -420,6 +448,10 @@
             let topicList = document.getElementById("topicList");
             for(let i=0; i<topics.length; i++) {
                 let topic = document.createElement("div");
+                topic.id = topics[i].id;
+                topic.onclick = function (){
+                    getTopicId(this.id);
+                };
                 let picture = topics[i].picture;
                 let headPic = baseURL+'/image/' + picture;
                 let createTime = topics[i].createTime;
@@ -440,7 +472,7 @@
                                                 <svg class="tt-icon">
                                                     <use xlink:href="#icon-locked"></use>
                                                 </svg>
-                                                <a href="page-single-topic.html">` + topics[i].title + `</a>
+                                                <a href="#">` + topics[i].title + `</a>
                                             </h6>
                                         </div>
                                         <div class="tt-col-category"><span class="tt-color04 tt-badge">` + topics[i].category + `</span></div>
@@ -512,10 +544,14 @@
             console.log("error");
         })
     }
-    // 退出登录
-    function logout(){
-        localStorage.removeItem("token");
+
+    // 获取帖子id
+    function getTopicId(id){
+        let tid = id;
+        console.log(tid);
+        localStorage.tid = tid;
     }
+
 </script>
 <svg width="0" height="0" class="hidden">
     <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" id="facebook-f-brands">
