@@ -281,7 +281,7 @@ public class UserController {
     public Result getUserPostSum() {
         Subject subject = SecurityUtils.getSubject();
         int userId = (int)subject.getPrincipal();
-        int sum = postService.getPostSum(-1, userId);
+        int sum = postService.getPostSum(-1, userId, -1);
         return Result.success("sum", sum);
     }
 

@@ -48,6 +48,7 @@ public class CommentController {
     public Result addComment(@Valid @RequestBody CommentDto commentDto) {
         Post post = postService.getPostById(commentDto.getPostId());
         Assert.notNull(post, "帖子不存在");
+        Assert.isTrue(!post.isHidden(), "帖子不存在");
         Subject subject = SecurityUtils.getSubject();
         User user = userService.getUserById((int)subject.getPrincipal());
         Comment comment = new Comment(commentDto.getContent(), user, post);
@@ -70,6 +71,7 @@ public class CommentController {
     public Result getCommentPostSum(@RequestBody CommentDto commentDto) {
         Post post = postService.getPostById(commentDto.getPostId());
         Assert.notNull(post, "关联帖子不存在");
+        Assert.isTrue(!post.isHidden(), "帖子不存在");
         int sum = commentService.getCommentSumByPostId(commentDto.getPostId());
         return Result.success("sum", sum);
     }
@@ -78,6 +80,7 @@ public class CommentController {
     public Result getCommentList(@Validated(CommentList.class) @RequestBody PaginationDto paginationDto) {
         Post post = postService.getPostById(paginationDto.getPostId());
         Assert.notNull(post, "帖子不存在");
+        Assert.isTrue(!post.isHidden(), "帖子不存在");
         Pagination pagination = new Pagination();
         pagination.setFrom(paginationDto.getPageSize() * (paginationDto.getPosition() - 1));
         pagination.setNum(paginationDto.getPageSize());

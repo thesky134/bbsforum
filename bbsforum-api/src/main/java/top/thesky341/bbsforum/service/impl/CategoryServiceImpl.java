@@ -31,4 +31,16 @@ public class CategoryServiceImpl implements CategoryService {
     public Category getCategoryByName(String name) {
         return categoryMapper.getCategoryByName(name);
     }
+
+    @Override
+    public Category addCategory(Category category) {
+        categoryMapper.addCategory(category);
+        return categoryMapper.getCategoryById(category.getId());
+    }
+
+    @Override
+    public Category reviseCategory(Category category) {
+        categoryMapper.reviseCategory(category);
+        return categoryMapper.getCategoryById(category.getId());
+    }
 }

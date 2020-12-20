@@ -11,11 +11,13 @@ import java.util.Date;
 public class PostInfoVo {
     private int id;
     private String picture;
+    private String user;
     private String title;
     private String category;
     private int commentSum;
     private int visitSum;
     private Date createTime;
+    private Date modifyTime;
     private boolean excellent;
     private boolean top;
     private boolean hidden;
@@ -30,10 +32,46 @@ public class PostInfoVo {
         category = post.getCategory().getName();
         this.commentSum = commentSum;
         this.visitSum = visitSum;
+        this.user = post.getUser().getUsername();
         createTime = post.getCreateTime();
+        modifyTime = post.getModifyTime();
         excellent = post.isExcellent();
         top = post.isTop();
         hidden = post.isHidden();
+    }
+
+    @Override
+    public String toString() {
+        return "PostInfoVo{" +
+                "id=" + id +
+                ", picture='" + picture + '\'' +
+                ", user='" + user + '\'' +
+                ", title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", commentSum=" + commentSum +
+                ", visitSum=" + visitSum +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", excellent=" + excellent +
+                ", top=" + top +
+                ", hidden=" + hidden +
+                '}';
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public int getId() {
@@ -116,19 +154,4 @@ public class PostInfoVo {
         this.hidden = hidden;
     }
 
-    @Override
-    public String toString() {
-        return "PostInfoVo{" +
-                "id=" + id +
-                ", picture='" + picture + '\'' +
-                ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", commentSum=" + commentSum +
-                ", visitSum=" + visitSum +
-                ", createTime=" + createTime +
-                ", excellent=" + excellent +
-                ", top=" + top +
-                ", hidden=" + hidden +
-                '}';
-    }
 }

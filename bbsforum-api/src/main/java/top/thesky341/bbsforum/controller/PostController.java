@@ -111,14 +111,14 @@ public class PostController {
      */
     @PostMapping("/post/all/sum")
     public Result getAllPostSum() {
-        return Result.success("sum", postService.getPostSum(-1, -1));
+        return Result.success("sum", postService.getPostSum(-1, -1, 0));
     }
 
     @PostMapping("/post/category/sum")
     public Result getPostSumWithCategory(@RequestBody Category category) {
         category = categoryService.getCategoryById(category.getId());
         Assert.notNull(category, "分类不存在");
-        return Result.success("sum", postService.getPostSum(category.getId(), -1));
+        return Result.success("sum", postService.getPostSum(category.getId(), -1, 0));
     }
 
     /**
@@ -140,7 +140,7 @@ public class PostController {
         Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
                 paginationDto.getPageSize());
         pagination.setCategoryId(paginationDto.getCategoryId());
-        CategoryVo categoryVo = new CategoryVo(category, postService.getPostSum(category.getId(), -1));
+        CategoryVo categoryVo = new CategoryVo(category, postService.getPostSum(category.getId(), -1, 0));
         Map<String, Object> data = new HashMap<>();
         data.put("category", categoryVo);
         data.put("posts", getPostInfoListByPagination(pagination));
@@ -151,6 +151,19 @@ public class PostController {
     public Result postView(@PathVariable int id) {
         Post post = postService.getPostById(id);
         Assert.notNull(post, "帖子不存在");
+        if (post.isHidden()) {
+            Subject subject = SecurityUtils.getSubject();
+            if(subject.isAuthenticated()) {
+                int userId = (int)subject.getPrincipal();
+                if(userId != post.getUser().getId()
+                        && !subject.hasRole("admin")
+                        && !subject.hasRole("superadmin")) {
+                    return new Result(ResultCode.PermissionDenied);
+                }
+            } else {
+                return new Result(ResultCode.PermissionDenied);
+            }
+        }
         PostVo postVo = new PostVo();
         postVo.parsePost(post);
         postVo.setVisitSum(userPostStateService.getPostStateSum(id, 4));
@@ -236,6 +249,7 @@ public class PostController {
     public Result changePostState(@PathVariable String stateStr, @PathVariable String operateStr, @PathVariable int postId) {
         Post post = postService.getPostById(postId);
         Assert.notNull(post, "帖子不存在");
+        Assert.isTrue(!post.isHidden(), "帖子不存在");
         Subject subject = SecurityUtils.getSubject();
         User user = userService.getUserById((int) subject.getPrincipal());
         if (operateStr.equals("add")) {
