@@ -84,12 +84,14 @@ public class CommentController {
         pagination.setPostId(paginationDto.getPostId());
 
         List<Comment> comments = commentService.getCommentListByPagination(pagination);
+        System.out.println(comments);
         List<CommentVo> commentVos = new ArrayList<>();
         for(int i = 0; i < comments.size(); i++) {
             CommentVo commentVo = new CommentVo();
             Comment comment = comments.get(i);
             commentVo.setContent(comment.getContent());
             commentVo.setId(comment.getId());
+            commentVo.setPostTitle(comment.getPost().getTitle());
             commentVo.setCreateTime(comment.getCreateTime());
             commentVo.setModifyTIme(comment.getModifyTime());
             commentVo.setUser(comment.getUser().getUsername());

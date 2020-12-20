@@ -10,6 +10,7 @@ import java.util.Date;
  */
 public class CommentVo {
     private int id;
+    private String postTitle;
     private String content;
     private Date createTime;
     private Date modifyTIme;
@@ -22,6 +23,14 @@ public class CommentVo {
     private boolean like;
 
     public CommentVo() {
+    }
+
+    public String getPostTitle() {
+        return postTitle;
+    }
+
+    public void setPostTitle(String postTitle) {
+        this.postTitle = postTitle;
     }
 
     public int getId() {
@@ -116,10 +125,11 @@ public class CommentVo {
     public String toString() {
         return "CommentVo{" +
                 "id=" + id +
+                ", postTitle='" + postTitle + '\'' +
                 ", content='" + content + '\'' +
                 ", createTime=" + createTime +
                 ", modifyTIme=" + modifyTIme +
-                ", user=" + user +
+                ", user='" + user + '\'' +
                 ", goodSum=" + goodSum +
                 ", badSum=" + badSum +
                 ", likeSum=" + likeSum +
