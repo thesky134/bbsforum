@@ -17,6 +17,10 @@
         SELECT COUNT(*)
         FROM user
     </select>
+    <select id="getAllUser" resultMap="userMap">
+        SELECT *
+        FROM user
+    </select>
     <select id="getUserListByPagination" resultMap="userMap">
         SELECT *
         FROM user
@@ -90,6 +94,11 @@
         UPDATE user
         SET passwd = #{passwd}
         WHERE id = #{id}
+    </update>
+    <update id="updateUserDisabledState">
+        UPDATE user
+        SET is_disabled = #{state}
+        WHERE id = #{userId}
     </update>
 
     <resultMap id="userMap" type="user">
