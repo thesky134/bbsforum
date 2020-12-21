@@ -99,8 +99,18 @@ public class PostController {
         Post post = new Post(postDto, user, category);
         postService.revisePost(post);
         if (category.getName().equals("积分悬赏")) {
-            user.setScore(oldPost.getReward() + user.getScore() - postDto.getReward());
-            userService.updateScore(user);
+            if(oldPost.getCategory().getName().equals("积分悬赏")) {
+                user.setScore(oldPost.getReward() + user.getScore() - postDto.getReward());
+                userService.updateScore(user);
+            } else {
+                user.setScore(user.getScore() - postDto.getReward());
+                userService.updateScore(user);
+            }
+        } else {
+            if(oldPost.getCategory().getName().equals("积分悬赏")) {
+                user.setScore(oldPost.getReward() + user.getScore());
+                userService.updateScore(user);
+            }
         }
         return Result.success();
     }

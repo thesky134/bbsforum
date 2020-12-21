@@ -16,7 +16,9 @@ public interface UserService {
     User getUserByEmail(String email);
     User getUserById(int id);
     List<User> getUserListByPagination(Pagination pagination);
+    List<User> getAdminListByPagination(Pagination pagination);
     int getUserSum();
+    int getAdminSum();
     int sumOfLoginsInaFewDays(int days);
     void checkIsTodayFirstLogin(User user);
     void updateLastLoginTime(User user);

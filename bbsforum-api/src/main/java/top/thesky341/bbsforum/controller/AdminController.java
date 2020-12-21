@@ -52,10 +52,14 @@ public class AdminController {
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         user = userService.getUserByUsername(user.getUsername());
-        if(!(subject.hasRole("admin") || subject.hasRole("superadmin"))) {
+        if (!(subject.hasRole("admin") || subject.hasRole("superadmin"))) {
+            subject.logout();
             return new Result(ResultCode.PermissionDenied);
         }
-        return Result.success(UserSessionManager.OAUTH_TOKEN, subject.getSession().getId());
+        Map<String, Object> data = new HashMap<>();
+        data.put(UserSessionManager.OAUTH_TOKEN, subject.getSession().getId());
+        data.put("id", user.getId());
+        return Result.success(data);
     }
 
     @RequiresRoles(value = {"admin", "superadmin"}, logical = Logical.OR)
@@ -183,6 +187,25 @@ public class AdminController {
         Category category = categoryService.getCategoryById(categoryId);
         Assert.notNull(category, "分类不存在");
         return Result.success("category", new CategoryVo(category, postService.getPostSum(category.getId(), -1, 0)));
+    }
+
+    @RequiresRoles("superadmin")
+    @PostMapping("/admin/admin/sum")
+    public Result getAdminSum() {
+        return Result.success("sum", userService.getUserSum());
+    }
+
+    @PostMapping("/admin/admin/list")
+    public Result getAdminList(@Valid @RequestBody PaginationDto paginationDto) {
+        Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
+                paginationDto.getPageSize());
+        List<User> users = userService.getAdminListByPagination(pagination);
+        List<UserVo> userVos = new ArrayList<>();
+        for(User user : users) {
+            UserVo userVo = new UserVo(user);
+            userVos.add(userVo);
+        }
+        return Result.success("users", userVos);
     }
 
     public List<PostInfoVo> getPostInfoListByPagination(Pagination pagination) {

@@ -46,6 +46,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAdminListByPagination(Pagination pagination) {
+        return userMapper.getAdminListByPagination(pagination);
+    }
+
+    @Override
+    public int getAdminSum() {
+        return userMapper.getAdminSum();
+    }
+
+    @Override
     public void updateUsername(User user) {
         userMapper.updateUsername(user);
     }

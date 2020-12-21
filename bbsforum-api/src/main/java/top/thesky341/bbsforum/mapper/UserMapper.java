@@ -19,6 +19,8 @@ public interface UserMapper {
     void addUser(User user);
     void deleteUserById(User user);
     int getUserSum();
+    int getAdminSum();
+    List<User> getAdminListByPagination(Pagination pagination);
     List<User> getAllUser();
     List<User> getUserListByPagination(Pagination pagination);
     User getUserById(int id);
