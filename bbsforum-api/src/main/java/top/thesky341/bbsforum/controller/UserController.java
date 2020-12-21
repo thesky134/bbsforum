@@ -298,6 +298,7 @@ public class UserController {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     @RequiresAuthentication
     @PostMapping("/user/comment/sum")
     public Result getCommentSum() {
@@ -319,6 +320,8 @@ public class UserController {
         return null;
     }
 
+=======
+>>>>>>> origin/main
 =======
 >>>>>>> origin/main
 

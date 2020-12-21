@@ -56,6 +56,20 @@
         ORDER BY create_time DESC
         LIMIT #{from}, #{num}
     </select>
+    <select id="getCommentListByPagination" resultMap="commentMap">
+        SELECT *
+        FROM comment
+        WHERE is_deleted = 0
+        <if test="userId != -1">
+            AND user_id != #{userId}
+        </if>
+        <if test="postId != -1">
+            AND post_id = #{postId}
+            AND is_hidden = 0
+        </if>
+        ORDER BY create_time DESC
+        LIMIT #{from}, #{num}
+    </select>
 
     <resultMap id="commentMap" type="comment">
         <id column="id" property="id"/>
