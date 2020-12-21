@@ -98,6 +98,7 @@ public class CommentController {
             commentVo.setGoodSum(userCommentStateService.getCommentStateSum(comment.getId(), 1));
             commentVo.setBadSum(userCommentStateService.getCommentStateSum(comment.getId(), 2));
             commentVo.setLikeSum(userCommentStateService.getCommentStateSum(comment.getId(), 3));
+            commentVo.setPicture(comment.getUser().getPicture());
             Subject subject = SecurityUtils.getSubject();
             if (subject.isAuthenticated()) {
                 int userId = (int)subject.getPrincipal();

@@ -10,6 +10,7 @@ import java.util.Date;
  */
 public class CommentVo {
     private int id;
+    private String picture;
     private String postTitle;
     private String content;
     private Date createTime;
@@ -23,6 +24,33 @@ public class CommentVo {
     private boolean like;
 
     public CommentVo() {
+    }
+
+    @Override
+    public String toString() {
+        return "CommentVo{" +
+                "id=" + id +
+                ", picture='" + picture + '\'' +
+                ", postTitle='" + postTitle + '\'' +
+                ", content='" + content + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTIme=" + modifyTIme +
+                ", user='" + user + '\'' +
+                ", goodSum=" + goodSum +
+                ", badSum=" + badSum +
+                ", likeSum=" + likeSum +
+                ", good=" + good +
+                ", bad=" + bad +
+                ", like=" + like +
+                '}';
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public String getPostTitle() {
@@ -121,21 +149,4 @@ public class CommentVo {
         this.like = like;
     }
 
-    @Override
-    public String toString() {
-        return "CommentVo{" +
-                "id=" + id +
-                ", postTitle='" + postTitle + '\'' +
-                ", content='" + content + '\'' +
-                ", createTime=" + createTime +
-                ", modifyTIme=" + modifyTIme +
-                ", user='" + user + '\'' +
-                ", goodSum=" + goodSum +
-                ", badSum=" + badSum +
-                ", likeSum=" + likeSum +
-                ", good=" + good +
-                ", bad=" + bad +
-                ", like=" + like +
-                '}';
-    }
 }

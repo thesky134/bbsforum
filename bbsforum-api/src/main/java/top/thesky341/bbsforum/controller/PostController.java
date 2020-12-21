@@ -226,7 +226,7 @@ public class PostController {
      * 当赞或喜欢时，踩会被取消
      * 当踩时，赞和喜欢会取消
      *
-     * @param stateStr good, bad, like
+     * @param stateStr   good, bad, like
      * @param operateStr add, delete
      * @param postId
      * @return
@@ -234,6 +234,7 @@ public class PostController {
     @RequiresAuthentication
     @PostMapping("/post/manage/{stateStr}/{operateStr}/{postId}")
     public Result changePostState(@PathVariable String stateStr, @PathVariable String operateStr, @PathVariable int postId) {
+        System.out.println(stateStr + " " + operateStr + " " + postId);
         Post post = postService.getPostById(postId);
         Assert.notNull(post, "帖子不存在");
         Subject subject = SecurityUtils.getSubject();
