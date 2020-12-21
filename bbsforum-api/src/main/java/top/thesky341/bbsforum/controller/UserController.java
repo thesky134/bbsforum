@@ -97,7 +97,10 @@ public class UserController {
         //检查是否每天第一次登录，第一次登录积分加5
         userService.checkIsTodayFirstLogin(user);
         userService.updateLastLoginTime(user);
-        return Result.success(UserSessionManager.OAUTH_TOKEN, subject.getSession().getId());
+        Map<String, Object> data = new HashMap<>();
+        data.put(UserSessionManager.OAUTH_TOKEN, subject.getSession().getId());
+        data.put("id", user.getId());
+        return Result.success(data);
     }
 
     /**
@@ -255,13 +258,9 @@ public class UserController {
     }
 
 
-    @RequiresAuthentication
-    @PostMapping("/user/manage/info")
-    public Result getUserInfo() {
-        Subject subject = SecurityUtils.getSubject();
-        int userId = (int)subject.getPrincipal();
+    @PostMapping("/user/manage/info/{userId}")
+    public Result getUserInfo(@PathVariable int userId) {
         User user = userService.getUserById(userId);
-        user.setChara(null);
         user.setOther(null);
         user.setTodayScore(-1);
         user.setCreateTime(null);
@@ -282,7 +281,7 @@ public class UserController {
     public Result getUserPostSum() {
         Subject subject = SecurityUtils.getSubject();
         int userId = (int)subject.getPrincipal();
-        int sum = postService.getPostSum(-1, userId);
+        int sum = postService.getPostSum(-1, userId, -1);
         return Result.success("sum", sum);
     }
 

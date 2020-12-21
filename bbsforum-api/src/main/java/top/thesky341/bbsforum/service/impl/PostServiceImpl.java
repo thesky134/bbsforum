@@ -20,8 +20,8 @@ public class PostServiceImpl implements PostService {
     PostMapper postMapper;
 
     @Override
-    public int getPostSum(int categoryId, int userId) {
-        return postMapper.getPostSum(categoryId, userId);
+    public int getPostSum(int categoryId, int userId, int hidden) {
+        return postMapper.getPostSum(categoryId, userId, hidden);
     }
 
     /**
@@ -35,28 +35,28 @@ public class PostServiceImpl implements PostService {
      */
     @Override
     public List<Post> getPostListByPagination(Pagination pagination) {
-        if(pagination.getUserId() == -1) {
-            int postTopSum = postMapper.getPostTopSum(pagination.getCategoryId());
-            System.out.println(postTopSum);
-            if(postTopSum - 1 >= pagination.getFrom() + pagination.getNum() - 1) {
-                pagination.setTop(1);
-                return postMapper.getPostListByPagination(pagination);
-            } else if(postTopSum - 1 >= pagination.getFrom()) {
-                List<Post> result = new ArrayList<>();
-                //需要测试
-                pagination.setTop(1);
-                result.addAll(postMapper.getPostListByPagination(pagination));
-                pagination.setFrom(0);
-                pagination.setNum(pagination.getNum() - result.size());
-                pagination.setTop(0);
-                result.addAll(postMapper.getPostListByPagination(pagination));
-                return result;
-            } else {
-                pagination.setTop(0);
-                pagination.setFrom(pagination.getFrom() - postTopSum);
-                return postMapper.getPostListByPagination(pagination);
-            }
+        if(pagination.getAdmin() != -1 || pagination.getUserId() != -1) {
+            return postMapper.getPostListByPagination(pagination);
+        }
+        //主页或者具体分类下的帖子列表
+        int postTopSum = postMapper.getPostTopSum(pagination.getCategoryId());
+        System.out.println(postTopSum);
+        if(postTopSum - 1 >= pagination.getFrom() + pagination.getNum() - 1) {
+            pagination.setTop(1);
+            return postMapper.getPostListByPagination(pagination);
+        } else if(postTopSum - 1 >= pagination.getFrom()) {
+            List<Post> result = new ArrayList<>();
+            //需要测试
+            pagination.setTop(1);
+            result.addAll(postMapper.getPostListByPagination(pagination));
+            pagination.setFrom(0);
+            pagination.setNum(pagination.getNum() - result.size());
+            pagination.setTop(0);
+            result.addAll(postMapper.getPostListByPagination(pagination));
+            return result;
         } else {
+            pagination.setTop(0);
+            pagination.setFrom(pagination.getFrom() - postTopSum);
             return postMapper.getPostListByPagination(pagination);
         }
     }
@@ -86,5 +86,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public void setPostDeleted(int postId) {
         postMapper.setPostDeleted(postId);
+    }
+
+    @Override
+    public void updatePostTopState(int postId, int state) {
+        postMapper.updatePostTopState(postId, state);
+    }
+
+    @Override
+    public void updatePostExcellentState(int postId, int state) {
+        postMapper.updatePostExcellentState(postId, state);
     }
 }

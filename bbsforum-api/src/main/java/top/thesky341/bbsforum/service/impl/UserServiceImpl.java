@@ -4,11 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import top.thesky341.bbsforum.entity.Chara;
+import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.entity.User;
 import top.thesky341.bbsforum.mapper.CharaMapper;
 import top.thesky341.bbsforum.mapper.UserMapper;
 import top.thesky341.bbsforum.service.UserService;
 import top.thesky341.bbsforum.util.common.UserUtil;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author thesky
@@ -21,12 +26,33 @@ public class UserServiceImpl implements UserService {
     @Autowired
     CharaMapper charaMapper;
 
+    @Override
     public User addUser(User user) {
         Chara chara = charaMapper.getGeneralChara();
         Assert.notNull(chara, "普通用户角色不存在");
         user.setChara(chara);
         userMapper.addUser(user);
         return userMapper.getUserById(user.getId());
+    }
+
+    @Override
+    public List<User> getUserListByPagination(Pagination pagination) {
+        return userMapper.getUserListByPagination(pagination);
+    }
+
+    @Override
+    public int getUserSum() {
+        return userMapper.getUserSum();
+    }
+
+    @Override
+    public List<User> getAdminListByPagination(Pagination pagination) {
+        return userMapper.getAdminListByPagination(pagination);
+    }
+
+    @Override
+    public int getAdminSum() {
+        return userMapper.getAdminSum();
     }
 
     @Override
@@ -98,7 +124,43 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int sumOfLoginsInaFewDays(int days) {
+        List<User> users = userMapper.getAllUser();
+        int sum = 0;
+        for(User user : users) {
+            if(user.getLastLoginTime() == null) {
+                continue;
+            }
+            Date date = user.getLastLoginTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            Calendar compareTime = Calendar.getInstance();
+            System.out.println(calendar);
+            System.out.println(compareTime);
+            compareTime.add(Calendar.DAY_OF_YEAR, -days);
+            if(calendar.get(Calendar.YEAR) < compareTime.get(Calendar.YEAR)) {
+                continue;
+            } else if(calendar.get(Calendar.YEAR) == compareTime.get(Calendar.YEAR)
+                    && calendar.get(Calendar.MONTH) < compareTime.get(Calendar.MONTH)) {
+                continue;
+            } else if(calendar.get(Calendar.YEAR) == compareTime.get(Calendar.YEAR)
+                    && calendar.get(Calendar.MONTH) == compareTime.get(Calendar.MONTH)
+                    && calendar.get(Calendar.DAY_OF_MONTH) < compareTime.get(Calendar.DAY_OF_MONTH)) {
+                continue;
+            } else {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    @Override
     public void updateLastLoginTime(User user) {
         userMapper.updateLastLoginTime(user);
+    }
+
+    @Override
+    public void updateUserDisabledState(int userId, int state) {
+        userMapper.updateUserDisabledState(userId, state);
     }
 }

@@ -5,7 +5,9 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -58,6 +60,10 @@ public class GlobleExceptionHandler {
             return new Result(ResultCode.AuthenticationException);
         } else if(e instanceof UnauthenticatedException) {
             return new Result((ResultCode.UnauthenticatedException));
+        } else if(e instanceof UnauthorizedException) {
+            return new Result(ResultCode.PermissionDenied);
+        } else if(e instanceof DuplicateKeyException) {
+            return new Result(ResultCode.DuplicateKeyException);
         } else {
             Result result = Result.error();
             Map<String, String> data = new HashMap<>();

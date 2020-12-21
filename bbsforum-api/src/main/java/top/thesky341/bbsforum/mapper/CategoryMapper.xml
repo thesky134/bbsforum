@@ -8,6 +8,12 @@
             NULL, #{name}, #{introduction}, NOW(), NULL
             )
     </insert>
+    <update id="reviseCategory" parameterType="category">
+        UPDATE category
+        SET name = #{name},
+            introduction = #{introduction}
+        WHERE id = #{id}
+    </update>
     <delete id="deleteCategoryById">
         DELETE FROM category WHERE id = #{id}
     </delete>
