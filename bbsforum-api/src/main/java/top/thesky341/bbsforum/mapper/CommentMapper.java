@@ -19,5 +19,5 @@ public interface CommentMapper {
     Comment getCommentById(int id);
     List<Comment> getCommentByUserId(int userId);
     List<Comment> getCommentByPostId(int postId);
-    int getCommentSumByPostId(int postId);
+    int getCommentSum(int postId, int userId);
 }

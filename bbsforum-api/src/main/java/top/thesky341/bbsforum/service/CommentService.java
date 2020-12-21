@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2020/12/11
  */
 public interface CommentService {
-    int getCommentSumByPostId(int postId);
+    int getCommentSum(int postId, int userId);
     Comment getCommentById(int id);
     Comment addComment(Comment comment);
     void updateContent(Comment comment);

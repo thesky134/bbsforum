@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.thesky341.bbsforum.config.shiro.UserSessionManager;
 import top.thesky341.bbsforum.dto.PaginationDto;
+import top.thesky341.bbsforum.entity.Category;
 import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.entity.Post;
 import top.thesky341.bbsforum.entity.groups.*;
@@ -252,12 +253,34 @@ public class UserController {
         return Result.success("posts", getPostInfoListByPagination(pagination));
     }
 
+    @RequiresAuthentication
+    @PostMapping("/user/comment/sum")
+    public Result getCommentSum() {
+        Subject subject = SecurityUtils.getSubject();
+        int userId = (int)subject.getPrincipal();
+        int sum = commentService.getCommentSum(-1, userId);
+        return Result.success("sum", sum);
+    }
+
+    @RequiresAuthentication
+//    @PostMapping("/user/comment/list")
+    public Result getCommentList(@Valid @RequestBody PaginationDto paginationDto) {
+//        Category category = categoryService.getCategoryById(paginationDto.getCategoryId());
+//        Assert.notNull(category, "分类不存在");
+//        Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
+//                paginationDto.getPageSize());
+//        pagination.setCategoryId(paginationDto.getCategoryId());
+//        return Result.success("posts", getPostInfoListByPagination(pagination));
+        return null;
+    }
+
+
     public List<PostInfoVo> getPostInfoListByPagination(Pagination pagination) {
         List<Post> posts = postService.getPostListByPagination(pagination);
         List<PostInfoVo> postInfoVos = new ArrayList<>();
         for (Post post : posts) {
             int postId = post.getId();
-            int commentSum = commentService.getCommentSumByPostId(postId);
+            int commentSum = commentService.getCommentSum(postId, -1);
             int visitSum = userPostStateService.getPostStateSum(postId, 4);
             postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
         }

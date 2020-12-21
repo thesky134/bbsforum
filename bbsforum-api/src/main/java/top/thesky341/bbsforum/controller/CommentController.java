@@ -70,7 +70,7 @@ public class CommentController {
     public Result getCommentPostSum(@RequestBody CommentDto commentDto) {
         Post post = postService.getPostById(commentDto.getPostId());
         Assert.notNull(post, "关联帖子不存在");
-        int sum = commentService.getCommentSumByPostId(commentDto.getPostId());
+        int sum = commentService.getCommentSum(commentDto.getPostId(), -1);
         return Result.success("sum", sum);
     }
 

@@ -147,7 +147,7 @@ public class PostController {
         PostVo postVo = new PostVo();
         postVo.parsePost(post);
         postVo.setVisitSum(userPostStateService.getPostStateSum(id, 4));
-        postVo.setCommentSum(commentService.getCommentSumByPostId(id));
+        postVo.setCommentSum(commentService.getCommentSum(id, -1));
         postVo.setGoodSum(userPostStateService.getPostStateSum(id, 1));
         postVo.setBadSum(userPostStateService.getPostStateSum(id, 2));
         postVo.setLikeSum(userPostStateService.getPostStateSum(id, 3));
@@ -207,7 +207,7 @@ public class PostController {
         List<PostInfoVo> postInfoVos = new ArrayList<>();
         for (Post post : posts) {
             int postId = post.getId();
-            int commentSum = commentService.getCommentSumByPostId(postId);
+            int commentSum = commentService.getCommentSum(postId, -1);
             int visitSum = userPostStateService.getPostStateSum(postId, 4);
             postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
         }
