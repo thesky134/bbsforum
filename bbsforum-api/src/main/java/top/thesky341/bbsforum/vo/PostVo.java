@@ -15,6 +15,8 @@ public class PostVo {
     private Date createDate;
     private Date modifyDate;
     private String user;
+    private int userId;
+    private String picture;
     private String category;
     private boolean excellent;
     private boolean top;
@@ -26,6 +28,7 @@ public class PostVo {
     private boolean good;
     private boolean bad;
     private boolean like;
+    private int reward;
 
     public PostVo() {
     }
@@ -40,6 +43,17 @@ public class PostVo {
         setCategory(post.getCategory().getName());
         setExcellent(post.isExcellent());
         setTop(post.isTop());
+        setPicture(post.getUser().getPicture());
+        setUserId(post.getUser().getId());
+        setReward(post.getReward());
+    }
+
+    public int getReward() {
+        return reward;
+    }
+
+    public void setReward(int reward) {
+        this.reward = reward;
     }
 
     public int getId() {
@@ -178,6 +192,22 @@ public class PostVo {
         this.like = like;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     @Override
     public String toString() {
         return "PostVo{" +
@@ -187,6 +217,8 @@ public class PostVo {
                 ", createDate=" + createDate +
                 ", modifyDate=" + modifyDate +
                 ", user='" + user + '\'' +
+                ", userId=" + userId +
+                ", picture='" + picture + '\'' +
                 ", category='" + category + '\'' +
                 ", excellent=" + excellent +
                 ", top=" + top +
@@ -198,6 +230,7 @@ public class PostVo {
                 ", good=" + good +
                 ", bad=" + bad +
                 ", like=" + like +
+                ", reward=" + reward +
                 '}';
     }
 }

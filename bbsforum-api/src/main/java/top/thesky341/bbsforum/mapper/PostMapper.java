@@ -17,10 +17,13 @@ import java.util.List;
 @Mapper
 public interface PostMapper {
     void addPost(Post post);
+    void batchAddPost(Post post);
     void revisePost(Post posr);
     void deletePostById(int id);
     void updatePostHiddenState(@Param("id") int id, @Param("state") int state);
     void setPostDeleted(int id);
+    void updatePostTopState(@Param("id") int id, @Param("state") int state);
+    void updatePostExcellentState(@Param("id") int id, @Param("state") int state);
     Post getPostById(int id);
     List<Post> getPostByUserId(int userId);
 
@@ -30,7 +33,7 @@ public interface PostMapper {
      * @param userId 用户，不指定时置为-1
      * @return
      */
-    int getPostSum(int categoryId, int userId);
+    int getPostSum(int categoryId, int userId, @Param("hidden") int hidden);
     int getPostTopSum(int categoryId);
 
     /**

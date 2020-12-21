@@ -41,6 +41,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> getCommentListByPagination(Pagination pagination) {
-        return null;
+        return commentMapper.getCommentListByPagination(pagination);
     }
 }

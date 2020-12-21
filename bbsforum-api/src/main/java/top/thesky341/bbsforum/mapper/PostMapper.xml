@@ -11,6 +11,14 @@
             0, #{reward}
         )
     </insert>
+    <insert id="batchAddPost" parameterType="post" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO post VALUE (
+            NULL, #{title}, #{content}, NOW(),
+            NULL, #{user.id}, #{category.id},
+            #{hidden}, #{deleted}, #{excellent},
+            #{top}, #{reward}
+            )
+    </insert>
     <update id="revisePost" parameterType="post">
         UPDATE post
         SET title = #{title},
@@ -35,9 +43,19 @@
         SET is_deleted = 1
         WHERE id = #{id}
     </update>
+    <update id="updatePostTopState">
+        UPDATE post
+        SET is_top = #{state}
+        WHERE id = #{id}
+    </update>
+    <update id="updatePostExcellentState">
+        UPDATE post
+        SET is_excellent = #{state}
+        WHERE id = #{id}
+    </update>
     <select id="getPostById" resultMap="postMap">
         SELECT *
-        FROM post WHERE id = #{id} AND is_hidden = 0 AND is_deleted = 0
+        FROM post WHERE id = #{id} AND is_deleted = 0
     </select>
     <select id="getPostByUserId" resultMap="postMap">
         SELECT *
@@ -52,14 +70,12 @@
         <if test="categoryId != -1">
             AND category_id = #{categoryId}
         </if>
-        <choose>
-            <when test="userId == -1">
-                AND is_hidden = 0
-            </when>
-            <when test="userId != -1">
-                AND user_id = #{userId}
-            </when>
-        </choose>
+        <if test="userId != -1">
+            AND user_id = #{userId}
+        </if>
+        <if test="hidden != -1">
+            AND is_hidden = #{hidden}
+        </if>
     </select>
 <!--    可以用于主页，具体分类的帖子列表-->
     <select id="getPostTopSum" resultType="integer">

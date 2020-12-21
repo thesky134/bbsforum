@@ -1,39 +1,31 @@
-package top.thesky341.bbsforum.entity;
+package top.thesky341.bbsforum.vo;
 
-import org.hibernate.validator.constraints.Length;
-import top.thesky341.bbsforum.entity.groups.Login;
-import top.thesky341.bbsforum.entity.groups.Register;
-import top.thesky341.bbsforum.entity.groups.UpdateUsername;
+import top.thesky341.bbsforum.entity.Category;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
  * @author thesky
- * @date 2020/12/8
+ * @date 2020/12/18
  */
-public class Category {
+public class CategoryVo {
     private int id = -1;
-    @NotNull(message = "分类名必须存在")
-    @Length(min = 1, max = 20, message = "分类名长度应该在1至20之间")
-    @Pattern(regexp = "^[^\\s]+$", message = "分类名不能包含空白字符")
     private String name;
-    @NotNull(message = "介绍必须存在")
-    @Length(min = 1, max = 100, message = "分类名长度应该在1至100之间")
     private String introduction;
     private Date createTime;
     private Date modifyTime;
+    private int sum;
 
-    public Category() {
+    public CategoryVo() {
     }
 
-    public Category(int id, String name, String introduction, Date createTime, Date modifyTime) {
-        this.id = id;
-        this.name = name;
-        this.introduction = introduction;
-        this.createTime = createTime;
-        this.modifyTime = modifyTime;
+    public CategoryVo(Category category, int sum) {
+        this.id = category.getId();
+        this.name = category.getName();
+        this.introduction = category.getIntroduction();
+        this.createTime = category.getCreateTime();
+        this.modifyTime = category.getModifyTime();
+        this.sum = sum;
     }
 
     public int getId() {
@@ -76,14 +68,23 @@ public class Category {
         this.modifyTime = modifyTime;
     }
 
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
+
     @Override
     public String toString() {
-        return "Category{" +
+        return "CategoryVo{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", introduction='" + introduction + '\'' +
                 ", createTime=" + createTime +
                 ", modifyTime=" + modifyTime +
+                ", sum=" + sum +
                 '}';
     }
 }

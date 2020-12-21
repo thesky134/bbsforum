@@ -10,6 +10,10 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/global_functions.js"></script>
 </head>
 <body>
 <!-- tt-mobile menu -->
@@ -105,42 +109,38 @@
                             <div class="tt-avatar-icon">
                                 <i class="tt-icon"><svg><use xlink:href="#icon-ava-d"></use></svg></i>
                             </div>
-                            <div class="tt-avatar-title">
-                               <a href="#">dylan89</a>
+                            <!--用户名-->
+                            <div class="tt-avatar-title" id="showUsernameDiv">
+
                             </div>
-                            <a href="#" class="tt-info-time">
-                                <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>6 Jan,2019
+                            <!--时间-->
+                            <a href="#" class="tt-info-time" id="showCreateTimeDiv">
+                                <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg>
+                                </i>
                             </a>
                         </div>
-                        <h3 class="tt-item-title">
-                            <a href="#">Web Hosting Packages for ThemeForest WordPress</a>
+                        <!--标题-->
+                        <button onclick="getTopicView()">getTopicView</button>
+                        <h3 class="tt-item-title" id="showTitleDiv">
+
                         </h3>
                         <div class="tt-item-tag">
-                            <ul class="tt-list-badge">
-                                <li><a href="#"><span class="tt-color03 tt-badge">exchange</span></a></li>
-                                <li><a href="#"><span class="tt-badge">themeforest</span></a></li>
-                                <li><a href="#"><span class="tt-badge">elements</span></a></li>
+                            <ul class="tt-list-badge" >
+                                <!--帖子分类-->
+                                <li><a href="#" id="showCategoryDiv">
+
+                                </a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="tt-item-description">
-                        <h6 class="tt-title">Get ready for Movember!</h6>
-                        <p>
-                            It’s time to channel your inner Magnum P.I., Ron Swanson or Hercule Poroit! It’s the time that all guys (or gals) love and all our
-                            partners hate It’s Movember!
-                        </p>
-                        <p>
-                            Throughout November we will be inviting all community members to help raise awareness and funds for the lives of men affected
-                            by cancer and mental health problems via the Movember Foundation 10.
-                        </p>
-                        <h6 class="tt-title">How Does it Work?</h6>
-                        <p>
-                            Authors and customers with facial hair unite! Simply grow, groom, and share your facial hair during November! Even females can enter if they desire (be creative, ladies!). Be inspired by checking out last year’s highlights 28.
-                        </p>
+                     <!--帖子内容-->
+                    <div class="tt-item-description" id="showContentDiv">
+
                     </div>
                     <div class="tt-item-info info-bottom">
                         <a href="#" class="tt-icon-btn">
-                            <i class="tt-icon"><svg><use xlink:href="#icon-like"></use></svg></i>
+                            <i class="tt-icon"><svg>
+                                <use xlink:href="#icon-like"></use></svg></i>
                             <span class="tt-text">671</span>
                         </a>
                         <a href="#" class="tt-icon-btn">
@@ -203,26 +203,29 @@
                                 <i class="tt-icon"><svg><use xlink:href="#icon-ava-t"></use></svg></i>
                             </div>
                             <div class="tt-avatar-title">
-                               <a href="#">tesla02</a>
+                               <a href="#">用户名</a>
                             </div>
+                            <!--回复时间-->
                             <a href="#" class="tt-info-time">
                                 <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>6 Jan,2019
                             </a>
                         </div>
                     </div>
                     <div class="tt-item-description">
-                        Finally!<br>
-                        Are there any special recommendations for design or an updated guide that includes new preview sizes, including retina displays?
+                        回复1
                     </div>
                     <div class="tt-item-info info-bottom">
+                        <!--赞-->
                         <a href="#" class="tt-icon-btn">
                             <i class="tt-icon"><svg><use xlink:href="#icon-like"></use></svg></i>
                             <span class="tt-text">671</span>
                         </a>
+                        <!--踩-->
                         <a href="#" class="tt-icon-btn">
                              <i class="tt-icon"><svg><use xlink:href="#icon-dislike"></use></svg></i>
                             <span class="tt-text">39</span>
                         </a>
+                        <!--喜欢-->
                         <a href="#" class="tt-icon-btn">
                              <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
                             <span class="tt-text">12</span>
@@ -231,45 +234,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tt-item">
-                 <div class="tt-single-topic">
-                    <div class="tt-item-header pt-noborder">
-                        <div class="tt-item-info info-top">
-                            <div class="tt-avatar-icon">
-                                <i class="tt-icon"><svg><use xlink:href="#icon-ava-k"></use></svg></i>
-                            </div>
-                            <div class="tt-avatar-title">
-                               <a href="#">kolis27</a>
-                            </div>
-                            <a href="#" class="tt-info-time">
-                                <i class="tt-icon"><svg><use xlink:href="#icon-time"></use></svg></i>6 Jan,2019
-                            </a>
-                        </div>
-                    </div>
-                    <div class="tt-item-description">
-                        <p>
-                            It’s too big preview image, it should be smaller even five in row. On one page there are 30 items to 60 pages it is 1800 items in
-                        categories eg in Add-Ons category have 22749 items, why not see all of them but only those 1800 items? This is a bad thing.
-                        </p>
-                    </div>
-                    <div class="tt-item-info info-bottom">
-                        <a href="#" class="tt-icon-btn">
-                            <i class="tt-icon"><svg><use xlink:href="#icon-like"></use></svg></i>
-                            <span class="tt-text">671</span>
-                        </a>
-                        <a href="#" class="tt-icon-btn">
-                             <i class="tt-icon"><svg><use xlink:href="#icon-dislike"></use></svg></i>
-                            <span class="tt-text">39</span>
-                        </a>
-                        <a href="#" class="tt-icon-btn">
-                             <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                            <span class="tt-text">12</span>
-                        </a>
-                        <div class="col-separator"></div>
 
-                    </div>
-                </div>
-            </div>
 
         </div>
         <div class="tt-wrapper-inner">
@@ -406,133 +371,54 @@
         </svg>
     </span>
 </a>
-
-<div class="modal fade" id="modalAdvancedSearch" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
-		<div class="modal-content">
-			<div class="tt-modal-advancedSearch">
-				<div class="tt-modal-title">
-					<i class="pt-icon">
-						<svg>
-							<use xlink:href="#icon-advanced_search"></use>
-						</svg>
-					</i>
-					Advanced Search
-					<a class="pt-close-modal" href="#" data-dismiss="modal">
-						<svg class="icon">
-							<use xlink:href="#icon-cancel"></use>
-						</svg>
-					</a>
-				</div>
-				<form class="form-default">
-					<div class="form-group">
-						<i class="pt-customInputIcon">
-                           <svg class="tt-icon">
-                              <use xlink:href="#icon-search"></use>
-                            </svg>
-                        </i>
-						<input type="text" name="name" class="form-control pt-customInputSearch" id="searchForum" placeholder="Search all forums">
-					</div>
-					<div class="form-group">
-						<label for="searchName">Posted by</label>
-						<input type="text" name="name" class="form-control" id="searchName" placeholder="Username">
-					</div>
-					<div class="form-group">
-						<label for="searchCategory">In Category</label>
-						<input type="text" name="name" class="form-control" id="searchCategory" placeholder="Add Category">
-					</div>
-					<div class="checkbox-group">
-				        <input type="checkbox" id="searcCheckBox01" name="checkbox">
-				        <label for="searcCheckBox01">
-				            <span class="check"></span>
-				            <span class="box"></span>
-				            <span class="tt-text">Include all tags</span>
-				        </label>
-				    </div>
-					<div class="form-group">
-						<label>Only return topics/posts that...</label>
-						<div class="checkbox-group">
-					        <input type="checkbox" id="searcCheckBox02" name="checkbox">
-					        <label for="searcCheckBox02">
-					            <span class="check"></span>
-					            <span class="box"></span>
-					            <span class="tt-text">I liked</span>
-					        </label>
-					    </div>
-					    <div class="checkbox-group">
-					        <input type="checkbox" id="searcCheckBox03" name="checkbox">
-					        <label for="searcCheckBox03">
-					            <span class="check"></span>
-					            <span class="box"></span>
-					            <span class="tt-text">are in my messages</span>
-					        </label>
-					    </div>
-					    <div class="checkbox-group">
-					        <input type="checkbox" id="searcCheckBox04" name="checkbox">
-					        <label for="searcCheckBox04">
-					            <span class="check"></span>
-					            <span class="box"></span>
-					            <span class="tt-text">I’ve read</span>
-					        </label>
-					    </div>
-					</div>
-					<div class="form-group">
-						<select class="form-control" id="searchTop">
-							<option>any</option>
-							<option>value 01</option>
-							<option>value 02</option>
-							<option>value 03</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="searchaTopics">Where topics</label>
-						<select class="form-control" id="searchaTopics">
-							<option>any</option>
-							<option>value 01</option>
-							<option>value 02</option>
-							<option>value 03</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="searchAdvTime">Posted</label>
-						<div class="row">
-							<div class="col-6">
-								<select class="form-control">
-									<option>any</option>
-									<option>value 01</option>
-									<option>value 02</option>
-									<option>value 03</option>
-								</select>
-							</div>
-							<div class="col-6">
-								<input type="text" name="name" class="form-control" id="searchAdvTime" placeholder="dd-mm-yyyy">
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="minPostCount">Minimum Post Count</label>
-						<select class="form-control" id="minPostCount">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-							<option>6</option>
-							<option>7</option>
-							<option>8</option>
-							<option>9</option>
-							<option selected>10</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<a href="#" class="btn btn-secondary btn-block">Search</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
 <script src="js/bundle.js"></script>
+<script>
+    const baseURL = window.config.ip;
+    // 获取帖子详情
+    function getTopicView(){
+        axios({
+            method: 'POST',
+            url: baseURL+'/post/view/1',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response)=>{
+            let result = response.data;
+            let topic = result.data.post;
+            console.log(topic);
+            let username = topic.user;
+            let category = topic.category;
+            let title = topic.title;
+            let content = topic.content;
+            let createDate = topic.createDate;
+
+
+            let showUsernameDiv = document.getElementById("showUsernameDiv");
+            let showCategoryDiv = document.getElementById("showCategoryDiv");
+            let showTitleDiv = document.getElementById("showTitleDiv");
+            let showContentDiv = document.getElementById("showContentDiv");
+
+            let showUsername = document.createElement("a");
+            let showCategory = document.createElement("span");
+            let showTitle = document.createElement("a");
+            let showContent = document.createElement("div");
+
+            showUsername.innerHTML = `<a href="#">`+username+`</a>`;
+            showCategory.innerHTML = `<span class="tt-color03 tt-badge">`+category+`</span>`;
+            showTitle.innerHTML = `<a href="#">`+title+`</a>`;
+            showContent.innerText = content;
+
+            console.log(createDate);
+            showUsernameDiv.appendChild(showUsername);
+            showCategoryDiv.appendChild(showCategory);
+            showTitleDiv.appendChild(showTitle);
+            showContentDiv.appendChild(showContent);
+
+        }).catch(()=>{
+            console.log("error");
+        })
+    }
+</script>
 <svg width="0" height="0" class="hidden">
 	 <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" id="facebook-f-brands">
     <path fill="currentColor" d="M215.8 85H264V3.6C255.7 2.5 227.1 0 193.8 0 124.3 0 76.7 42.4 76.7 120.3V192H0v91h76.7v229h94V283h73.6l11.7-91h-85.3v-62.7c0-26.3 7.3-44.3 45.1-44.3z"></path>

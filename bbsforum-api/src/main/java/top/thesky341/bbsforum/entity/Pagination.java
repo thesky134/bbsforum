@@ -13,6 +13,7 @@ public class Pagination {
     private Integer userId = -1;
     private Integer postId = -1;
     private Integer top = -1;
+    private Integer admin = -1;
 
     public Pagination() {
     }
@@ -54,6 +55,14 @@ public class Pagination {
         this.postId = postId;
     }
 
+    public Integer getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Integer admin) {
+        this.admin = admin;
+    }
+
     @Override
     public String toString() {
         return "Pagination{" +
@@ -63,6 +72,7 @@ public class Pagination {
                 ", userId=" + userId +
                 ", postId=" + postId +
                 ", top=" + top +
+                ", admin=" + admin +
                 '}';
     }
 

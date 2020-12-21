@@ -10,5 +10,6 @@ import top.thesky341.bbsforum.entity.UserPostState;
 public interface UserPostStateService {
     int getPostStateSum(int postId, int state);
     int getUserPostStateSum(int postId, int userId, int state);
-    UserPostState addUserPostState(UserPostState userPostState);
+    void addUserPostState(UserPostState userPostState);
+    void deleteUserPostState(UserPostState userPostState);
 }

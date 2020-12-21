@@ -1,10 +1,13 @@
 package top.thesky341.bbsforum.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.entity.User;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author thesky
@@ -15,6 +18,11 @@ import java.util.Date;
 public interface UserMapper {
     void addUser(User user);
     void deleteUserById(User user);
+    int getUserSum();
+    int getAdminSum();
+    List<User> getAdminListByPagination(Pagination pagination);
+    List<User> getAllUser();
+    List<User> getUserListByPagination(Pagination pagination);
     User getUserById(int id);
     User getUserByUsername(String name);
     User getUserByEmail(String email);
@@ -28,4 +36,6 @@ public interface UserMapper {
     void updatePersonalSignal(User user);
     void updatePicture(User user);
     void updateScore(User user);
+    void updatePasswd(User user);
+    void updateUserDisabledState(@Param("userId") int userId, @Param("state") int state);
 }

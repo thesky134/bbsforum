@@ -14,6 +14,7 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
     void addCategory(Category category);
+    void reviseCategory(Category category);
     void deleteCategoryById(int id);
     Category getCategoryById(int id);
     Category getCategoryByName(String name);
