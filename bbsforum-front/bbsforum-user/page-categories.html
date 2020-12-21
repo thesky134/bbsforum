@@ -93,30 +93,7 @@
     <div class="tt-categories-list">
         <!--分类列表-->
         <div class="row" id="categoriesList">
-            <div class="col-md-6 col-lg-4">
-                <div class="tt-item">
-                    <div class="tt-item-header">
-                        <ul class="tt-list-badge">
-                            <li><a href="page-categories-single.html"><span class="tt-color01 tt-badge">帖子加精</span></a>
-                            </li>
-                        </ul>
-                        <h6 class="tt-title"><a href="page-categories-single.html">帖子 - 1,245</a></h6>
-                    </div>
-                    <div class="tt-item-layout">
-                        <div class="innerwrapper">
-                            这是精品贴展示区
-                        </div>
 
-                        <a href="#" class="tt-btn-icon">
-                            <i class="tt-icon">
-                                <svg>
-                                    <use xlink:href="#icon-favorite"></use>
-                                </svg>
-                            </i>
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </main>
@@ -351,6 +328,16 @@
 <script src="js/bundle.js"></script>
 <script>
     const baseURL = window.config.ip;
+    // 将token添加至请求头
+    axios.interceptors.request.use(
+        function (config){
+            config.headers['Oauth-Token'] = localStorage.token;
+            return config;
+        },
+        function (error){
+            return Promise.reject(error);
+        }
+    )
     // 获取帖子分类 all
     function getCategories(){
         console.log("getCategories()函数被调用了");
