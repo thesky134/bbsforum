@@ -12,6 +12,8 @@ import java.util.Date;
 /**
  * @author thesky
  * @date 2020/12/18
+ * 对个人信息进行了封装
+ * 用户的敏感信息不会被返回
  */
 public class UserVo {
     private int id;

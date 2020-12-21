@@ -9,6 +9,8 @@ import java.util.Map;
 /**
  * @author thesky
  * @date 2020/12/9
+ * 专门用于返回数据
+ * 包含了返回的状态码，提示信息，相应的数据
  */
 public class Result implements Serializable {
     /**

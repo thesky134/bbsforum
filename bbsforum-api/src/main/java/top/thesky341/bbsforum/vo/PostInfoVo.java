@@ -7,11 +7,19 @@ import java.util.Date;
 /**
  * @author thesky
  * @date 2020/12/11
+ * 对帖子信息进行了封装，不包含帖子内容
+ * 帖子信息和具体的帖子不一样
+ * 前者用户主页或者具体分类下的帖子列表展示
+ * 后者用于查看帖子
  */
 public class PostInfoVo {
     private int id;
+    /**
+     * 帖子作者的头像路径
+     */
     private String picture;
     private String user;
+    private int userId;
     private String title;
     private String category;
     private int commentSum;
@@ -33,29 +41,12 @@ public class PostInfoVo {
         this.commentSum = commentSum;
         this.visitSum = visitSum;
         this.user = post.getUser().getUsername();
+        this.userId = post.getUser().getId();
         createTime = post.getCreateTime();
         modifyTime = post.getModifyTime();
         excellent = post.isExcellent();
         top = post.isTop();
         hidden = post.isHidden();
-    }
-
-    @Override
-    public String toString() {
-        return "PostInfoVo{" +
-                "id=" + id +
-                ", picture='" + picture + '\'' +
-                ", user='" + user + '\'' +
-                ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", commentSum=" + commentSum +
-                ", visitSum=" + visitSum +
-                ", createTime=" + createTime +
-                ", modifyTime=" + modifyTime +
-                ", excellent=" + excellent +
-                ", top=" + top +
-                ", hidden=" + hidden +
-                '}';
     }
 
     public String getUser() {
@@ -154,4 +145,30 @@ public class PostInfoVo {
         this.hidden = hidden;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "PostInfoVo{" +
+                "id=" + id +
+                ", picture='" + picture + '\'' +
+                ", user='" + user + '\'' +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", commentSum=" + commentSum +
+                ", visitSum=" + visitSum +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", excellent=" + excellent +
+                ", top=" + top +
+                ", hidden=" + hidden +
+                '}';
+    }
 }

@@ -7,18 +7,33 @@ import java.util.Date;
 /**
  * @author thesky
  * @date 2020/12/16
+ * 对将要返回的评论进行了封装
  */
 public class CommentVo {
     private int id;
+    /**
+     * 评论作者的头像路径
+     */
     private String picture;
+    /**
+     * 评论对应帖子的标题
+     * 在显示个人评论时会使用
+     */
     private String postTitle;
     private String content;
     private Date createTime;
     private Date modifyTIme;
+    /**
+     * 评论作者名字
+     */
     private String user;
+    private int userId;
     private int goodSum;
     private int badSum;
     private int likeSum;
+    /**
+     * 当前用户是否给该评论点赞
+     */
     private boolean good;
     private boolean bad;
     private boolean like;
@@ -26,23 +41,12 @@ public class CommentVo {
     public CommentVo() {
     }
 
-    @Override
-    public String toString() {
-        return "CommentVo{" +
-                "id=" + id +
-                ", picture='" + picture + '\'' +
-                ", postTitle='" + postTitle + '\'' +
-                ", content='" + content + '\'' +
-                ", createTime=" + createTime +
-                ", modifyTIme=" + modifyTIme +
-                ", user='" + user + '\'' +
-                ", goodSum=" + goodSum +
-                ", badSum=" + badSum +
-                ", likeSum=" + likeSum +
-                ", good=" + good +
-                ", bad=" + bad +
-                ", like=" + like +
-                '}';
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getPicture() {
@@ -149,4 +153,23 @@ public class CommentVo {
         this.like = like;
     }
 
+    @Override
+    public String toString() {
+        return "CommentVo{" +
+                "id=" + id +
+                ", picture='" + picture + '\'' +
+                ", postTitle='" + postTitle + '\'' +
+                ", content='" + content + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTIme=" + modifyTIme +
+                ", user='" + user + '\'' +
+                ", userId=" + userId +
+                ", goodSum=" + goodSum +
+                ", badSum=" + badSum +
+                ", likeSum=" + likeSum +
+                ", good=" + good +
+                ", bad=" + bad +
+                ", like=" + like +
+                '}';
+    }
 }

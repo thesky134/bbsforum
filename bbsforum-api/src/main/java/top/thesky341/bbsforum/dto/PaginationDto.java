@@ -17,10 +17,9 @@ public class PaginationDto {
     @NotNull(message = "所在页数必须存在")
     @Min(value = 1, message = "所在页数必须大于1")
     private int position;
-    @NotNull(message = "分类不允许为空", groups = {PaginationWithCategory.class})
     private int categoryId = -1;
-    @NotNull(message = "关联的帖子必须存在", groups = {CommentList.class})
     private int postId = -1;
+    private int userId = -1;
 
     public PaginationDto() {
     }
@@ -63,6 +62,14 @@ public class PaginationDto {
         this.postId = postId;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "PaginationDto{" +
@@ -70,6 +77,7 @@ public class PaginationDto {
                 ", position=" + position +
                 ", categoryId=" + categoryId +
                 ", postId=" + postId +
+                ", userId=" + userId +
                 '}';
     }
 }

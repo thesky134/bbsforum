@@ -7,6 +7,8 @@ import java.util.Date;
 /**
  * @author thesky
  * @date 2020/12/11
+ * 对具体的帖子进行了封装
+ * 包含了帖子对应的各方面内容
  */
 public class PostVo {
     private int id;
@@ -40,6 +42,7 @@ public class PostVo {
         setCreateDate(post.getCreateTime());
         setModifyDate(post.getModifyTime());
         setUser(post.getUser().getUsername());
+        setUserId(post.getUser().getId());
         setCategory(post.getCategory().getName());
         setExcellent(post.isExcellent());
         setTop(post.isTop());

@@ -112,6 +112,11 @@
         SET is_disabled = #{state}
         WHERE id = #{userId}
     </update>
+    <update id="updateChara">
+        UPDATE user
+        SET chara_id = #{chara.id}
+        WHERE id = #{id}
+    </update>
 
     <resultMap id="userMap" type="user">
         <id column="id" property="id"/>

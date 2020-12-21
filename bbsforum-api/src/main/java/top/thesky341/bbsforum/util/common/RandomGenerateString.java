@@ -7,6 +7,11 @@ import java.util.Random;
  * @date 2020/12/10
  */
 public class RandomGenerateString {
+    /**
+     * 生成一个随机字符串
+     * @param length 指定生成字符串的长度
+     * @return 返回生成的字符串
+     */
     public static String generateString(int length) {
         if (length <= 0) {
             length = 1;

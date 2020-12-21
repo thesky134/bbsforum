@@ -43,6 +43,9 @@ public class CommentController {
     @Resource(name = "userCommentStateServiceImpl")
     UserCommentStateService userCommentStateService;
 
+    /**
+     * 添加评论，评论是有关联帖子的
+     */
     @RequiresAuthentication
     @PostMapping("/comment/manage/add")
     public Result addComment(@Valid @RequestBody CommentDto commentDto) {
@@ -53,10 +56,12 @@ public class CommentController {
         User user = userService.getUserById((int)subject.getPrincipal());
         Comment comment = new Comment(commentDto.getContent(), user, post);
         comment = commentService.addComment(comment);
-        System.out.println(comment);
         return Result.success();
     }
 
+    /**
+     * 修改评论
+     */
     @RequiresAuthentication
     @PostMapping("/comment/manage/revise")
     public Result reviseComment(@Valid @RequestBody CommentDto commentDto) {
@@ -67,15 +72,21 @@ public class CommentController {
         return Result.success();
     }
 
+    /**
+     * 获取某个帖子的评论数量
+     */
     @PostMapping("/comment/post/sum")
     public Result getCommentPostSum(@RequestBody CommentDto commentDto) {
         Post post = postService.getPostById(commentDto.getPostId());
         Assert.notNull(post, "关联帖子不存在");
         Assert.isTrue(!post.isHidden(), "帖子不存在");
-        int sum = commentService.getCommentSumByPostId(commentDto.getPostId());
+        int sum = commentService.getCommentSum(commentDto.getPostId(), -1);
         return Result.success("sum", sum);
     }
 
+    /**
+     * 以分页的方式获取某个帖子的评论列表
+     */
     @PostMapping("/comment/post/list")
     public Result getCommentList(@Validated(CommentList.class) @RequestBody PaginationDto paginationDto) {
         Post post = postService.getPostById(paginationDto.getPostId());
@@ -98,6 +109,7 @@ public class CommentController {
             commentVo.setCreateTime(comment.getCreateTime());
             commentVo.setModifyTIme(comment.getModifyTime());
             commentVo.setUser(comment.getUser().getUsername());
+            commentVo.setUserId(comment.getUser().getId());
             commentVo.setGoodSum(userCommentStateService.getCommentStateSum(comment.getId(), 1));
             commentVo.setBadSum(userCommentStateService.getCommentStateSum(comment.getId(), 2));
             commentVo.setLikeSum(userCommentStateService.getCommentStateSum(comment.getId(), 3));
@@ -124,7 +136,6 @@ public class CommentController {
      * @param stateStr good, bad, like
      * @param operateStr add, delete
      * @param commentId
-     * @return
      */
     @RequiresAuthentication
     @PostMapping("/comment/manage/{stateStr}/{operateStr}/{commentId}")

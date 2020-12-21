@@ -1,6 +1,7 @@
 package top.thesky341.bbsforum.service;
 
 import org.springframework.stereotype.Service;
+import top.thesky341.bbsforum.entity.Chara;
 import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.entity.User;
 
@@ -32,4 +33,5 @@ public interface UserService {
     void updateScore(User user);
     void updatePasswd(User user);
     void updateUserDisabledState(int userId, int state);
+    void updateChara(User user);
 }

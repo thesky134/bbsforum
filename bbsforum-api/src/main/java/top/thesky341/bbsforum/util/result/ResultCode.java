@@ -3,6 +3,7 @@ package top.thesky341.bbsforum.util.result;
 /**
  * @author thesky
  * @date 2020/12/9
+ * 对常用的返回状态进行了封装
  */
 public enum ResultCode {
     SUCCESS(0, "成功"),

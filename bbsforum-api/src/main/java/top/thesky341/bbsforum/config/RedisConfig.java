@@ -9,8 +9,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * @author thesky
  * @date 2020/12/15
+ * 注入RedisManager
  */
-
 @Configuration
 public class RedisConfig {
 
