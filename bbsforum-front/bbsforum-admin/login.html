@@ -4,39 +4,33 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>管理员登陆 - QAdmin后台模板</title>
-    <meta name="keywords" content="qadmin,qadmin模板,后台模板,qadmin后台模板">
-    <meta name="description" content="qadmin是一个轻量级后台模板,基于layui框架开发,简洁而不简单">
+    <title>管理员登陆 - 简约论坛</title>
     <link rel="stylesheet" href="./static/layui/css/layui.css">
     <link rel="stylesheet" href="./static/admin/css/login.css">
     <script src="./static/layui/layui.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script src="static/js/bbsjs.js"></script>
 </head>
 
 <body id="login">
 <div class="login">
-    <h2>QAdmin后台模板</h2>
+    <h2>简约论坛</h2>
     <form class="layui-form" method="post" target="_blank" action="">
         <div class="layui-form-item">
-            <input type="username" name="user" placeholder="用户名" class="layui-input">
+            <input type="username" name="username" placeholder="用户名" class="layui-input">
             <i class="layui-icon input-icon">&#xe66f;</i>
         </div>
         <div class="layui-form-item">
-            <input type="password" name="pwd" placeholder="密码" class="layui-input">
+            <input type="password" name="passwd" placeholder="密码" class="layui-input">
             <i class="layui-icon input-icon">&#xe673;</i>
         </div>
         <div class="layui-form-item">
-            <input type="checkbox" name="box" lay-skin="primary" title="记住密码" checked=""> <a class="back"
-                                                                                             href="javascript:;"
-                                                                                             style="margin-top: 10px">忘记密码</a>
-        </div>
-        <div class="layui-form-item">
             <button style="width: 100%" class="layui-btn" lay-submit lay-filter="login">立即登录</button>
-
         </div>
     </form>
 
     <script>
-
+        let baseURL = window.config.baseURL
 
         layui.use('form', function () {
             var form = layui.form,
@@ -44,13 +38,44 @@
                 $ = layui.jquery;
 
             form.on('submit(login)', function (data) {
-                layer.load({
+                let layerLogin = layer.load({
                     shade: 0.5,
                     time: 0,
                 });
-                setTimeout(function () {
-                    window.location.href = 'index.html';
-                }, 1000)
+                let username = data.field.username
+                let passwd = data.field.passwd
+                axios({
+                    method: 'POST',
+                    url: baseURL + '/admin/manage/login',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        "username": username,
+                        "passwd": passwd
+                    }
+                }).then((response) => {
+                    layer.close(layerLogin)
+                    let result = response.data
+                    let code = result.code
+                    if(code === 0) {
+                        let adminToken = result.data["Oauth-Token"];
+                        localStorage.adminToken = adminToken;
+                        localStorage.adminId = result.data.id
+                        location.href = "index.html"
+                    } else {
+                        layer.open({
+                            title: "登录提示",
+                            content: result.message
+                        })
+                    }
+                }).catch(() => {
+                    layer.close(layerLogin)
+                    layer.open({
+                        title: "登录提示",
+                        content: "登录错误"
+                    })
+                })
 
                 return false;
             });
