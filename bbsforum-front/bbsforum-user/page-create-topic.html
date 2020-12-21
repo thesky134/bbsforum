@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="css/style.css">
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 	<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
-	<script src="./config.js"></script>
+	<script src="js/config.js"></script>
 </head>
-<body onload="getCategories()">
+<body onload="checkLoginState();getCategories()">
 <!-- tt-mobile menu -->
 <nav class="panel-menu" id="mobile-menu">
     <ul>
@@ -33,22 +33,23 @@
     </div>
 </nav>
 <header id="tt-header">
-    <div class="container">
-        <div class="row tt-row no-gutters">
-            <div class="col-auto">
-                <!-- toggle mobile menu -->
-                <a class="toggle-mobile-menu" href="#">
-                    <svg class="tt-icon">
-                      <use xlink:href="#icon-menu_icon"></use>
-                    </svg>
-                </a>
-                <!-- /toggle mobile menu -->
+	<div class="container">
+		<div class="row tt-row no-gutters" id="tt-header-login">
+			<!--导航条-->
+			<div class="col-auto">
+				<!-- toggle mobile menu -->
+				<a class="toggle-mobile-menu" href="#">
+					<svg class="tt-icon">
+						<use xlink:href="#icon-menu_icon"></use>
+					</svg>
+				</a>
+				<!-- /toggle mobile menu -->
 				<!-- logo -->
 				<div class="tt-logo">
-					<a href="index.html"><img src="images/logo0.png" alt=""></a>
+					<a href="index.html"><img src="images/logo.png" alt=""></a>
 				</div>
 				<!-- /logo -->
-                <!-- desctop menu -->
+				<!-- desctop menu -->
 				<div class="tt-desktop-menu">
 					<nav>
 						<ul>
@@ -70,34 +71,17 @@
 									<li><a href="page-categories-single.html">帖子分类详情</a></li>
 									<li><a href="error404.html">Error 404</a></li>
 									<li><a href="_demo_modal-level-up.html">升级通知</a></li>
-
 								</ul>
 							</li>
 						</ul>
 					</nav>
 				</div>
-                <!-- /desctop menu -->
+				<!-- /desctop menu -->
+				<!--此处显示登录入口或个人栏-->
 
-            </div>
-            <div class="col-auto ml-auto">
-                 <div class="tt-user-info d-flex justify-content-center">
-                    <a href="#" class="tt-btn-icon">
-                         <i class="tt-icon"><svg><use xlink:href="#icon-notification"></use></svg></i>
-                    </a>
-                    <div class="tt-avatar-icon tt-size-md">
-                        <i class="tt-icon"><svg><use xlink:href="#icon-ava-a"></use></svg></i>
-                    </div>
-                    <div class="custom-select-01">
-                        <select>
-                            <option value="Default Sorting">azyrusmax</option>
-                            <option value="value 01">value 01</option>
-                            <option value="value 02">value 02</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </header>
 <main id="tt-pageContent">
     <div class="container">
