@@ -3,6 +3,7 @@ package top.thesky341.bbsforum.controller;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
@@ -296,6 +297,7 @@ public class UserController {
         return Result.success("posts", getPostInfoListByPagination(pagination));
     }
 
+
     public List<PostInfoVo> getPostInfoListByPagination(Pagination pagination) {
         List<Post> posts = postService.getPostListByPagination(pagination);
         List<PostInfoVo> postInfoVos = new ArrayList<>();
@@ -307,4 +309,6 @@ public class UserController {
         }
         return postInfoVos;
     }
+
+
 }
