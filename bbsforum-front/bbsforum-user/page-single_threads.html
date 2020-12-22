@@ -13,17 +13,19 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/global_functions.js"></script>
     <script src="js/single_setting_functions.js"></script>
 </head>
-<body onload="getTopics()">
+<body onload="getTopics();checkLoginState();showInfo()">
 <header id="tt-header">
     <div class="container">
-        <div class="row tt-row no-gutters">
+        <div class="row tt-row no-gutters" id="tt-header-login">
+            <!--导航条-->
             <div class="col-auto">
                 <!-- toggle mobile menu -->
                 <a class="toggle-mobile-menu" href="#">
                     <svg class="tt-icon">
-                      <use xlink:href="#icon-menu_icon"></use>
+                        <use xlink:href="#icon-menu_icon"></use>
                     </svg>
                 </a>
                 <!-- /toggle mobile menu -->
@@ -54,31 +56,14 @@
                                     <li><a href="page-categories-single.html">帖子分类详情</a></li>
                                     <li><a href="error404.html">Error 404</a></li>
                                     <li><a href="_demo_modal-level-up.html">升级通知</a></li>
-
                                 </ul>
                             </li>
                         </ul>
                     </nav>
                 </div>
                 <!-- /desctop menu -->
+                <!--此处显示登录入口或个人栏-->
 
-            </div>
-            <div class="col-auto ml-auto">
-                 <div class="tt-user-info d-flex justify-content-center">
-                    <a href="#" class="tt-btn-icon">
-                         <i class="tt-icon"><svg><use xlink:href="#icon-notification"></use></svg></i>
-                    </a>
-                    <div class="tt-avatar-icon tt-size-md">
-                        <a href="page-single_threads.html"><i class="tt-icon"><svg><use xlink:href="#icon-ava-a"></use></svg></i></a>
-                    </div>
-                    <div class="custom-select-01">
-                        <select>
-                            <option value="Default Sorting">azyrusmax</option>
-                            <option value="value 01">value 01</option>
-                            <option value="value 02">value 02</option>
-                        </select>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -87,23 +72,21 @@
     <div class="tt-wrapper-section">
         <div class="container">
             <div class="tt-user-header">
-                <div class="tt-col-avatar">
-                    <div class="tt-icon">
-                       <svg class="tt-icon">
-                          <use xlink:href="#icon-ava-d"></use>
-                        </svg>
-                    </div>
+                <!--头像-->
+                <div class="tt-col-avatar" id="showHeadPicDiv">
+
                 </div>
                 <div class="tt-col-title">
-                    <div class="tt-title">
-                        <a href="#">username</a>
+                    <!--用户名-->
+                    <div class="tt-title" id="showUsernameDiv">
+
                     </div>
-                    <ul class="tt-list-badge">
-                        <li><a href="#"><span class="tt-color14 tt-badge">积分 : 26</span></a></li>
+                    <!--积分-->
+                    <ul class="tt-list-badge" id="showScoreDiv">
+                        <li></li>
                     </ul>
                 </div>
                 <div class="tt-col-btn" id="js-settings-btn">
-
                     <div class="tt-list-btn">
                         <a href="#" class="tt-btn-icon">
                             设置 &nbsp;
@@ -115,7 +98,6 @@
                 </div>
             </div>
             </div>
-        </div>
     </div>
     <div class="container">
         <div class="tt-tab-wrapper">
@@ -125,7 +107,7 @@
                     <li class="nav-item show">
                         <a class="nav-link active" data-toggle="tab" href="#tt-tab-02" role="tab"><span>帖子</span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" onclick="toSingleReplies()">
                         <a src="page-single_replies" class="nav-link" data-toggle="tab" href="#tt-tab-03" role="tab" ><span>回复</span></a>
                     </li>
                 </ul>
@@ -664,12 +646,12 @@
     </div>
     <form class="form-default">
         <!--上传头像-->
-        <div class="tt-form-upload" id="headDiv">
+        <div class="tt-form-upload" id="sheadDiv">
             <div class="row no-gutter">
                 <div class="col-auto">
-                    <div class="tt-avatar" id="headPicDiv">
-                        <div class="headPicContainer" id="headPicContainer">
-                            <img class="headPic" src="" id="headPic"/>
+                    <div class="tt-avatar" id="sheadPicDiv">
+                        <div class="headPicContainer" id="sheadPicContainer">
+                            <img class="headPic" src="" id="sheadPic"/>
                         </div>
                     </div>
                 </div>
@@ -896,6 +878,7 @@
                 'Content-Type': 'application/json'
             },
             data: {
+                userId: localStorage.myUid,
                 pageSize: 15,
                 position: positon
             }
@@ -906,6 +889,10 @@
             let topicList = document.getElementById("topicList");
             for(let i=0; i<topics.length; i++) {
                 let topic = document.createElement("div");
+                topic.id = topics[i].id;
+                topic.onclick = function (){
+                    getTopicId(this.id);
+                };
                 let picture = topics[i].picture;
                 let headPic = baseURL+'/image/' + picture;
                 let createTime = topics[i].createTime;
@@ -997,6 +984,10 @@
         }).catch(()=>{
             console.log("error");
         })
+    }
+    // 跳转到回复页
+    function toSingleReplies(){
+        location.href = "./page-single_replies.html";
     }
 </script>
 <svg width="0" height="0" class="hidden">

@@ -2784,12 +2784,12 @@
     </div>
     <form class="form-default">
         <!--上传头像-->
-        <div class="tt-form-upload" id="headDiv">
+        <div class="tt-form-upload" id="sheadDiv">
             <div class="row no-gutter">
                 <div class="col-auto">
-                    <div class="tt-avatar" id="headPicDiv">
-                        <div class="headPicContainer" id="headPicContainer">
-                            <img class="headPic" src="" id="headPic"/>
+                    <div class="tt-avatar" id="sheadPicDiv">
+                        <div class="headPicContainer" id="sheadPicContainer">
+                            <img class="headPic" src="" id="sheadPic"/>
                         </div>
                     </div>
                 </div>
@@ -3005,7 +3005,7 @@
     function showInfo() {
         axios({
             method: 'POST',
-            url: baseURL + '/user/manage/info',
+            url: baseURL + '/user/manage/info/'+localStorage.myUid,
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -3025,7 +3025,7 @@
             let settingsUserScore = document.createElement("settingsUserScore");
             settingsUserScore.for="settingsUserName";
             settingsUserScore.innerText = score;
-            document.getElementById("headPic").src = headPic;
+            document.getElementById("sheadPic").src = headPic;
             scoreDiv.appendChild(settingsUserScore);
             document.getElementById("settingsUserName").value = username;
             document.getElementById("settingsUserEmail").value = email;
@@ -3061,23 +3061,23 @@
         ).then((response) => {
             let result = response.data;
             let message = result.message;
-            let headDiv = document.getElementById("headDiv");
+            let sheadDiv = document.getElementById("sheadDiv");
             if (document.getElementById("showHeadPicMessage")) {
-                headDiv.removeChild(document.getElementById("showHeadPicMessage"));
+                sheadDiv.removeChild(document.getElementById("showHeadPicMessage"));
             }
             let showHeadPicMessage = document.createElement("label");
             showHeadPicMessage.id = "showHeadPicMessage";
             showHeadPicMessage.style.cssText = "font-size: 10px; color: #ff0000";
             showHeadPicMessage.innerText = message;
-            headDiv.appendChild(showHeadPicMessage);
-            getHeadPic();
+            sheadDiv.appendChild(showHeadPicMessage);
+            getSettingHeadPic();
             console.log(response);
         }).catch(() => {
             console.log("error")
         })
     }
     // 获取用户头像
-    function getHeadPic(){
+    function getSettingHeadPic(){
         axios({
             method: 'POST',
             url: baseURL+'/user/manage/info',
@@ -3089,16 +3089,16 @@
             let picture = result.data.user.picture;
             let headPicSrc = baseURL+'/image/'+picture;
             console.log(headPicSrc);
-            let headPicDiv = document.getElementById("headPicDiv");
-            if (document.getElementById("headPicContainer")){
-                headPicDiv.removeChild(document.getElementById("headPicContainer"));
+            let sheadPicDiv = document.getElementById("sheadPicDiv");
+            if (document.getElementById("sheadPicContainer")){
+                sheadPicDiv.removeChild(document.getElementById("sheadPicContainer"));
                 console.log("删除了");
             }
-            let headPicContainer = document.createElement("div");
-            headPicContainer.className = "headPicContainer";
-            headPicContainer.id = "headPicContainer";
-            headPicContainer.innerHTML = `<img class="headPic" src=`+headPicSrc+`>`;
-            headPicDiv.appendChild(headPicContainer);
+            let sheadPicContainer = document.createElement("div");
+            sheadPicContainer.className = "headPicContainer";
+            sheadPicContainer.id = "sheadPicContainer";
+            sheadPicContainer.innerHTML = `<img class="headPic" src=`+headPicSrc+`>`;
+            sheadPicDiv.appendChild(sheadPicContainer);
         }).catch(()=>{
             console.log("error");
         })
@@ -3478,7 +3478,7 @@
         cleanMessage();
     }
     function cleanMessage() {
-        let headDiv = document.getElementById("headDiv");
+        let headDiv = document.getElementById("sheadDiv");
         let usernameDiv = document.getElementById("usernameDiv");
         let emailDiv = document.getElementById("emailDiv");
         let passwdDiv = document.getElementById("passwdDiv");
