@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>修改帖子 - 简约论坛</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="static/myfile/style.css">
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script src="static/js/bbsjs.js"></script>
+</head>
+<body>
+<main id="tt-pageContent">
+    <div class="container">
+        <div class="tt-wrapper-inner">
+            <h1 class="tt-title-border">
+                修改帖子
+            </h1>
+            <form class="form-default form-create-topic">
+                <div class="form-group">
+                    <label for="title">帖子标题</label>
+                    <div class="tt-value-wrapper">
+                        <input type="text" name="name" class="form-control" id="title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="categoryList">帖子分类</label>
+                    <select class="form-control" id="categoryList" onchange="changeCategory()">
+                    </select>
+                </div>
+                <div class="pt-editor">
+                    <label class="pt-title" for="content">帖子正文</label>
+                    <div class="form-group">
+                        <textarea name="message" class="form-control" rows="10"
+                                  id="content"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label for="title">是否发布</label>
+                                <label class="radio-inline">
+                                    <input id="public" type="radio" name="public" id="inlineRadio2" value="public" checked> 发布
+                                </label>
+                                <label class="radio-inline">
+                                    <input id="hidden" type="radio" name="public" id="inlineRadio3" value="draft"> 存为草稿
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3" id="rewardbox">
+                            <div class="form-group">
+                                <label for="reward">悬赏积分: </label>
+                                <input type="text" name="name" class="form-control" id="reward">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto ml-md-auto">
+                            <a href="javascript:;" class="btn btn-color01 btn-width-lg" onclick="savePost()">修改帖子</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</main>
+<script>
+    let baseURL = window.config.baseURL
+    let postId = window.localStorage.getItem("postId")
+    window.localStorage.removeItem("postId")
+    let title = document.getElementById("title");
+    let categoryList = document.getElementById("categoryList");
+    let content = document.getElementById("content");
+    let publicItem = document.getElementById("public")
+    let hidden = document.getElementById("hidden")
+    let reward = document.getElementById("reward");
+    let rewardbox = document.getElementById("rewardbox")
+    rewardbox.style.display = "none"
+    axios({
+        method: 'POST',
+        url: baseURL + "/category/all",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => {
+        let result = response.data
+        console.log(result)
+        let code = result.code
+        if(code === 0) {
+            let categorys = result.data.categorys
+            console.log(categorys)
+            for(let i = 0; i < categorys.length; i++) {
+                let category = categorys[i]
+                let categoryTemplate = `<option value="${category.name}">${category.name}</option>`
+                categoryList.innerHTML += categoryTemplate
+            }
+            axios({
+                method: 'POST',
+                url: baseURL + "/post/view/" + postId,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response =>{
+                let result = response.data
+                console.log(result)
+                let code = result.code
+                if(code === 0) {
+                    let post = result.data.post
+                    title.value = post.title
+                    content.value = post.content
+                    if(post.hidden === true) {
+                        hidden.checked = true
+                    } else {
+                        publicItem.checked = true
+                    }
+                    if(post.category === "积分悬赏") {
+                        reward.value = post.reward
+                        rewardbox.style.display = "block"
+                    }
+                    let childNodes = categoryList.childNodes
+                    console.log(childNodes)
+                    for(let j = 1; j < childNodes.length; j++) {
+                        if(childNodes[j].value === post.category) {
+                            console.log(childNodes[j].value)
+                            childNodes[j].selected = true
+                        }
+                    }
+                } else {
+                    alert(result.message)
+                }
+            }).catch(()=>{
+                alert("获取原贴错误")
+            })
+        } else {
+            alert(result.message)
+        }
+    }).catch(() => {
+        alert("获取列表错误")
+    })
+
+    function changeCategory() {
+        let childNodes = categoryList.childNodes
+        for(let i = 1; i < childNodes.length; i++) {
+            if(childNodes[i].selected === true) {
+                if(childNodes[i].value === "积分悬赏") {
+                    rewardbox.style.display = "block"
+                } else {
+                    rewardbox.style.display = "none"
+                }
+            }
+        }
+    }
+
+    function savePost() {
+        let category;
+        let childNodes = categoryList.childNodes
+        for(let j = 1; j < childNodes.length; j++) {
+            if(childNodes[j].selected === true) {
+                category = childNodes[j]
+                break
+            }
+        }
+
+        let rewardValue = parseInt(reward.value)
+        console.log(reward)
+        if(category.value === "积分悬赏" && (isNaN(rewardValue) || rewardValue <= 0)) {
+            alert("积分奖励请输入合适的正整数")
+        } else {
+            axios({
+                method: 'POST',
+                url: baseURL + "/post/manage/revise",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    id: postId,
+                    title: title.value,
+                    category: category.value,
+                    content: content.value,
+                    hidden: hidden.checked,
+                    reward: rewardValue
+                }
+            }).then((response) => {
+                let result = response.data
+                let code = result.code
+                if(code === 0) {
+                    alert("修改正确")
+
+                } else {
+                    alert(result.message)
+                }
+            }).catch(() => {
+                alert("修改错误")
+            })
+        }
+    }
+</script>
+</body>
+</html>
