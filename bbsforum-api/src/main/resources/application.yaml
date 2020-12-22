@@ -1,18 +1,12 @@
-spring:
-  profiles:
-    active: dev
-
----
 server:
-  port: 8085
+  port: 8083
 
 spring:
   datasource:
     username: root
     password: abcd1234
-    url: jdbc:mysql://localhost:3306/forum
+    url: jdbc:mysql://localhost:3306/forum?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-  profiles: dev
   mvc:
     static-path-pattern: /image/**
   resources:
@@ -36,20 +30,4 @@ mybatis:
 
 imgAbsolutePathPrefix: /home/thesky/uploadfiles/forum/
 
----
-
-spring:
-  datasource:
-    username: root
-    password: abcd1234
-    url: jdbc:mysql://localhost:3306/blog
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  profiles: prod
-
-mybatis:
-  type-aliases-package: top.thesky341.bbsforum.entity
-  mapper-locations: classpath:top/thesky341/bbsforum/mapper/*.xml
-
-server:
-  port: 8083
 

@@ -15,4 +15,5 @@ public interface CharaMapper {
     void deleteCharaById(int id);
     Chara getCharaById(int id);
     Chara getGeneralChara();
+    Chara getCharaByName(String name);
 }

@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author thesky
  * @date 2020/12/15
+ * 对Redis操作进行了封装
  */
 public class RedisManager {
 

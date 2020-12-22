@@ -3,6 +3,7 @@ package top.thesky341.bbsforum.util.result;
 /**
  * @author thesky
  * @date 2020/12/9
+ * 对常用的返回状态进行了封装
  */
 public enum ResultCode {
     SUCCESS(0, "成功"),
@@ -24,7 +25,8 @@ public enum ResultCode {
     RewardNotGreater0(171, "积分奖励必须大于 0"),
     ScoreNotEnough(172, "用户积分不足"),
     OperateNotExist(191, "操作不存在"),
-    CategoryAlreadyExist(201, "分类已存在");
+    CategoryAlreadyExist(201, "分类已存在"),
+    PostNotRewardRequest(211, "该帖子不是积分悬赏");
     /**
      * 状态码
      */

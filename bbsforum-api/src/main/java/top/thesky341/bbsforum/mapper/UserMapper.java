@@ -38,4 +38,5 @@ public interface UserMapper {
     void updateScore(User user);
     void updatePasswd(User user);
     void updateUserDisabledState(@Param("userId") int userId, @Param("state") int state);
+    void updateChara(User user);
 }

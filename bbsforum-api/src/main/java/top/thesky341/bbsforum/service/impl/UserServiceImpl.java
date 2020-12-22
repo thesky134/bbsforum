@@ -163,4 +163,14 @@ public class UserServiceImpl implements UserService {
     public void updateUserDisabledState(int userId, int state) {
         userMapper.updateUserDisabledState(userId, state);
     }
+
+    @Override
+    public void updateChara(User user) {
+        userMapper.updateChara(user);
+    }
+
+    @Override
+    public void updateDailyScore(User user) {
+        userMapper.updateDailyScore(user);
+    }
 }

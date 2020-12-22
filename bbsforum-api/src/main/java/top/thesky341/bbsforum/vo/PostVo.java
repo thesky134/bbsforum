@@ -7,6 +7,8 @@ import java.util.Date;
 /**
  * @author thesky
  * @date 2020/12/11
+ * 对具体的帖子进行了封装
+ * 包含了帖子对应的各方面内容
  */
 public class PostVo {
     private int id;
@@ -29,6 +31,7 @@ public class PostVo {
     private boolean bad;
     private boolean like;
     private int reward;
+    private CommentVo comment;
 
     public PostVo() {
     }
@@ -40,12 +43,21 @@ public class PostVo {
         setCreateDate(post.getCreateTime());
         setModifyDate(post.getModifyTime());
         setUser(post.getUser().getUsername());
+        setUserId(post.getUser().getId());
         setCategory(post.getCategory().getName());
         setExcellent(post.isExcellent());
         setTop(post.isTop());
         setPicture(post.getUser().getPicture());
         setUserId(post.getUser().getId());
         setReward(post.getReward());
+    }
+
+    public CommentVo getComment() {
+        return comment;
+    }
+
+    public void setComment(CommentVo comment) {
+        this.comment = comment;
     }
 
     public int getReward() {
@@ -231,6 +243,7 @@ public class PostVo {
                 ", bad=" + bad +
                 ", like=" + like +
                 ", reward=" + reward +
+                ", comment=" + comment +
                 '}';
     }
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 /**
  * @author thesky
  * @date 2020/12/18
+ * 对将要返回的分类的信息进行封装
  */
 public class CategoryVo {
     private int id = -1;
@@ -14,6 +15,9 @@ public class CategoryVo {
     private String introduction;
     private Date createTime;
     private Date modifyTime;
+    /**
+     * 该分类下关联的帖子数量
+     */
     private int sum;
 
     public CategoryVo() {

@@ -7,11 +7,19 @@ import java.util.Date;
 /**
  * @author thesky
  * @date 2020/12/11
+ * 对帖子信息进行了封装，不包含帖子内容
+ * 帖子信息和具体的帖子不一样
+ * 前者用户主页或者具体分类下的帖子列表展示
+ * 后者用于查看帖子
  */
 public class PostInfoVo {
     private int id;
+    /**
+     * 帖子作者的头像路径
+     */
     private String picture;
     private String user;
+    private int userId;
     private String title;
     private String category;
     private int commentSum;
@@ -21,11 +29,13 @@ public class PostInfoVo {
     private boolean excellent;
     private boolean top;
     private boolean hidden;
+    private int reward;
+    private boolean answered;
 
     public PostInfoVo() {
     }
 
-    public PostInfoVo(Post post, int commentSum, int visitSum) {
+    public PostInfoVo(Post post, int commentSum, int visitSum, boolean answered) {
         id = post.getId();
         picture = post.getUser().getPicture();
         title = post.getTitle();
@@ -33,6 +43,9 @@ public class PostInfoVo {
         this.commentSum = commentSum;
         this.visitSum = visitSum;
         this.user = post.getUser().getUsername();
+        this.userId = post.getUser().getId();
+        this.reward = post.getReward();
+        this.answered = answered;
         createTime = post.getCreateTime();
         modifyTime = post.getModifyTime();
         excellent = post.isExcellent();
@@ -40,22 +53,20 @@ public class PostInfoVo {
         hidden = post.isHidden();
     }
 
-    @Override
-    public String toString() {
-        return "PostInfoVo{" +
-                "id=" + id +
-                ", picture='" + picture + '\'' +
-                ", user='" + user + '\'' +
-                ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", commentSum=" + commentSum +
-                ", visitSum=" + visitSum +
-                ", createTime=" + createTime +
-                ", modifyTime=" + modifyTime +
-                ", excellent=" + excellent +
-                ", top=" + top +
-                ", hidden=" + hidden +
-                '}';
+    public int getReward() {
+        return reward;
+    }
+
+    public void setReward(int reward) {
+        this.reward = reward;
+    }
+
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
     }
 
     public String getUser() {
@@ -154,4 +165,32 @@ public class PostInfoVo {
         this.hidden = hidden;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "PostInfoVo{" +
+                "id=" + id +
+                ", picture='" + picture + '\'' +
+                ", user='" + user + '\'' +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", commentSum=" + commentSum +
+                ", visitSum=" + visitSum +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", excellent=" + excellent +
+                ", top=" + top +
+                ", hidden=" + hidden +
+                ", reward=" + reward +
+                ", answered=" + answered +
+                '}';
+    }
 }

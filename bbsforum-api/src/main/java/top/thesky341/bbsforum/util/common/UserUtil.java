@@ -14,6 +14,7 @@ import java.util.Date;
 public class UserUtil {
     /**
      * 检查传入时间是否为今天之前的时间
+     * 用于判断今天是否登录过
      * @param date 待检查的时间
      */
     public static boolean checkIsBeforeToday(Date date) {
@@ -33,6 +34,9 @@ public class UserUtil {
         return false;
     }
 
+    /**
+     * 得到当前用户的id
+     */
     @RequiresAuthentication
     public static int getCurrentUserId() {
         Subject subject = SecurityUtils.getSubject();

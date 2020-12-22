@@ -19,6 +19,10 @@
         SELECT *
         FROM chara WHERE name = "general"
     </select>
+    <select id="getCharaByName" resultMap="charaMap">
+        SELECT *
+        FROM chara WHERE name = #{name}
+    </select>
 
     <resultMap id="charaMap" type="chara">
         <id column="id" property="id"/>

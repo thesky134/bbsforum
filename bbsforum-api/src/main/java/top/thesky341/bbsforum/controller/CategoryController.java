@@ -24,6 +24,10 @@ public class CategoryController {
     @Resource(name = "postServiceImpl")
     PostService postService;
 
+    /**
+     * 获取所有的分类
+     * @return
+     */
     @PostMapping("/category/all")
     public Result getAllCategory() {
         List<Category> categories =  categoryService.getAllCategory();

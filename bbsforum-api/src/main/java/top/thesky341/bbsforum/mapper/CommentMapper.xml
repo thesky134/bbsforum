@@ -35,33 +35,19 @@
         FROM comment
         WHERE is_deleted = 0
         <if test="postId != -1">
-            post_id = #{postId}
-            is_hidden = 0
-        </if>
-        <if test="userId != -1">
-            user_id = #{userId}
-        </if>
-    </select>
-    <select id="getCommentListByPagination" resultMap="commentMap">
-        SELECT *
-        FROM comment
-        WHERE is_deleted = 0
-        <if test="userId != -1">
-            AND user_id != #{userId}
-        </if>
-        <if test="postId != -1">
             AND post_id = #{postId}
             AND is_hidden = 0
         </if>
-        ORDER BY create_time DESC
-        LIMIT #{from}, #{num}
+        <if test="userId != -1">
+            AND user_id = #{userId}
+        </if>
     </select>
     <select id="getCommentListByPagination" resultMap="commentMap">
         SELECT *
         FROM comment
         WHERE is_deleted = 0
         <if test="userId != -1">
-            AND user_id != #{userId}
+            AND user_id = #{userId}
         </if>
         <if test="postId != -1">
             AND post_id = #{postId}
