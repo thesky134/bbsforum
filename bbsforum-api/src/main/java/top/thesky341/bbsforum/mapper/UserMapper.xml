@@ -13,6 +13,32 @@
     <insert id="deleteUserById">
         DELETE FROM user WHERE id = #{id}
     </insert>
+    <select id="getUserSum" resultType="integer">
+        SELECT COUNT(*)
+        FROM user
+    </select>
+    <select id="getAdminSum" resultType="integer">
+        SELECT COUNT(*)
+        FROM user
+        WHERE chara_id = 2 OR chara_id = 3
+    </select>
+    <select id="getAllUser" resultMap="userMap">
+        SELECT *
+        FROM user
+    </select>
+    <select id="getUserListByPagination" resultMap="userMap">
+        SELECT *
+        FROM user
+        ORDER BY create_time DESC
+        LIMIT #{from}, #{num}
+    </select>
+    <select id="getAdminListByPagination" resultMap="userMap">
+        SELECT *
+        FROM user
+        WHERE chara_id = 2 OR chara_id = 3
+        ORDER BY create_time DESC
+        LIMIT #{from}, #{num}
+    </select>
     <select id="getUserById" resultMap="userMap">
         SELECT *
         FROM user WHERE id = #{id}
@@ -75,6 +101,16 @@
         UPDATE user
         SET score = #{score}
         WHERE id = #{id}
+    </update>
+    <update id="updatePasswd">
+        UPDATE user
+        SET passwd = #{passwd}
+        WHERE id = #{id}
+    </update>
+    <update id="updateUserDisabledState">
+        UPDATE user
+        SET is_disabled = #{state}
+        WHERE id = #{userId}
     </update>
 
     <resultMap id="userMap" type="user">

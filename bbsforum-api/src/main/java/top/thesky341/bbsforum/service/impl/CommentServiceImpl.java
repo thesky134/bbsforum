@@ -19,8 +19,8 @@ public class CommentServiceImpl implements CommentService {
     CommentMapper commentMapper;
 
     @Override
-    public int getCommentSumByPostId(int postId) {
-        return commentMapper.getCommentSumByPostId(postId);
+    public int getCommentSum(int postId, int userId) {
+        return commentMapper.getCommentSum(postId, userId);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> getCommentListByPagination(Pagination pagination) {
-        return null;
+        return commentMapper.getCommentListByPagination(pagination);
     }
 }

@@ -48,6 +48,7 @@ public class CommentController {
     public Result addComment(@Valid @RequestBody CommentDto commentDto) {
         Post post = postService.getPostById(commentDto.getPostId());
         Assert.notNull(post, "帖子不存在");
+        Assert.isTrue(!post.isHidden(), "帖子不存在");
         Subject subject = SecurityUtils.getSubject();
         User user = userService.getUserById((int)subject.getPrincipal());
         Comment comment = new Comment(commentDto.getContent(), user, post);
@@ -70,6 +71,7 @@ public class CommentController {
     public Result getCommentPostSum(@RequestBody CommentDto commentDto) {
         Post post = postService.getPostById(commentDto.getPostId());
         Assert.notNull(post, "关联帖子不存在");
+        Assert.isTrue(!post.isHidden(), "帖子不存在");
         int sum = commentService.getCommentSumByPostId(commentDto.getPostId());
         return Result.success("sum", sum);
     }
@@ -78,24 +80,28 @@ public class CommentController {
     public Result getCommentList(@Validated(CommentList.class) @RequestBody PaginationDto paginationDto) {
         Post post = postService.getPostById(paginationDto.getPostId());
         Assert.notNull(post, "帖子不存在");
+        Assert.isTrue(!post.isHidden(), "帖子不存在");
         Pagination pagination = new Pagination();
         pagination.setFrom(paginationDto.getPageSize() * (paginationDto.getPosition() - 1));
         pagination.setNum(paginationDto.getPageSize());
         pagination.setPostId(paginationDto.getPostId());
 
         List<Comment> comments = commentService.getCommentListByPagination(pagination);
+        System.out.println(comments);
         List<CommentVo> commentVos = new ArrayList<>();
         for(int i = 0; i < comments.size(); i++) {
             CommentVo commentVo = new CommentVo();
             Comment comment = comments.get(i);
             commentVo.setContent(comment.getContent());
             commentVo.setId(comment.getId());
+            commentVo.setPostTitle(comment.getPost().getTitle());
             commentVo.setCreateTime(comment.getCreateTime());
             commentVo.setModifyTIme(comment.getModifyTime());
             commentVo.setUser(comment.getUser().getUsername());
             commentVo.setGoodSum(userCommentStateService.getCommentStateSum(comment.getId(), 1));
             commentVo.setBadSum(userCommentStateService.getCommentStateSum(comment.getId(), 2));
             commentVo.setLikeSum(userCommentStateService.getCommentStateSum(comment.getId(), 3));
+            commentVo.setPicture(comment.getUser().getPicture());
             Subject subject = SecurityUtils.getSubject();
             if (subject.isAuthenticated()) {
                 int userId = (int)subject.getPrincipal();

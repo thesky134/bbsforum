@@ -99,8 +99,18 @@ public class PostController {
         Post post = new Post(postDto, user, category);
         postService.revisePost(post);
         if (category.getName().equals("积分悬赏")) {
-            user.setScore(oldPost.getReward() + user.getScore() - postDto.getReward());
-            userService.updateScore(user);
+            if(oldPost.getCategory().getName().equals("积分悬赏")) {
+                user.setScore(oldPost.getReward() + user.getScore() - postDto.getReward());
+                userService.updateScore(user);
+            } else {
+                user.setScore(user.getScore() - postDto.getReward());
+                userService.updateScore(user);
+            }
+        } else {
+            if(oldPost.getCategory().getName().equals("积分悬赏")) {
+                user.setScore(oldPost.getReward() + user.getScore());
+                userService.updateScore(user);
+            }
         }
         return Result.success();
     }
@@ -111,14 +121,14 @@ public class PostController {
      */
     @PostMapping("/post/all/sum")
     public Result getAllPostSum() {
-        return Result.success("sum", postService.getPostSum(-1, -1));
+        return Result.success("sum", postService.getPostSum(-1, -1, 0));
     }
 
     @PostMapping("/post/category/sum")
     public Result getPostSumWithCategory(@RequestBody Category category) {
         category = categoryService.getCategoryById(category.getId());
         Assert.notNull(category, "分类不存在");
-        return Result.success("sum", postService.getPostSum(category.getId(), -1));
+        return Result.success("sum", postService.getPostSum(category.getId(), -1, 0));
     }
 
     /**
@@ -140,7 +150,7 @@ public class PostController {
         Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
                 paginationDto.getPageSize());
         pagination.setCategoryId(paginationDto.getCategoryId());
-        CategoryVo categoryVo = new CategoryVo(category, postService.getPostSum(category.getId(), -1));
+        CategoryVo categoryVo = new CategoryVo(category, postService.getPostSum(category.getId(), -1, 0));
         Map<String, Object> data = new HashMap<>();
         data.put("category", categoryVo);
         data.put("posts", getPostInfoListByPagination(pagination));
@@ -151,10 +161,23 @@ public class PostController {
     public Result postView(@PathVariable int id) {
         Post post = postService.getPostById(id);
         Assert.notNull(post, "帖子不存在");
+        if (post.isHidden()) {
+            Subject subject = SecurityUtils.getSubject();
+            if(subject.isAuthenticated()) {
+                int userId = (int)subject.getPrincipal();
+                if(userId != post.getUser().getId()
+                        && !subject.hasRole("admin")
+                        && !subject.hasRole("superadmin")) {
+                    return new Result(ResultCode.PermissionDenied);
+                }
+            } else {
+                return new Result(ResultCode.PermissionDenied);
+            }
+        }
         PostVo postVo = new PostVo();
         postVo.parsePost(post);
         postVo.setVisitSum(userPostStateService.getPostStateSum(id, 4));
-        postVo.setCommentSum(commentService.getCommentSumByPostId(id));
+        postVo.setCommentSum(commentService.getCommentSum(id, -1));
         postVo.setGoodSum(userPostStateService.getPostStateSum(id, 1));
         postVo.setBadSum(userPostStateService.getPostStateSum(id, 2));
         postVo.setLikeSum(userPostStateService.getPostStateSum(id, 3));
@@ -214,7 +237,7 @@ public class PostController {
         List<PostInfoVo> postInfoVos = new ArrayList<>();
         for (Post post : posts) {
             int postId = post.getId();
-            int commentSum = commentService.getCommentSumByPostId(postId);
+            int commentSum = commentService.getCommentSum(postId, -1);
             int visitSum = userPostStateService.getPostStateSum(postId, 4);
             postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
         }
@@ -226,7 +249,7 @@ public class PostController {
      * 当赞或喜欢时，踩会被取消
      * 当踩时，赞和喜欢会取消
      *
-     * @param stateStr good, bad, like
+     * @param stateStr   good, bad, like
      * @param operateStr add, delete
      * @param postId
      * @return
@@ -234,8 +257,10 @@ public class PostController {
     @RequiresAuthentication
     @PostMapping("/post/manage/{stateStr}/{operateStr}/{postId}")
     public Result changePostState(@PathVariable String stateStr, @PathVariable String operateStr, @PathVariable int postId) {
+        System.out.println(stateStr + " " + operateStr + " " + postId);
         Post post = postService.getPostById(postId);
         Assert.notNull(post, "帖子不存在");
+        Assert.isTrue(!post.isHidden(), "帖子不存在");
         Subject subject = SecurityUtils.getSubject();
         User user = userService.getUserById((int) subject.getPrincipal());
         if (operateStr.equals("add")) {

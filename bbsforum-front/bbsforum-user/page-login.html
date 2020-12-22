@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
-    <script src="./config.js"></script>
+    <script src="js/config.js"></script>
 </head>
 <body>
 <div id="login">
@@ -99,7 +99,7 @@
                     this.vshow_pwd = false;
                 }
                 else{
-                    this.pwd_msg = '密码有误！';
+                    this.pwd_msg = '密码格式有误！';
                     this.vshow_pwd = true;
                 }
             },

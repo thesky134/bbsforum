@@ -62,5 +62,5 @@ const config = {
     menu: menu,
 };
 
-// module.exports.name = "Qadmin";
-// module.exports.menu = menu;
+module.exports.name = "Qadmin";
+module.exports.menu = menu;

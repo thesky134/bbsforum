@@ -3,6 +3,7 @@ package top.thesky341.bbsforum.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import top.thesky341.bbsforum.entity.Comment;
+import top.thesky341.bbsforum.entity.Pagination;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface CommentMapper {
     Comment getCommentById(int id);
     List<Comment> getCommentByUserId(int userId);
     List<Comment> getCommentByPostId(int postId);
+    int getCommentSum(int postId, int userId);
     int getCommentSumByPostId(int postId);
+    List<Comment> getCommentListByPagination(Pagination pagination);
 }

@@ -29,7 +29,7 @@ public class CategoryController {
         List<Category> categories =  categoryService.getAllCategory();
         List<CategoryVo> categoryVos = new ArrayList<>();
         for(Category category : categories) {
-            CategoryVo categoryVo = new CategoryVo(category, postService.getPostSum(category.getId(), -1));
+            CategoryVo categoryVo = new CategoryVo(category, postService.getPostSum(category.getId(), -1, 0));
             categoryVos.add(categoryVo);
         }
         return Result.success("categorys", categoryVos);

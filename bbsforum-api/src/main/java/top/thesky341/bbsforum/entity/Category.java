@@ -1,5 +1,12 @@
 package top.thesky341.bbsforum.entity;
 
+import org.hibernate.validator.constraints.Length;
+import top.thesky341.bbsforum.entity.groups.Login;
+import top.thesky341.bbsforum.entity.groups.Register;
+import top.thesky341.bbsforum.entity.groups.UpdateUsername;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
@@ -8,7 +15,12 @@ import java.util.Date;
  */
 public class Category {
     private int id = -1;
+    @NotNull(message = "分类名必须存在")
+    @Length(min = 1, max = 20, message = "分类名长度应该在1至20之间")
+    @Pattern(regexp = "^[^\\s]+$", message = "分类名不能包含空白字符")
     private String name;
+    @NotNull(message = "介绍必须存在")
+    @Length(min = 1, max = 100, message = "分类名长度应该在1至100之间")
     private String introduction;
     private Date createTime;
     private Date modifyTime;

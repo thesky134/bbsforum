@@ -12,4 +12,6 @@ public interface CategoryService {
     List<Category> getAllCategory();
     Category getCategoryById(int id);
     Category getCategoryByName(String name);
+    Category addCategory(Category category);
+    Category reviseCategory(Category category);
 }
