@@ -13,330 +13,857 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <script src="js/config.js"></script>
-    <script src="js/global_functions.js"></script>
+    <script src="js/single_setting_functions.js"></script>
 </head>
-<body onload="getTopics();checkLoginState()">
-<div>
-    <!-- tt-mobile menu -->
-    <nav class="panel-menu" id="mobile-menu">
-        <ul>
-
-        </ul>
-        <div class="mm-navbtn-names">
-            <div class="mm-closebtn">
-                Close
-                <div class="tt-icon">
-                    <svg>
-                        <use xlink:href="#icon-cancel"></use>
-                    </svg>
-                </div>
-            </div>
-            <div class="mm-backbtn">返回</div>
-        </div>
-    </nav>
-    <header id="tt-header">
-        <div class="container">
-            <div class="row tt-row no-gutters" id="tt-header-login">
-                <!--导航条-->
-                <div class="col-auto">
-                    <!-- toggle mobile menu -->
-                    <a class="toggle-mobile-menu" href="#">
-                        <svg class="tt-icon">
-                            <use xlink:href="#icon-menu_icon"></use>
-                        </svg>
-                    </a>
-                    <!-- /toggle mobile menu -->
-                    <!-- logo -->
-                    <div class="tt-logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
-                    </div>
-                    <!-- /logo -->
-                    <!-- desctop menu -->
-                    <div class="tt-desktop-menu">
-                        <nav>
-                            <ul>
-                                <li><a href="index.html"><span>首页</span></a></li>
-                                <li><a href="page-categories.html"><span>分类</span></a></li>
-                                <li><a href="page-create-topic.html"><span>发帖</span></a></li>
-                                <li>
-                                    <a href="page-single-user.html"><span>分页</span></a>
-                                    <ul>
-                                        <li><a href="index.html">主页</a></li>
-                                        <li><a href="page-single-topic.html">帖子</a></li>
-                                        <li><a href="page-create-topic.html">发帖</a></li>
-                                        <li><a href="page-single_threads.html">用户帖子</a></li>
-                                        <li><a href="page-single_replies.html">用户回复</a></li>
-                                        <li><a href="page-single_settings.html">个人设置</a></li>
-                                        <li><a href="page-signup.html">注册</a></li>
-                                        <li><a href="page-login.html">登录</a></li>
-                                        <li><a href="page-categories.html">分类</a></li>
-                                        <li><a href="page-categories-single.html">帖子分类详情</a></li>
-                                        <li><a href="error404.html">Error 404</a></li>
-                                        <li><a href="_demo_modal-level-up.html">升级通知</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <!-- /desctop menu -->
-                    <!--此处显示登录入口或个人栏-->
-
-                </div>
-            </div>
-        </div>
-    </header>
-    <main id="tt-pageContent" class="tt-offset-small">
-        <div class="container">
-            <div class="tt-topic-list">
-                <div class="tt-list-header">
-                    <div class="tt-col-topic">帖子</div>
-                    <div class="tt-col-category">分类</div>
-                    <div class="tt-col-value hide-mobile">回复</div>
-                    <div class="tt-col-value hide-mobile">浏览</div>
-                    <div class="tt-col-category">发布时间</div>
-                </div>
-            </div>
-            <!--显示帖子-->
-            <div class="tt-topic-list flex" id="topicList">
-
-            </div>
-            <!--显示下一页-->
-            <div class="tt-row-btn">
-                <button type="button" class="btn-icon js-topiclist-showmore" id="nextPage" value="0" onclick="getTopics()">
+<body onload="getTopics()">
+<header id="tt-header">
+    <div class="container">
+        <div class="row tt-row no-gutters">
+            <div class="col-auto">
+                <!-- toggle mobile menu -->
+                <a class="toggle-mobile-menu" href="#">
                     <svg class="tt-icon">
-                        <use xlink:href="#icon-load_lore_icon"></use>
+                        <use xlink:href="#icon-menu_icon"></use>
                     </svg>
-                </button>
+                </a>
+                <!-- /toggle mobile menu -->
+                <!-- logo -->
+                <div class="tt-logo">
+                    <a href="index.html"><img src="images/logo.png" alt=""></a>
+                </div>
+                <!-- /logo -->
+                <!-- desctop menu -->
+                <div class="tt-desktop-menu">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html"><span>首页</span></a></li>
+                            <li><a href="page-categories.html"><span>分类</span></a></li>
+                            <li><a href="page-create-topic.html"><span>发帖</span></a></li>
+                            <li>
+                                <a href="page-single-user.html"><span>分页</span></a>
+                                <ul>
+                                    <li><a href="index.html">主页</a></li>
+                                    <li><a href="page-single-topic.html">帖子</a></li>
+                                    <li><a href="page-create-topic.html">发帖</a></li>
+                                    <li><a href="page-single_threads.html">用户帖子</a></li>
+                                    <li><a href="page-single_replies.html">用户回复</a></li>
+                                    <li><a href="page-single_settings.html">个人设置</a></li>
+                                    <li><a href="page-signup.html">注册</a></li>
+                                    <li><a href="page-login.html">登录</a></li>
+                                    <li><a href="page-categories.html">分类</a></li>
+                                    <li><a href="page-categories-single.html">帖子分类详情</a></li>
+                                    <li><a href="error404.html">Error 404</a></li>
+                                    <li><a href="_demo_modal-level-up.html">升级通知</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- /desctop menu -->
+
+            </div>
+            <div class="col-auto ml-auto">
+                <div class="tt-user-info d-flex justify-content-center">
+                    <a href="#" class="tt-btn-icon">
+                        <i class="tt-icon"><svg><use xlink:href="#icon-notification"></use></svg></i>
+                    </a>
+                    <div class="tt-avatar-icon tt-size-md">
+                        <a href="page-single_threads.html"><i class="tt-icon"><svg><use xlink:href="#icon-ava-a"></use></svg></i></a>
+                    </div>
+                    <div class="custom-select-01">
+                        <select>
+                            <option value="Default Sorting">azyrusmax</option>
+                            <option value="value 01">value 01</option>
+                            <option value="value 02">value 02</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+</header>
+<main id="tt-pageContent" class="tt-offset-small">
+    <div class="tt-wrapper-section">
+        <div class="container">
+            <div class="tt-user-header">
+                <div class="tt-col-avatar">
+                    <div class="tt-icon">
+                        <svg class="tt-icon">
+                            <use xlink:href="#icon-ava-d"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tt-col-title">
+                    <div class="tt-title">
+                        <a href="#">username</a>
+                    </div>
+                    <ul class="tt-list-badge">
+                        <li><a href="#"><span class="tt-color14 tt-badge">积分 : 26</span></a></li>
+                    </ul>
+                </div>
+                <div class="tt-col-btn" id="js-settings-btn">
 
-    </main>
-    <div id="js-popup-settings" class="tt-popup-settings">
-        <div class="tt-btn-col-close">
-            <a href="#">
+                    <div class="tt-list-btn">
+                        <a href="#" class="tt-btn-icon">
+                            设置 &nbsp;
+                            <svg class="tt-icon">
+                                <use xlink:href="#icon-settings_fill"></use>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="container">
+        <div class="tt-tab-wrapper">
+            <div class="tt-wrapper-inner">
+                <ul class="nav nav-tabs pt-tabs-default" role="tablist">
+
+                    <li class="nav-item show">
+                        <a class="nav-link active" data-toggle="tab" href="#tt-tab-02" role="tab"><span>帖子</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a src="page-single_replies" class="nav-link" data-toggle="tab" href="#tt-tab-03" role="tab" ><span>回复</span></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane tt-indent-none show active" id="tt-tab-02" role="tabpanel">
+                    <div id="container">
+                        <div class="tt-topic-list">
+                            <div class="tt-list-header">
+                                <div class="tt-col-topic">帖子</div>
+                                <div class="tt-col-category">分类</div>
+                                <div class="tt-col-value hide-mobile">回复</div>
+                                <div class="tt-col-value hide-mobile">浏览</div>
+                                <div class="tt-col-category">发布时间</div>
+                            </div>
+                            <!--显示帖子-->
+                            <div class="tt-topic-list" id="topicList">
+
+                            </div>
+                            <!--显示下一页-->
+                            <div class="tt-row-btn">
+                                <button type="button" class="btn-icon js-topiclist-showmore" id="nextPage" value="0" onclick="getTopics()">
+                                    <svg class="tt-icon">
+                                        <use xlink:href="#icon-load_lore_icon"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane tt-indent-none" id="tt-tab-03" role="tabpanel">
+                    <div class="tt-topic-list">
+                        <div class="tt-list-header">
+                            <div class="tt-col-topic">Topic</div>
+                            <div class="tt-col-category">Category</div>
+                            <div class="tt-col-value">Activity</div>
+                        </div>
+                        <div class="tt-row-btn">
+                            <button type="button" class="btn-icon js-topiclist-showmore">
+                                <svg class="tt-icon">
+                                    <use xlink:href="#icon-load_lore_icon"></use>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tt-tab-06" role="tabpanel">
+                    <div class="tt-wrapper-inner">
+                        <div class="tt-categories-list">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color01 tt-badge">politics</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <a href="#" class="tt-btn-icon">
+                                                <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color02 tt-badge">video</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 368</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">movies</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">new movies</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">marvel movies</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">netflix</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">prime</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color03 tt-badge">exchange</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 381</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color04 tt-badge">pets</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 98</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color05 tt-badge">music</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 28</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color06 tt-badge">movies</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 74</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color15 tt-badge">nature</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color07 tt-badge">video games</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color08 tt-badge">youtube</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color09 tt-badge">social</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color10 tt-badge">science</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color11 tt-badge">entertainment</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color04 tt-badge">pets</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color05 tt-badge">music</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="tt-item">
+                                        <div class="tt-item-header">
+                                            <ul class="tt-list-badge">
+                                                <li><a href="#"><span class="tt-color06 tt-badge">movies</span></a></li>
+                                            </ul>
+                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
+                                        </div>
+                                        <div class="tt-item-layout">
+                                            <div class="tt-innerwrapper">
+                                                Lets discuss about whats happening around the world politics.
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <h6 class="tt-title">Similar TAGS</h6>
+                                                <ul class="tt-list-badge">
+                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
+                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tt-innerwrapper">
+                                                <a href="#" class="tt-btn-icon">
+                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="tt-row-btn">
+                                        <button type="button" class="btn-icon js-topiclist-showmore">
+                                            <svg class="tt-icon">
+                                                <use xlink:href="#icon-load_lore_icon"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div id="js-popup-settings" class="tt-popup-settings" onmouseout="cleanMessage()">
+    <div class="tt-btn-col-close">
+        <a>
 			<span class="tt-icon-title">
 				<svg>
 					<use xlink:href="#icon-settings_fill"></use>
 				</svg>
 			</span>
-                <span class="tt-icon-text">
-				Settings
+            <span class="tt-icon-text">
+				设置
 			</span>
-                <span class="tt-icon-close">
+            <span class="tt-icon-close">
 				<svg>
 					<use xlink:href="#icon-cancel"></use>
 				</svg>
 			</span>
-            </a>
-        </div>
-        <form class="form-default">
-            <div class="tt-form-upload">
-                <div class="row no-gutter">
-                    <div class="col-auto">
-                        <div class="tt-avatar">
-                            <svg>
-                                <use xlink:href="#icon-ava-d"></use>
-                            </svg>
+        </a>
+    </div>
+    <form class="form-default">
+        <!--上传头像-->
+        <div class="tt-form-upload" id="headDiv">
+            <div class="row no-gutter">
+                <div class="col-auto">
+                    <div class="tt-avatar" id="headPicDiv">
+                        <div class="headPicContainer" id="headPicContainer">
+                            <img class="headPic" src="" id="headPic"/>
                         </div>
                     </div>
-                    <div class="col-auto ml-auto">
-                        <a href="#" class="btn btn-primary">Upload Picture</a>
-                    </div>
+                </div>
+                <div class="col-auto ml-auto">
+                    <a href="#" class="btn btn-primary" onclick="document.getElementById('picture').click()">上传头像</a>
+                    <input type="file" id="picture" name="picture" value="上传头像" style="display: none">
+                    <a href="#" class="btn1 btn-primary" onclick="updateHeadPicFather()">保存</a>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="settingsUserName">Username</label>
-                <input type="text" name="name" class="form-control" id="settingsUserName" placeholder="azyrusmax">
-            </div>
-            <div class="form-group">
-                <label for="settingsUserEmail">Email</label>
-                <input type="text" name="name" class="form-control" id="settingsUserEmail" placeholder="Sample@sample.com">
-            </div>
-            <div class="form-group">
-                <label for="settingsUserPassword">Password</label>
-                <input type="password" name="name" class="form-control" id="settingsUserPassword" placeholder="************">
-            </div>
-            <div class="form-group">
-                <label for="settingsUserLocation">Location</label>
-                <input type="text" name="name" class="form-control" id="settingsUserLocation" placeholder="Slovakia">
-            </div>
-            <div class="form-group">
-                <label for="settingsUserWebsite">Website</label>
-                <input type="text" name="name" class="form-control" id="settingsUserWebsite" placeholder="Sample.com">
-            </div>
-            <div class="form-group">
-                <label for="settingsUserAbout">About</label>
-                <textarea name="" placeholder="Few words about you" class="form-control" id="settingsUserAbout"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="settingsUserAbout">Notify me via Email</label>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="settingsCheckBox01" name="checkbox">
-                    <label for="settingsCheckBox01">
-                        <span class="check"></span>
-                        <span class="box"></span>
-                        <span class="tt-text">When someone replies to my thread</span>
-                    </label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="settingsCheckBox02" name="checkbox">
-                    <label for="settingsCheckBox02">
-                        <span class="check"></span>
-                        <span class="box"></span>
-                        <span class="tt-text">When someone likes my thread or reply</span>
-                    </label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="settingsCheckBox03" name="checkbox">
-                    <label for="settingsCheckBox03">
-                        <span class="check"></span>
-                        <span class="box"></span>
-                        <span class="tt-text">When someone mentions me</span>
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <a href="#" class="btn btn-secondary">Save</a>
-            </div>
-        </form>
-    </div>
-    <a href="page-create-topic.html" class="tt-btn-create-topic">
+        </div>
+        <!--个人积分-->
+        <div class="form-group" id="scoreDiv">
+            <label for="settingsUserName">个人积分：</label>
+        </div>
+        <!--用户名-->
+        <div class="form-group" id="usernameDiv">
+            <label for="settingsUserName">用户名</label><br>
+            <input type="text" name="name" class="form-control1" id="settingsUserName" placeholder="你的用户名" value="">
+            <a href="#" class="btn1 btn-primary" onclick="checkUsername()">保存</a>
+        </div>
+        <!--邮箱-->
+        <div class="form-group" id="emailDiv">
+            <label for="settingsUserEmail">邮箱</label><br>
+            <input type="text" name="name" class="form-control1" id="settingsUserEmail" placeholder="你的邮箱">
+            <a href="#" class="btn1 btn-primary" onclick="checkEmail()">保存</a>
+        </div>
+        <!--密码-->
+        <div class="form-group" id="passwdDiv">
+            <label for="settingsUserPassword">密码</label><br>
+            <input type="password" name="name" class="form-control1" id="oldUserPassword" placeholder="原密码"><br><br>
+            <input type="password" name="name" class="form-control1" id="settingsUserPassword" placeholder="新密码,更改密码后需重新登陆">
+            <a href="#" class="btn1 btn-primary" onclick="checkNewPasswd()">保存</a>
+        </div>
+        <!--联系方式-->
+        <div class="form-group" id="phoneDiv">
+            <label for="settingsUserPhone">联系方式</label><br>
+            <input type="text" name="name" class="form-control1" id="settingsUserPhone" placeholder="手机号码">
+            <a href="#" class="btn1 btn-primary" onclick="checkPhone()">保存</a>
+        </div>
+        <!--工作性质-->
+        <div class="form-group" id="jobTypeDiv">
+            <label for="settingsUserJob">工作性质</label><br>
+            <input type="text" name="name" class="form-control1" id="settingsUserJob" placeholder="工作性质">
+            <a href="#" class="btn1 btn-primary" onclick="checkJobType()">保存</a>
+        </div>
+        <!--工作地点-->
+        <div class="form-group" id="jobLocationDiv">
+            <label for="settingsUserLocation">工作地点</label><br>
+            <input type="text" name="name" class="form-control1" id="settingsUserLocation" placeholder="工作地点">
+            <a href="#" class="btn1 btn-primary" onclick="checkJobLocation()">保存</a>
+        </div>
+        <!--个性签名-->
+        <div class="form-group" id="personalSignalDiv">
+            <label for="settingsUserAbout">个性签名</label><br>
+            <textarea name="" placeholder="来点个性" class="form-control" id="settingsUserAbout"></textarea><br>
+            <a href="#" class="btn1 btn-primary" onclick="checkPersonalSignal()">保存</a>
+        </div>
+    </form>
+</div>
+<a href="page-create-topic.html" class="tt-btn-create-topic">
     <span class="tt-icon">
         <svg>
           <use xlink:href="#icon-create_new"></use>
         </svg>
     </span>
-    </a>
+</a>
 
-    <div class="modal fade" id="modalAdvancedSearch" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="tt-modal-advancedSearch">
-                    <div class="tt-modal-title">
-                        <i class="pt-icon">
-                            <svg>
-                                <use xlink:href="#icon-advanced_search"></use>
+<div class="modal fade" id="modalAdvancedSearch" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="tt-modal-advancedSearch">
+                <div class="tt-modal-title">
+                    <i class="pt-icon">
+                        <svg>
+                            <use xlink:href="#icon-advanced_search"></use>
+                        </svg>
+                    </i>
+                    Advanced Search
+                    <a class="pt-close-modal" href="#" data-dismiss="modal">
+                        <svg class="icon">
+                            <use xlink:href="#icon-cancel"></use>
+                        </svg>
+                    </a>
+                </div>
+                <form class="form-default">
+                    <div class="form-group">
+                        <i class="pt-customInputIcon">
+                            <svg class="tt-icon">
+                                <use xlink:href="#icon-search"></use>
                             </svg>
                         </i>
-                        Advanced Search
-                        <a class="pt-close-modal" href="#" data-dismiss="modal">
-                            <svg class="icon">
-                                <use xlink:href="#icon-cancel"></use>
-                            </svg>
-                        </a>
+                        <input type="text" name="name" class="form-control pt-customInputSearch" id="searchForum" placeholder="Search all forums">
                     </div>
-                    <form class="form-default">
-                        <div class="form-group">
-                            <i class="pt-customInputIcon">
-                                <svg class="tt-icon">
-                                    <use xlink:href="#icon-search"></use>
-                                </svg>
-                            </i>
-                            <input type="text" name="name" class="form-control pt-customInputSearch" id="searchForum" placeholder="Search all forums">
-                        </div>
-                        <div class="form-group">
-                            <label for="searchName">Posted by</label>
-                            <input type="text" name="name" class="form-control" id="searchName" placeholder="Username">
-                        </div>
-                        <div class="form-group">
-                            <label for="searchCategory">In Category</label>
-                            <input type="text" name="name" class="form-control" id="searchCategory" placeholder="Add Category">
-                        </div>
+                    <div class="form-group">
+                        <label for="searchName">Posted by</label>
+                        <input type="text" name="name" class="form-control" id="searchName" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="searchCategory">In Category</label>
+                        <input type="text" name="name" class="form-control" id="searchCategory" placeholder="Add Category">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="searcCheckBox01" name="checkbox">
+                        <label for="searcCheckBox01">
+                            <span class="check"></span>
+                            <span class="box"></span>
+                            <span class="tt-text">Include all tags</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Only return topics/posts that...</label>
                         <div class="checkbox-group">
-                            <input type="checkbox" id="searcCheckBox01" name="checkbox">
-                            <label for="searcCheckBox01">
+                            <input type="checkbox" id="searcCheckBox02" name="checkbox">
+                            <label for="searcCheckBox02">
                                 <span class="check"></span>
                                 <span class="box"></span>
-                                <span class="tt-text">Include all tags</span>
+                                <span class="tt-text">I liked</span>
                             </label>
                         </div>
-                        <div class="form-group">
-                            <label>Only return topics/posts that...</label>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="searcCheckBox02" name="checkbox">
-                                <label for="searcCheckBox02">
-                                    <span class="check"></span>
-                                    <span class="box"></span>
-                                    <span class="tt-text">I liked</span>
-                                </label>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="searcCheckBox03" name="checkbox">
-                                <label for="searcCheckBox03">
-                                    <span class="check"></span>
-                                    <span class="box"></span>
-                                    <span class="tt-text">are in my messages</span>
-                                </label>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="searcCheckBox04" name="checkbox">
-                                <label for="searcCheckBox04">
-                                    <span class="check"></span>
-                                    <span class="box"></span>
-                                    <span class="tt-text">I’ve read</span>
-                                </label>
-                            </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="searcCheckBox03" name="checkbox">
+                            <label for="searcCheckBox03">
+                                <span class="check"></span>
+                                <span class="box"></span>
+                                <span class="tt-text">are in my messages</span>
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <select class="form-control" id="searchTop">
-                                <option>any</option>
-                                <option>value 01</option>
-                                <option>value 02</option>
-                                <option>value 03</option>
-                            </select>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="searcCheckBox04" name="checkbox">
+                            <label for="searcCheckBox04">
+                                <span class="check"></span>
+                                <span class="box"></span>
+                                <span class="tt-text">I’ve read</span>
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label for="searchaTopics">Where topics</label>
-                            <select class="form-control" id="searchaTopics">
-                                <option>any</option>
-                                <option>value 01</option>
-                                <option>value 02</option>
-                                <option>value 03</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="searchAdvTime">Posted</label>
-                            <div class="row">
-                                <div class="col-6">
-                                    <select class="form-control">
-                                        <option>any</option>
-                                        <option>value 01</option>
-                                        <option>value 02</option>
-                                        <option>value 03</option>
-                                    </select>
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" name="name" class="form-control" id="searchAdvTime" placeholder="dd-mm-yyyy">
-                                </div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="searchTop">
+                            <option>any</option>
+                            <option>value 01</option>
+                            <option>value 02</option>
+                            <option>value 03</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="searchaTopics">Where topics</label>
+                        <select class="form-control" id="searchaTopics">
+                            <option>any</option>
+                            <option>value 01</option>
+                            <option>value 02</option>
+                            <option>value 03</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="searchAdvTime">Posted</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-control">
+                                    <option>any</option>
+                                    <option>value 01</option>
+                                    <option>value 02</option>
+                                    <option>value 03</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" name="name" class="form-control" id="searchAdvTime" placeholder="dd-mm-yyyy">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="minPostCount">Minimum Post Count</label>
-                            <select class="form-control" id="minPostCount">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option selected>10</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <a href="#" class="btn btn-secondary btn-block">Search</a>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="minPostCount">Minimum Post Count</label>
+                        <select class="form-control" id="minPostCount">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option selected>10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <a href="#" class="btn btn-secondary btn-block">Search</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
 <script src="js/bundle.js"></script>
-<script type="text/javascript">
+<script>
     const baseURL = window.config.ip;
     // 将token添加至请求头
     axios.interceptors.request.use(
@@ -348,18 +875,23 @@
             return Promise.reject(error);
         }
     )
-
-
-
-
-
+    // 获取下一页位置
+    function getPosition(){
+        console.log("getPosition()函数被调用了")
+        let position = parseInt(document.getElementById("nextPage").value);
+        position ++;
+        document.getElementById("nextPage").value = position;
+        console.log(position);
+        return position;
+    }
     // 获取一页帖子
     function getTopics(){
         console.log("getTopics()函数被调用了")
         let positon = getPosition();
+        let url = baseURL+'/user/post/list'
         axios({
             method: 'POST',
-            url: baseURL+'/post/all/list',
+            url: url,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -370,21 +902,18 @@
         }).then((response)=>{
             let result = response.data;
             let topics = result.data.posts;
+            console.log(topics);
             let topicList = document.getElementById("topicList");
             for(let i=0; i<topics.length; i++) {
                 let topic = document.createElement("div");
-                topic.id = topics[i].id;
-                topic.onclick = function (){
-                    getTopicId(this.id);
-                };
                 let picture = topics[i].picture;
                 let headPic = baseURL+'/image/' + picture;
                 let createTime = topics[i].createTime;
                 let showTime = createTime.slice(0, createTime.indexOf('T'));
-                if (topics[i].top&&!topics[i].hidden) {
+                if (topics[i].top) {
                     if (topics[i].excellent) {
                         topic.className = "tt-item tt-itemselect";
-                        topic.innerHTML = `<div class="tt-col-avatar" onclick="toSingleCenter()">
+                        topic.innerHTML = `<div class="tt-col-avatar">
                                                 <div class="headPicContainer">
                                                     <img class="headPic" src="` + headPic + `"/>
                                                 </div>
@@ -397,7 +926,7 @@
                                                 <svg class="tt-icon">
                                                     <use xlink:href="#icon-locked"></use>
                                                 </svg>
-                                                <a href="#">` + topics[i].title + `</a>
+                                                <a href="page-single-topic.html">` + topics[i].title + `</a>
                                             </h6>
                                         </div>
                                         <div class="tt-col-category"><span class="tt-color04 tt-badge">` + topics[i].category + `</span></div>
@@ -406,7 +935,7 @@
                                         <div class="tt-col-category hide-mobile">` + showTime + `</div>`;
                     } else {
                         topic.className = "tt-item tt-itemselect";
-                        topic.innerHTML = `<div class="tt-col-avatar" onclick="toSingleCenter()">
+                        topic.innerHTML = `<div class="tt-col-avatar">
                                             <div class="headPicContainer">
                                                     <img class="headPic" src="` + headPic + `"/>
                                                 </div>
@@ -426,9 +955,9 @@
                     }
 
                 } else {
-                    if (topics[i].excellent&&!topics[i].hidden) {
+                    if (topics[i].excellent) {
                         topic.className = "tt-item";
-                        topic.innerHTML = `<div class="tt-col-avatar" onclick="toSingleCenter()">
+                        topic.innerHTML = `<div class="tt-col-avatar">
                                            <div class="headPicContainer">
                                                     <img class="headPic" src="` + headPic + `"/>
                                                 </div>
@@ -446,9 +975,8 @@
                                         <div class="tt-col-value hide-mobile">` + topics[i].visitSum + `</div>
                                         <div class="tt-col-category hide-mobile">` + showTime + `</div>`;
                     } else {
-                        if (!topics[i].hidden){
-                            topic.className = "tt-item";
-                            topic.innerHTML = `<div class="tt-col-avatar" onclick="toSingleCenter()">
+                        topic.className = "tt-item";
+                        topic.innerHTML = `<div class="tt-col-avatar">
                                             <div class="headPicContainer">
                                                     <img class="headPic" src="` + headPic + `"/>
                                                 </div>
@@ -462,7 +990,6 @@
                                         <div class="tt-col-value tt-color-select hide-mobile">` + topics[i].commentSum + `</div>
                                         <div class="tt-col-value hide-mobile">` + topics[i].visitSum + `</div>
                                         <div class="tt-col-category hide-mobile">` + showTime + `</div>`;
-                        }
                     }
                 }
                 topicList.appendChild(topic);
@@ -471,13 +998,6 @@
             console.log("error");
         })
     }
-
-    // 获取帖子id
-    function getTopicId(id){
-        let tid = id;
-        localStorage.tid = tid;
-    }
-
 </script>
 <svg width="0" height="0" class="hidden">
     <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" id="facebook-f-brands">

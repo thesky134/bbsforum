@@ -2,7 +2,7 @@
 function showInfo() {
     axios({
         method: 'POST',
-        url: baseURL + '/user/manage/info',
+        url: baseURL + '/user/manage/info/'+localStorage.myUid,
         headers: {
             'Content-Type': 'application/json'
         }
@@ -22,7 +22,7 @@ function showInfo() {
         let settingsUserScore = document.createElement("settingsUserScore");
         settingsUserScore.for="settingsUserName";
         settingsUserScore.innerText = score;
-        document.getElementById("headPic").src = headPic;
+        document.getElementById("sheadPic").src = headPic;
         scoreDiv.appendChild(settingsUserScore);
         document.getElementById("settingsUserName").value = username;
         document.getElementById("settingsUserEmail").value = email;
@@ -30,6 +30,21 @@ function showInfo() {
         document.getElementById("settingsUserJob").value = jobType;
         document.getElementById("settingsUserLocation").value = jobLocation;
         document.getElementById("settingsUserAbout").value = personalSignal;
+        // 展示头像+用户名+积分
+        let showUsernameDiv = document.getElementById("showUsernameDiv");
+        let showScoreDiv = document.getElementById("showScoreDiv");
+        let showHeadPicDiv = document.getElementById("showHeadPicDiv");
+        let showUsername = document.createElement("div");
+        let showScore = document.createElement("li");
+        let showHeadPic = document.createElement("div");
+        showHeadPic.className = "headPicContainer";
+        showHeadPic.id = "showHeadPic";
+        showHeadPic.innerHTML = `<img id="AHeadPic" class="headPic" src="`+headPic+`"/>`;
+        showUsername.innerHTML = `<a href="#">`+username+`</a>`;
+        showScore.innerHTML = `<a href="#"><span class="tt-color14 tt-badge">积分 : `+score+`</span></a>`;
+        showUsernameDiv.appendChild(showUsername);
+        showScoreDiv.appendChild(showScore);
+        showHeadPicDiv.appendChild(showHeadPic);
         console.log(username);
     }).catch(() => {
         console.log("error");
@@ -58,15 +73,16 @@ function updateHeadPic(){
     ).then((response) => {
         let result = response.data;
         let message = result.message;
-        let headDiv = document.getElementById("headDiv");
+        let sheadDiv = document.getElementById("sheadDiv");
         if (document.getElementById("showHeadPicMessage")) {
-            headDiv.removeChild(document.getElementById("showHeadPicMessage"));
+            sheadDiv.removeChild(document.getElementById("showHeadPicMessage"));
         }
         let showHeadPicMessage = document.createElement("label");
         showHeadPicMessage.id = "showHeadPicMessage";
         showHeadPicMessage.style.cssText = "font-size: 10px; color: #ff0000";
         showHeadPicMessage.innerText = message;
-        headDiv.appendChild(showHeadPicMessage);
+        sheadDiv.appendChild(showHeadPicMessage);
+        getSettingHeadPic();
         getHeadPic();
         console.log(response);
     }).catch(() => {
@@ -74,10 +90,10 @@ function updateHeadPic(){
     })
 }
 // 获取用户头像
-function getHeadPic(){
+function getSettingHeadPic(){
     axios({
         method: 'POST',
-        url: baseURL+'/user/manage/info',
+        url: baseURL+'/user/manage/info/'+localStorage.myUid,
         headers: {
             'Content-Type': 'application/json'
         }
@@ -86,16 +102,23 @@ function getHeadPic(){
         let picture = result.data.user.picture;
         let headPicSrc = baseURL+'/image/'+picture;
         console.log(headPicSrc);
-        let headPicDiv = document.getElementById("headPicDiv");
-        if (document.getElementById("headPicContainer")){
-            headPicDiv.removeChild(document.getElementById("headPicContainer"));
+        let sheadPicDiv = document.getElementById("sheadPicDiv");
+        if (document.getElementById("sheadPicContainer")){
+            sheadPicDiv.removeChild(document.getElementById("sheadPicContainer"));
             console.log("删除了");
         }
-        let headPicContainer = document.createElement("div");
-        headPicContainer.className = "headPicContainer";
-        headPicContainer.id = "headPicContainer";
-        headPicContainer.innerHTML = `<img class="headPic" src=`+headPicSrc+`>`;
-        headPicDiv.appendChild(headPicContainer);
+        let sheadPicContainer = document.createElement("div");
+        sheadPicContainer.className = "headPicContainer";
+        sheadPicContainer.id = "sheadPicContainer";
+        sheadPicContainer.innerHTML = `<img class="headPic" src=`+headPicSrc+`>`;
+        sheadPicDiv.appendChild(sheadPicContainer);
+        let showHeadPicDiv = document.getElementById("showHeadPicDiv");
+        showHeadPicDiv.removeChild(document.getElementById("showHeadPic"));
+        let showHeadPic = document.createElement("div");
+        showHeadPic.id = "showHeadPic";
+        showHeadPic.className = "headPicContainer";
+        showHeadPic.innerHTML = `<img id="AHeadPic" class="headPic" src="`+headPicSrc+`">`;
+        showHeadPicDiv.appendChild(showHeadPic);
     }).catch(()=>{
         console.log("error");
     })
@@ -475,7 +498,7 @@ document.onclick = function (event) {
     cleanMessage();
 }
 function cleanMessage() {
-    let headDiv = document.getElementById("headDiv");
+    let headDiv = document.getElementById("sheadDiv");
     let usernameDiv = document.getElementById("usernameDiv");
     let emailDiv = document.getElementById("emailDiv");
     let passwdDiv = document.getElementById("passwdDiv");
@@ -508,7 +531,3 @@ function cleanMessage() {
         personalSignalDiv.removeChild(document.getElementById("showPersonalSignalDivMessage"));
     }
 }
-
-(function () {
-    $('#js-settings-btn').trigger('click');
-})();
