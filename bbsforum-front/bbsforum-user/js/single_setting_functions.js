@@ -40,7 +40,7 @@ function showInfo() {
         showHeadPic.className = "headPicContainer";
         showHeadPic.id = "showHeadPic";
         showHeadPic.innerHTML = `<img id="AHeadPic" class="headPic" src="`+headPic+`"/>`;
-        showUsername.innerHTML = `<a href="#">`+username+`</a>`;
+        showUsername.innerHTML = `<a href="#" id="AUsername">`+username+`</a>`;
         showScore.innerHTML = `<a href="#"><span class="tt-color14 tt-badge">积分 : `+score+`</span></a>`;
         showUsernameDiv.appendChild(showUsername);
         showScoreDiv.appendChild(showScore);
@@ -168,6 +168,10 @@ function updateUsername(username) {
         showUsernameMessage.style.cssText = "font-size: 10px; color: #ff0000";
         showUsernameMessage.innerText = message;
         usernameDiv.appendChild(showUsernameMessage);
+        let myUsername = document.getElementById("myUsername");
+        myUsername.innerText = username;
+        let AUsername = document.getElementById("AUsername");
+        AUsername.innerText = username;
         console.log(result);
     }).catch(() => {
         console.log("error");

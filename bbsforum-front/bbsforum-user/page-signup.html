@@ -13,6 +13,7 @@
     <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/page-signup.js"></script>
 </head>
 <body>
 <div id="signup">
@@ -142,38 +143,7 @@
             }
         }
     })
-    function register() {
-        let username = document.getElementById("loginUserName").value;
-        let email = document.getElementById("loginUserEmail").value;
-        let password = document.getElementById("loginUserPassword").value;
-        axios({
-            method: 'POST',
-            url: baseURL+'/user/manage/register',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: {
-                username: username,
-                email: email,
-                passwd: password
-            }
-        }).then((response) => {
-            console.log(response.data);
-            let result = response.data;
-            let code = result.code;
-            let message = result.message;
-            if (code === 0) {
-                location.href="page-login.html";
-            } else if (code === 101){
-                alert("用户名/邮箱已注册！")
-            } else {
-                alert(message);
-            }
-        }).catch(() => {
-            console.log("error")
-        })
 
-    }
 </script>
 <svg width="0" height="0" class="hidden">
     <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg"

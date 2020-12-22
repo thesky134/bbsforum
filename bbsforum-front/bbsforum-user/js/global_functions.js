@@ -27,7 +27,7 @@ function checkLoginState() {
 
                                      </div>
                                     <div class="">
-                                        <a href="./page-single_threads.html" class="btn btn-primary">`+username+`</a>
+                                        <a href="./page-single_threads.html" class="btn btn-primary" id="myUsername">`+username+`</a>
                                         <a href="./page-login.html" class="btn btn-secondary" onclick="logout()">退出</a>
                                     </div>`;
             loginHeader.appendChild(userTab);
@@ -79,7 +79,8 @@ function toSingleCenter(){
     location.href = "page-single_threads.html";
 }
 // 跳转到其他用户的个人中心
-function toOtherSingleCenter(){
+function toOtherSingleCenter(uid){
+    getUserId(uid);
     location.href = "page-other-single_threads.html";
 }
 // 获取下一页位置
@@ -96,6 +97,10 @@ function logout(){
 }
 // 获取帖子id
 function getTopicId(id){
-    let tid = id;
-    localStorage.tid = tid;
+    localStorage.tid = id;
+}
+// 获取用户id
+function getUserId(id){
+    let uid = id;
+    localStorage.uid = uid;
 }
