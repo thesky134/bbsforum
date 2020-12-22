@@ -7,13 +7,16 @@ import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.thesky341.bbsforum.dto.PaginationDto;
+import top.thesky341.bbsforum.dto.RequestAnswerDto;
 import top.thesky341.bbsforum.dto.PostDto;
 import top.thesky341.bbsforum.dto.groups.PaginationWithCategory;
 import top.thesky341.bbsforum.entity.*;
 import top.thesky341.bbsforum.service.*;
+import top.thesky341.bbsforum.util.common.CommentUtil;
 import top.thesky341.bbsforum.util.result.Result;
 import top.thesky341.bbsforum.util.result.ResultCode;
 import top.thesky341.bbsforum.vo.CategoryVo;
+import top.thesky341.bbsforum.vo.CommentVo;
 import top.thesky341.bbsforum.vo.PostInfoVo;
 import top.thesky341.bbsforum.vo.PostVo;
 
@@ -40,6 +43,10 @@ public class PostController {
     CategoryService categoryService;
     @Resource(name = "userServiceImpl")
     UserService userService;
+    @Resource(name = "requestAnswerServiceImpl")
+    RequestAnswerService requestAnswerService;
+    @Resource(name = "userCommentStateServiceImpl")
+    UserCommentStateService userCommentStateService;
 
     /**
      * 添加帖子, 注意帖子可能为积分悬赏分类的
@@ -85,6 +92,10 @@ public class PostController {
         //判断用户是否有权限修改帖子
         if(userId != oldPost.getUser().getId() && !(subject.hasRole("admin") || subject.hasRole("superadmin"))) {
             return new Result(ResultCode.PermissionDenied);
+        }
+        if(oldPost.getCategory().getName().equals("积分悬赏")) {
+            Assert.isNull(requestAnswerService.getRequestAnswerByPostId(oldPost.getId()),
+                    "原贴子为积分悬赏，且已被回答，不允许修改");
         }
         User user = oldPost.getUser();
         Category category = categoryService.getCategoryByName(postDto.getCategory());
@@ -210,6 +221,13 @@ public class PostController {
                 userPostStateService.addUserPostState(userPostState);
             }
         }
+
+        if(post.getCategory().getName().equals("积分悬赏") && requestAnswerService.getRequestAnswerByPostId(post.getId()) != null) {
+            Comment comment = requestAnswerService.getRequestAnswerByPostId(post.getId()).getComment();
+            CommentVo commentVo = CommentUtil.parseCommentToCommentVo(comment, userCommentStateService);
+            postVo.setComment(commentVo);
+        }
+
         return Result.success("post", postVo);
     }
 
@@ -270,7 +288,11 @@ public class PostController {
             int postId = post.getId();
             int commentSum = commentService.getCommentSum(postId, -1);
             int visitSum = userPostStateService.getPostStateSum(postId, 4);
-            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
+            boolean answered = false;
+            if(post.getCategory().getName().equals("积分悬赏") && requestAnswerService.getRequestAnswerByPostId(postId) != null) {
+                answered = true;
+            }
+            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum, answered));
         }
         return postInfoVos;
     }
@@ -332,6 +354,32 @@ public class PostController {
         } else {
             return new Result(ResultCode.OperateNotExist);
         }
+        return Result.success();
+    }
+
+    @RequiresAuthentication
+    @PostMapping("/post/answer")
+    public Result answerPost(@RequestBody RequestAnswerDto requestAnswerDto) {
+        Post post = postService.getPostById(requestAnswerDto.getPostId());
+        Comment comment = commentService.getCommentById(requestAnswerDto.getCommentId());
+        Assert.notNull(post, "帖子不存在");
+        Assert.notNull(comment, "评论不存在");
+        if(!post.getCategory().getName().equals("积分悬赏")) {
+            return new Result(ResultCode.PostNotRewardRequest);
+        }
+        System.out.println(requestAnswerDto);
+        Subject subject = SecurityUtils.getSubject();
+        int userId = (int)subject.getPrincipal();
+        if(post.getUser().getId() != userId && !subject.hasRole("admin") && !subject.hasRole("superadmin")) {
+            return new Result(ResultCode.PermissionDenied);
+        }
+        RequestAnswer requestAnswer = requestAnswerService.getRequestAnswerByPostId(post.getId());
+        Assert.isNull(requestAnswer, "该帖子已经存在答案");
+        requestAnswer = new RequestAnswer(-1, post, comment);
+        requestAnswerService.addRequestAnswer(requestAnswer);
+        User answerUser = comment.getUser();
+        answerUser.setScore(answerUser.getScore() + post.getReward());
+        userService.updateScore(answerUser);
         return Result.success();
     }
 }

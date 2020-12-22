@@ -48,6 +48,8 @@ AdminController {
     CategoryService categoryService;
     @Resource(name = "charaServiceImpl")
     CharaService charaService;
+    @Resource(name = "requestAnswerServiceImpl")
+    RequestAnswerService requestAnswerService;
 
     /**
      * 用于管理员后台的登录
@@ -288,7 +290,11 @@ AdminController {
             int postId = post.getId();
             int commentSum = commentService.getCommentSum(postId, -1);
             int visitSum = userPostStateService.getPostStateSum(postId, 4);
-            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
+            boolean answered = false;
+            if(post.getCategory().getName().equals("积分悬赏") && requestAnswerService.getRequestAnswerByPostId(postId) != null) {
+                answered = true;
+            }
+            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum, answered));
         }
         return postInfoVos;
     }

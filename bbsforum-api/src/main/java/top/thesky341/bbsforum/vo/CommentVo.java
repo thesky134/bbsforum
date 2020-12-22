@@ -20,6 +20,7 @@ public class CommentVo {
      * 在显示个人评论时会使用
      */
     private String postTitle;
+    private int postId;
     private String content;
     private Date createTime;
     private Date modifyTIme;
@@ -39,6 +40,14 @@ public class CommentVo {
     private boolean like;
 
     public CommentVo() {
+    }
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public int getUserId() {
@@ -159,6 +168,7 @@ public class CommentVo {
                 "id=" + id +
                 ", picture='" + picture + '\'' +
                 ", postTitle='" + postTitle + '\'' +
+                ", postId=" + postId +
                 ", content='" + content + '\'' +
                 ", createTime=" + createTime +
                 ", modifyTIme=" + modifyTIme +

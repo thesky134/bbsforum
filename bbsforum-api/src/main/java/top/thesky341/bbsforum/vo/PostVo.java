@@ -31,6 +31,7 @@ public class PostVo {
     private boolean bad;
     private boolean like;
     private int reward;
+    private CommentVo comment;
 
     public PostVo() {
     }
@@ -49,6 +50,14 @@ public class PostVo {
         setPicture(post.getUser().getPicture());
         setUserId(post.getUser().getId());
         setReward(post.getReward());
+    }
+
+    public CommentVo getComment() {
+        return comment;
+    }
+
+    public void setComment(CommentVo comment) {
+        this.comment = comment;
     }
 
     public int getReward() {
@@ -234,6 +243,7 @@ public class PostVo {
                 ", bad=" + bad +
                 ", like=" + like +
                 ", reward=" + reward +
+                ", comment=" + comment +
                 '}';
     }
 }

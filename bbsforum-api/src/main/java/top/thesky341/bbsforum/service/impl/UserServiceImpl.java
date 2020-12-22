@@ -168,4 +168,9 @@ public class UserServiceImpl implements UserService {
     public void updateChara(User user) {
         userMapper.updateChara(user);
     }
+
+    @Override
+    public void updateDailyScore(User user) {
+        userMapper.updateDailyScore(user);
+    }
 }

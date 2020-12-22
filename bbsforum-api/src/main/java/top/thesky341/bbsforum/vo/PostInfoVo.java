@@ -29,11 +29,13 @@ public class PostInfoVo {
     private boolean excellent;
     private boolean top;
     private boolean hidden;
+    private int reward;
+    private boolean answered;
 
     public PostInfoVo() {
     }
 
-    public PostInfoVo(Post post, int commentSum, int visitSum) {
+    public PostInfoVo(Post post, int commentSum, int visitSum, boolean answered) {
         id = post.getId();
         picture = post.getUser().getPicture();
         title = post.getTitle();
@@ -42,11 +44,29 @@ public class PostInfoVo {
         this.visitSum = visitSum;
         this.user = post.getUser().getUsername();
         this.userId = post.getUser().getId();
+        this.reward = post.getReward();
+        this.answered = answered;
         createTime = post.getCreateTime();
         modifyTime = post.getModifyTime();
         excellent = post.isExcellent();
         top = post.isTop();
         hidden = post.isHidden();
+    }
+
+    public int getReward() {
+        return reward;
+    }
+
+    public void setReward(int reward) {
+        this.reward = reward;
+    }
+
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
     }
 
     public String getUser() {
@@ -169,6 +189,8 @@ public class PostInfoVo {
                 ", excellent=" + excellent +
                 ", top=" + top +
                 ", hidden=" + hidden +
+                ", reward=" + reward +
+                ", answered=" + answered +
                 '}';
     }
 }

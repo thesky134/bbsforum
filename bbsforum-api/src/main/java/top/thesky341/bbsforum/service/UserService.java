@@ -34,4 +34,5 @@ public interface UserService {
     void updatePasswd(User user);
     void updateUserDisabledState(int userId, int state);
     void updateChara(User user);
+    void updateDailyScore(User user);
 }

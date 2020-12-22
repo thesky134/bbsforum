@@ -18,6 +18,7 @@ import top.thesky341.bbsforum.service.CommentService;
 import top.thesky341.bbsforum.service.PostService;
 import top.thesky341.bbsforum.service.UserCommentStateService;
 import top.thesky341.bbsforum.service.UserService;
+import top.thesky341.bbsforum.util.common.CommentUtil;
 import top.thesky341.bbsforum.util.result.Result;
 import top.thesky341.bbsforum.util.result.ResultCode;
 import top.thesky341.bbsforum.vo.CommentVo;
@@ -56,6 +57,11 @@ public class CommentController {
         User user = userService.getUserById((int)subject.getPrincipal());
         Comment comment = new Comment(commentDto.getContent(), user, post);
         comment = commentService.addComment(comment);
+        if(user.getTodayScore() < 30) {
+            user.setScore(user.getScore() + 1);
+            user.setTodayScore(user.getTodayScore() + 1);
+            userService.updateDailyScore(user);
+        }
         return Result.success();
     }
 
@@ -101,29 +107,8 @@ public class CommentController {
         System.out.println(comments);
         List<CommentVo> commentVos = new ArrayList<>();
         for(int i = 0; i < comments.size(); i++) {
-            CommentVo commentVo = new CommentVo();
             Comment comment = comments.get(i);
-            commentVo.setContent(comment.getContent());
-            commentVo.setId(comment.getId());
-            commentVo.setPostTitle(comment.getPost().getTitle());
-            commentVo.setCreateTime(comment.getCreateTime());
-            commentVo.setModifyTIme(comment.getModifyTime());
-            commentVo.setUser(comment.getUser().getUsername());
-            commentVo.setUserId(comment.getUser().getId());
-            commentVo.setGoodSum(userCommentStateService.getCommentStateSum(comment.getId(), 1));
-            commentVo.setBadSum(userCommentStateService.getCommentStateSum(comment.getId(), 2));
-            commentVo.setLikeSum(userCommentStateService.getCommentStateSum(comment.getId(), 3));
-            commentVo.setPicture(comment.getUser().getPicture());
-            Subject subject = SecurityUtils.getSubject();
-            if (subject.isAuthenticated()) {
-                int userId = (int)subject.getPrincipal();
-                commentVo.setGood(userCommentStateService.getUserCommentStateSum(comment.getId(),
-                        userId, 1) == 1);
-                commentVo.setBad(userCommentStateService.getUserCommentStateSum(comment.getId(),
-                        userId, 2) == 1);
-                commentVo.setLike(userCommentStateService.getUserCommentStateSum(comment.getId(),
-                        userId, 3) == 1);
-            }
+            CommentVo commentVo = CommentUtil.parseCommentToCommentVo(comment, userCommentStateService);
             commentVos.add(commentVo);
         }
         return Result.success("comments", commentVos);

@@ -3,7 +3,6 @@ package top.thesky341.bbsforum.controller;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
@@ -56,6 +55,8 @@ public class UserController {
     UserPostStateService userPostStateService;
     @Resource(name = "userCommentStateServiceImpl")
     UserCommentStateService userCommentStateService;
+    @Resource(name = "requestAnswerServiceImpl")
+    RequestAnswerService requestAnswerService;
 
 
 
@@ -367,6 +368,7 @@ public class UserController {
             commentVo.setContent(comment.getContent());
             commentVo.setId(comment.getId());
             commentVo.setPostTitle(comment.getPost().getTitle());
+            commentVo.setPostId(comment.getPost().getId());
             commentVo.setCreateTime(comment.getCreateTime());
             commentVo.setModifyTIme(comment.getModifyTime());
             commentVo.setUser(comment.getUser().getUsername());
@@ -398,7 +400,11 @@ public class UserController {
             int postId = post.getId();
             int commentSum = commentService.getCommentSum(postId, -1);
             int visitSum = userPostStateService.getPostStateSum(postId, 4);
-            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum));
+            boolean answered = false;
+            if(post.getCategory().getName().equals("积分悬赏") && requestAnswerService.getRequestAnswerByPostId(postId) != null) {
+                answered = true;
+            }
+            postInfoVos.add(new PostInfoVo(post, commentSum, visitSum, answered));
         }
         return postInfoVos;
     }
