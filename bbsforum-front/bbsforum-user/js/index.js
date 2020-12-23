@@ -64,7 +64,7 @@ function getTopics(){
                                                 <svg class="tt-icon">
                                                     <use xlink:href="#icon-pinned"></use>
                                                 </svg>
-                                                <a href="page-single-topic.html">` + topics[i].title + `</a>
+                                                <a href="page-single-topic.js">` + topics[i].title + `</a>
                                             </h6>
                                         </div>
                                         <div class="tt-col-category"><span class="tt-color04 tt-badge">` + topics[i].category + `</span></div>
