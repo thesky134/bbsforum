@@ -19,7 +19,6 @@ function getTopicView(){
         let createDate = topic.createDate;
         let showTime = createDate.slice(0, createDate.indexOf('T'));
         let headPicSrc = baseURL+'/image/'+picture;
-        let uid = topic.userId;
 
         // 获取父元素节点
         let headPicDiv = document.getElementById("theadPicDiv");
@@ -53,10 +52,8 @@ function getTopicView(){
         showCreateTimeDiv.appendChild(showCreateTime);
         headPicContainer.className = "headPicContainer";
         headPicContainer.id = "theadPicContainer";
-        headPicContainer.setAttribute("uid",uid);
-        console.log(uid);
         headPicContainer.onclick = function (){
-            toOtherSingleCenter(uid);
+            toOtherSingleCenter();
         }
         headPicContainer.innerHTML = `<img class="headPic" src=`+headPicSrc+`>`;
         headPicDiv.appendChild(headPicContainer);

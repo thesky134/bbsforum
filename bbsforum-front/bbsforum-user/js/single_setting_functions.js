@@ -280,7 +280,8 @@ function updatePasswd(oldPasswd, newPasswd) {
     }).then((response) => {
         let result = response.data;
         let message = result.message;
-        let code = result.code;
+        let token = result.token;
+        localStorage.token = token;
         let passwdDiv = document.getElementById("passwdDiv");
         if (document.getElementById("showPasswdMessage")) {
             passwdDiv.removeChild(document.getElementById("showPasswdMessage"));
@@ -290,6 +291,7 @@ function updatePasswd(oldPasswd, newPasswd) {
         showPasswdMessage.style.cssText = "font-size: 10px; color: #ff0000";
         showPasswdMessage.innerText = message;
         passwdDiv.appendChild(showPasswdMessage);
+        alert("message");
     }).catch(() => {
         console.log("error");
     })
