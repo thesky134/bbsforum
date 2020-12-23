@@ -1,6 +1,5 @@
 // 获取帖子分类列表
 function getCategories(){
-    console.log("getCategories()函数被调用了");
     axios({
         method: 'POST',
         url: baseURL+'/category/all',
@@ -10,19 +9,23 @@ function getCategories(){
     }).then((response)=>{
         let result = response.data;
         let code = result.code;
+        let message = result.message;
         if(code === 0){
             let categoriesList = document.getElementById("selectTopicCategories");
             let categories = result.data.categorys;
-            console.log(categories);
             for(let i=0; i<categories.length;i++){
                 let id = categories[i].id;
                 let name = categories[i].name;
                 let category = document.createElement("option");
                 let categoryName = document.createTextNode(name);
                 category.appendChild(categoryName);
+                category.setAttribute("name", "category");
                 category.value = id;
                 categoriesList.appendChild(category);
             }
+            showTopic();
+        }else {
+            alert(message);
         }
     }).catch(()=>{
         console.log("error");
@@ -43,8 +46,27 @@ function showTopic(){
         let title = topic.title;
         let category = topic.category;
         let content = topic.content
+        let reward = topic.reward;
+        let isHidden = topic.hidden;
+        let categories = document.getElementsByName("category");
+        let hidden = document.getElementById("hidden");
+        for (let i=0;i<categories.length;i++){
+            console.log(categories[i])
+            console.log(categories[i].innerText)
+            if (category === categories[i].innerText){
+                console.log(category)
+                document.getElementById("selectTopicCategories").selectedIndex = i;
+            }
+        }
         if (category === "积分悬赏"){
             showReward();
+            let rewardScore = document.getElementById("inputTopicReward");
+            rewardScore.value = reward;
+        }
+        if (isHidden){
+            hidden.selectedIndex = 1;
+        }else {
+            hidden.selectedIndex = 0;
         }
         document.getElementById("inputTopicTitle").value = title;
         document.getElementById("inputTopicContent").value = content;
@@ -162,4 +184,54 @@ function showReward(){
             grandfather.removeChild(father);
         }
     }
+}
+
+// 检验帖子标题
+function checkTopicTitle() {
+    let title = document.getElementById("inputTopicTitle").value;
+    let showTitleMessage = document.getElementById("showTitleMessage");
+    // 检查正则
+    let re_title = /^[^\s]{3,20}$/;
+    if (re_title.test(title)) {
+        cleanTitleMessage();
+    } else {
+        showTitleMessage.style.display = "";
+    }
+}
+// 检验帖子正文
+function checkTopicContent() {
+    let content = document.getElementById("inputTopicContent").value;
+    let showContentMessage = document.getElementById("showContentMessage");
+    // 检查正则
+    let re_content = /^[^\s]{1,3000}$/;
+    if (re_content.test(content)) {
+        cleanContentMessage();
+    } else {
+        showContentMessage.style.display = "";
+    }
+}
+// 检验积分
+function checkReward(){
+    let reward = document.getElementById("inputTopicReward").value;
+    let showRewardMessage = document.getElementById("showRewardMessage");
+    // 检查正则
+    let re_reward = /^[0-9]{1,20}$/;
+    if (re_reward.test(reward)) {
+        cleanRewardMessage();
+    } else {
+        showRewardMessage.style.display = "";
+    }
+}
+// 清空提示
+function cleanTitleMessage(){
+    let showTitleMessage = document.getElementById("showTitleMessage");
+    showTitleMessage.style.display = "none";
+}
+function cleanContentMessage(){
+    let showContentMessage = document.getElementById("showContentMessage");
+    showContentMessage.style.display = "none";
+}
+function cleanRewardMessage(){
+    let showRewardMessage = document.getElementById("showRewardMessage");
+    showRewardMessage.style.display = "none";
 }

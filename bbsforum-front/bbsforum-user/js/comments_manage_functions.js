@@ -32,9 +32,11 @@ function addGood(){
     }).then((response)=>{
         let result = response.data;
         let code = result.code;
-        console.log(result);
+        let message = result.message;
         if(code === 0){
             getAllSum();
+        }else {
+            alert(message);
         }
     }).catch(()=>{
         console.log("error");
@@ -51,8 +53,11 @@ function deleteGood(){
     }).then((response)=> {
         let result = response.data;
         let code = result.code;
+        let message = result.message;
         if(code === 0){
             getAllSum();
+        }else {
+            alert(message);
         }
     }).catch(()=>{
         console.log("error");
@@ -91,8 +96,11 @@ function addBad(){
     }).then((response)=>{
         let result = response.data;
         let code = result.code;
+        let message = result.message;
         if(code === 0){
             getAllSum();
+        } else {
+            alert(message);
         }
     }).catch(()=>{
         console.log("error");
@@ -109,8 +117,11 @@ function deleteBad(){
     }).then((response)=> {
         let result = response.data;
         let code = result.code;
+        let message = result.message;
         if(code === 0){
             getAllSum();
+        }else {
+            alert(message);
         }
     }).catch(()=>{
         console.log("error");
@@ -149,8 +160,11 @@ function addLike(){
     }).then((response)=>{
         let result = response.data;
         let code = result.code;
+        let message = result.message;
         if(code === 0){
             getAllSum();
+        }else {
+            alert(message);
         }
     }).catch(()=>{
         console.log("error");
@@ -167,8 +181,11 @@ function deleteLike(){
     }).then((response)=> {
         let result = response.data;
         let code = result.code;
+        let message = result.message;
         if(code === 0){
             getAllSum();
+        }else {
+            alert(message);
         }
     }).catch(()=>{
         console.log("error");

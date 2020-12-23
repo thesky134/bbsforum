@@ -45,7 +45,6 @@ function showInfo() {
         showUsernameDiv.appendChild(showUsername);
         showScoreDiv.appendChild(showScore);
         showHeadPicDiv.appendChild(showHeadPic);
-        console.log(username);
     }).catch(() => {
         console.log("error");
     })
@@ -292,8 +291,7 @@ function updatePasswd(oldPasswd, newPasswd) {
         showPasswdMessage.style.cssText = "font-size: 10px; color: #ff0000";
         showPasswdMessage.innerText = message;
         passwdDiv.appendChild(showPasswdMessage);
-        location.href="page-login.html";
-        console.log(result);
+        alert("message");
     }).catch(() => {
         console.log("error");
     })

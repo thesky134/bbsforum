@@ -17,7 +17,7 @@
     <script src="js/comments_manage_functions.js"></script>
     <script src="js/page-single-topic.js"></script>
 </head>
-<body onload="getTopicView();getComments();checkLoginState();getCommentAll()">
+<body onload="getTopicView();getComments();checkLoginState();getChara()" onbeforeunload="cleanChara()">
 <!-- tt-mobile menu -->
 <nav class="panel-menu" id="mobile-menu">
     <ul>
@@ -90,7 +90,7 @@
     <div class="container">
         <div class="tt-single-topic-list">
             <div class="tt-item">
-                 <div class="tt-single-topic">
+                 <div class="tt-single-topic" id="topicContainer">
                     <div class="tt-item-header">
                         <div class="tt-item-info info-top">
                             <div class="tt-avatar-icon" id="theadPicDiv">
@@ -144,6 +144,8 @@
                         <div class="col-separator"></div>
 
                     </div>
+                     <!--被采纳的回复-->
+
                 </div>
             </div>
             <!--帖子热度-->
@@ -189,6 +191,9 @@
 
             </div>
 
+            <div class="tt-wrapper-inner" style="display: none" id="bottom">
+                <h4 class="tt-title-separator"><span>回复已经到底啦！</span></h4>
+            </div>
             <!--显示下一页-->
             <div class="tt-row-btn">
                 <button type="button" class="btn-icon js-topiclist-showmore" id="nextPage" value="0" onclick="getComments()">
@@ -199,9 +204,7 @@
             </div>
 
         </div>
-        <div class="tt-wrapper-inner">
-            <h4 class="tt-title-separator"><span>回复已经到底啦！</span></h4>
-        </div>
+
         <!--写回复-->
         <div class="tt-wrapper-inner">
             <div class="pt-editor form-default">
@@ -341,7 +344,28 @@
             return Promise.reject(error);
         }
     )
-
+    // 获取用户角色
+    function getChara(){
+        axios({
+            method: 'POST',
+            url: baseURL+'/user/manage/info/'+localStorage.myUid,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response)=> {
+            if (localStorage.myUid !== "undefined"){
+                let result = response.data;
+                let character = result.data.user.chara;
+                localStorage.chara = character;
+            }
+        }).catch(()=>{
+            console.log("error");
+        })
+    }
+    // 清除chara
+    function cleanChara(){
+        localStorage.removeItem("chara");
+    }
 
 </script>
 <svg width="0" height="0" class="hidden">

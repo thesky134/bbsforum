@@ -89,7 +89,7 @@
                 if(re_username.test(this.vmodel_username)){
                     this.vshow_username = false;
                 }else {
-                    this.username_msg = '请输入正确的用户名！';
+                    this.username_msg = '用户名不能为空，不能含空格，且长度为3~20位！！';
                     this.vshow_username = true;
                 }
             },
@@ -100,7 +100,7 @@
                     this.vshow_pwd = false;
                 }
                 else{
-                    this.pwd_msg = '密码格式有误！';
+                    this.pwd_msg = '密码不能为空，且密码长度为6~26位！';
                     this.vshow_pwd = true;
                 }
             },

@@ -14,7 +14,6 @@ function register() {
             passwd: password
         }
     }).then((response) => {
-        console.log(response.data);
         let result = response.data;
         let code = result.code;
         let message = result.message;

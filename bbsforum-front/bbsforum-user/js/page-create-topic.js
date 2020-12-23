@@ -1,6 +1,5 @@
 // 获取帖子分类列表
 function getCategories(){
-    console.log("getCategories()函数被调用了");
     axios({
         method: 'POST',
         url: baseURL+'/category/all',
@@ -13,7 +12,6 @@ function getCategories(){
         if(code === 0){
             let categoriesList = document.getElementById("selectTopicCategories");
             let categories = result.data.categorys;
-            console.log(categories);
             for(let i=0; i<categories.length;i++){
                 let id = categories[i].id;
                 let name = categories[i].name;
@@ -64,7 +62,7 @@ function createTopic(){
         let code = result.code;
         let message = result.message;
         if (code === 0){
-            location.href = "index.html";
+            alert(message);
         }else{
             alert(message);
         }
@@ -87,8 +85,11 @@ function showReward(){
 											<div class="col-md-4">
 												<div class="form-group">
 													<label for="inputTopicReward">悬赏积分设置</label>
-													<input type="text" name="name" class="form-control" id="inputTopicReward" placeholder="输入你悬赏的积分">
+													<input type="text" name="name" class="form-control" id="inputTopicReward"
+													       onblur="checkReward()" placeholder="输入你悬赏的积分">
 												</div>
+												<label id="showRewardMessage" style="font-size: 10px; font-weight: bold;
+												        color: #ff0000;display: none">请输入合法的数字</label>
 											</div>
 										</div>`;
             container.appendChild(showreward);
@@ -101,4 +102,53 @@ function showReward(){
             grandfather.removeChild(father);
         }
     }
+}
+// 检验帖子标题
+function checkTopicTitle() {
+    let title = document.getElementById("inputTopicTitle").value;
+    let showTitleMessage = document.getElementById("showTitleMessage");
+    // 检查正则
+    let re_title = /^[^\s]{3,20}$/;
+    if (re_title.test(title)) {
+        cleanTitleMessage();
+    } else {
+        showTitleMessage.style.display = "";
+    }
+}
+// 检验帖子正文
+function checkTopicContent() {
+    let content = document.getElementById("inputTopicContent").value;
+    let showContentMessage = document.getElementById("showContentMessage");
+    // 检查正则
+    let re_content = /^[^\s]{1,3000}$/;
+    if (re_content.test(content)) {
+        cleanContentMessage();
+    } else {
+        showContentMessage.style.display = "";
+    }
+}
+// 检验积分
+function checkReward(){
+    let reward = document.getElementById("inputTopicReward").value;
+    let showRewardMessage = document.getElementById("showRewardMessage");
+    // 检查正则
+    let re_reward = /^[0-9]{1,20}$/;
+    if (re_reward.test(reward)) {
+        cleanRewardMessage();
+    } else {
+        showRewardMessage.style.display = "";
+    }
+}
+// 清空提示
+function cleanTitleMessage(){
+    let showTitleMessage = document.getElementById("showTitleMessage");
+    showTitleMessage.style.display = "none";
+}
+function cleanContentMessage(){
+    let showContentMessage = document.getElementById("showContentMessage");
+    showContentMessage.style.display = "none";
+}
+function cleanRewardMessage(){
+    let showRewardMessage = document.getElementById("showRewardMessage");
+    showRewardMessage.style.display = "none";
 }
