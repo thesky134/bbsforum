@@ -45,7 +45,6 @@ function showInfo() {
         showUsernameDiv.appendChild(showUsername);
         showScoreDiv.appendChild(showScore);
         showHeadPicDiv.appendChild(showHeadPic);
-        console.log(username);
     }).catch(() => {
         console.log("error");
     })

@@ -1,6 +1,5 @@
 // 获取帖子分类 all
 function getCategories(){
-    console.log("getCategories()函数被调用了");
     let categoriesList = document.getElementById("categoriesList");
     axios({
         method: 'POST',

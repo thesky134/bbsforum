@@ -17,7 +17,6 @@ function checkLoginState() {
         loginState = result.data.loginState;
         uid = result.data.userId;
         localStorage.myUid = uid;
-        console.log(result);
         if(loginState){
             username = result.data.username;
             let userTab = document.createElement("div");
@@ -70,8 +69,9 @@ function getHeadPic(){
         }
         headPicContainer.innerHTML = `<img class="headPic" src=`+headPicSrc+`>`;
         headPicDiv.appendChild(headPicContainer);
+
     }).catch(()=>{
-        console.log("error");
+
     })
 }
 // 跳转到用户自己的个人中心
@@ -88,12 +88,16 @@ function getPosition(){
     let position = parseInt(document.getElementById("nextPage").value);
     position ++;
     document.getElementById("nextPage").value = position;
-    console.log(position);
     return position;
 }
 // 退出登录
 function logout(){
     localStorage.removeItem("token");
+    localStorage.removeItem("myUid");
+    localStorage.removeItem("tid");
+    localStorage.removeItem("uid");
+    localStorage.removeItem("cid");
+    localStorage.removeItem("chara");
 }
 // 获取帖子id
 function getTopicId(id){

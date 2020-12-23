@@ -1,15 +1,12 @@
 // 获取下一页位置
 function getPosition(){
-    console.log("getPosition()函数被调用了")
     let position = parseInt(document.getElementById("nextPage").value);
     position ++;
     document.getElementById("nextPage").value = position;
-    console.log(position);
     return position;
 }
 // 获取一页回复
 function getComments(){
-    console.log("getComments()函数被调用了")
     let position = getPosition();
     axios({
         method: 'POST',
@@ -26,7 +23,6 @@ function getComments(){
         let result = response.data;
         let comments = result.data.comments;
         let commentList = document.getElementById("commentList");
-        console.log(commentList);
         for (let i=0; i<comments.length;i++){
             let picture = comments[i].picture;
             let headPic = baseURL+'/image/' + picture;
@@ -55,7 +51,6 @@ function getComments(){
                 <div class="tt-col-category hide-mobile">`+showTime+`</div>`;
             commentList.appendChild(comment);
         }
-        console.log(comments);
     }).catch(()=>{
         console.log("error");
     })
