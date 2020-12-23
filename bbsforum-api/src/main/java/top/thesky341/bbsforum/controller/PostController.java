@@ -160,6 +160,7 @@ public class PostController {
     public Result getPostList(@Valid @RequestBody PaginationDto paginationDto) {
         Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
                 paginationDto.getPageSize());
+        pagination.setHidden(0);
         return Result.success("posts", getPostInfoListByPagination(pagination));
     }
 
@@ -174,6 +175,7 @@ public class PostController {
         Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
                 paginationDto.getPageSize());
         pagination.setCategoryId(paginationDto.getCategoryId());
+        pagination.setHidden(0);
         CategoryVo categoryVo = new CategoryVo(category, postService.getPostSum(category.getId(), -1, 0));
         Map<String, Object> data = new HashMap<>();
         data.put("category", categoryVo);

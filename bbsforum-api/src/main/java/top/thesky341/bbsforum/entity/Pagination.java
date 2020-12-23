@@ -14,6 +14,7 @@ public class Pagination {
     private Integer postId = -1;
     private Integer top = -1;
     private Integer admin = -1;
+    private Integer hidden = -1;
 
     public Pagination() {
     }
@@ -21,6 +22,14 @@ public class Pagination {
     public Pagination(int from, int num) {
         this.from = from;
         this.num = num;
+    }
+
+    public Integer getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Integer hidden) {
+        this.hidden = hidden;
     }
 
     public int getFrom() {
@@ -73,6 +82,7 @@ public class Pagination {
                 ", postId=" + postId +
                 ", top=" + top +
                 ", admin=" + admin +
+                ", hidden=" + hidden +
                 '}';
     }
 

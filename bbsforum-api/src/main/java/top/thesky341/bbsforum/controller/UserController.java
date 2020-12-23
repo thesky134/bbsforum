@@ -278,14 +278,14 @@ public class UserController {
                 user.getSalt());
         user.setPasswd(encryptedNewPasswd);
         userService.updatePasswd(user);
-        subject.logout();
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), passwdDto.getNewPasswd());
-        subject.login(token);
-        user = userService.getUserByUsername(user.getUsername());
-        //检查是否每天第一次登录，第一次登录积分加5
-        userService.checkIsTodayFirstLogin(user);
-        userService.updateLastLoginTime(user);
-        return Result.success(UserSessionManager.OAUTH_TOKEN, subject.getSession().getId());
+//        subject.logout();
+//        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), passwdDto.getNewPasswd());
+//        subject.login(token);
+//        user = userService.getUserByUsername(user.getUsername());
+//        //检查是否每天第一次登录，第一次登录积分加5
+//        userService.checkIsTodayFirstLogin(user);
+//        userService.updateLastLoginTime(user);
+        return Result.success();
     }
 
 
@@ -331,8 +331,13 @@ public class UserController {
         int userId = paginationDto.getUserId();
         User user = userService.getUserById(userId);
         Assert.notNull(user, "用户不存在");
+        Subject subject = SecurityUtils.getSubject();
+
         Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1),
                 paginationDto.getPageSize());
+        if(!subject.isAuthenticated() || !((int)subject.getPrincipal() == userId || (subject.hasRole("admin") || subject.hasRole("superadmin")))) {
+            pagination.setHidden(0);
+        }
         pagination.setUserId(userId);
         return Result.success("posts", getPostInfoListByPagination(pagination));
     }
