@@ -15,4 +15,5 @@ public interface CommentService {
     Comment addComment(Comment comment);
     void updateContent(Comment comment);
     List<Comment> getCommentListByPagination(Pagination pagination);
+    void setCommentDeleted(int id);
 }

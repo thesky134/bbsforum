@@ -357,11 +357,11 @@ public class UserController {
         int userId = paginationDto.getUserId();
         User user = this.userService.getUserById(userId);
         Assert.notNull(user, "用户不存在");
+        System.out.println(user);
         Pagination pagination = new Pagination(paginationDto.getPageSize() * (paginationDto.getPosition() - 1), paginationDto.getPageSize());
         pagination.setUserId(userId);
         List<Comment> comments = this.commentService.getCommentListByPagination(pagination);
         List<CommentVo> commentVos = new ArrayList();
-
         for(int i = 0; i < comments.size(); ++i) {
             CommentVo commentVo = new CommentVo();
             Comment comment = (Comment)comments.get(i);
@@ -383,7 +383,6 @@ public class UserController {
                 commentVo.setBad(this.userCommentStateService.getUserCommentStateSum(comment.getId(), userId, 2) == 1);
                 commentVo.setLike(this.userCommentStateService.getUserCommentStateSum(comment.getId(), userId, 3) == 1);
             }
-
             commentVos.add(commentVo);
         }
 

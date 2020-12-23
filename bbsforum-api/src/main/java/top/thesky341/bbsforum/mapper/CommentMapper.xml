@@ -12,6 +12,16 @@
     <insert id="deleteCommentById">
         DELETE FROM comment WHERE id = #{id}
     </insert>
+    <update id="setCommentDeletedByPostId">
+        UPDATE comment
+        SET is_deleted = 1
+        WHERE post_id = #{postId}
+    </update>
+    <update id="setCommentDeleted">
+        UPDATE comment
+        SET is_deleted = 1
+        WHERE id = #{id}
+    </update>
     <update id="updateContent">
         UPDATE comment
         SET content = #{content},
@@ -20,11 +30,11 @@
     </update>
     <select id="getCommentById" resultMap="commentMap">
         SELECT *
-        FROM comment WHERE id = #{id}
+        FROM comment WHERE id = #{id} AND is_deleted = 0
     </select>
     <select id="getCommentByUserId" resultMap="commentMap">
         SELECT *
-        FROM comment WHERE user_id = #{userId}
+        FROM comment WHERE user_id = #{userId} AND is_deleted = 0
     </select>
     <select id="getCommentByPostId" resultMap="commentMap">
         SELECT *
