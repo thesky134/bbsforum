@@ -61,6 +61,3 @@ const config = {
     name: "简约论坛",
     menu: menu,
 };
-
-module.exports.name = "Qadmin";
-module.exports.menu = menu;

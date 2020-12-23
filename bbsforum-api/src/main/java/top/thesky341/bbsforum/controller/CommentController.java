@@ -78,6 +78,20 @@ public class CommentController {
         return Result.success();
     }
 
+    @RequiresAuthentication
+    @PostMapping("/comment/manage/deleted/{commentId}")
+    public Result setCommentDeleted(@PathVariable int commentId) {
+        Subject subject = SecurityUtils.getSubject();
+        int userId = (int) subject.getPrincipal();
+        Comment comment = commentService.getCommentById(commentId);
+        Assert.notNull(comment, "评论不存在");
+        if(userId != comment.getUser().getId() && !(subject.hasRole("admin") || subject.hasRole("superadmin"))) {
+            return new Result(ResultCode.PermissionDenied);
+        }
+        commentService.setCommentDeleted(commentId);
+        return Result.success();
+    }
+
     /**
      * 获取某个帖子的评论数量
      */

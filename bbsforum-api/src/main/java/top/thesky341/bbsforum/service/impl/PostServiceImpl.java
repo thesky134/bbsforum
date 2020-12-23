@@ -2,8 +2,10 @@ package top.thesky341.bbsforum.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.thesky341.bbsforum.entity.Comment;
 import top.thesky341.bbsforum.entity.Pagination;
 import top.thesky341.bbsforum.entity.Post;
+import top.thesky341.bbsforum.mapper.CommentMapper;
 import top.thesky341.bbsforum.mapper.PostMapper;
 import top.thesky341.bbsforum.service.PostService;
 
@@ -18,6 +20,8 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
     @Autowired
     PostMapper postMapper;
+    @Autowired
+    CommentMapper commentMapper;
 
     @Override
     public int getPostSum(int categoryId, int userId, int hidden) {
@@ -86,6 +90,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public void setPostDeleted(int postId) {
         postMapper.setPostDeleted(postId);
+        commentMapper.setCommentDeletedByPostId(postId);
     }
 
     @Override
