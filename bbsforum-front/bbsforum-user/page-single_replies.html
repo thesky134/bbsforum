@@ -15,8 +15,9 @@
     <script src="js/config.js"></script>
     <script src="js/global_functions.js"></script>
     <script src="js/single_setting_functions.js"></script>
+    <script src="js/page-single_replies.js"></script>
 </head>
-<body onload="checkLoginState();showInfo()">
+<body onload="checkLoginState();showInfo();getComments()">
 <!-- tt-mobile menu -->
 <nav class="panel-menu" id="mobile-menu">
     <ul>
@@ -106,7 +107,7 @@
                 <div class="tt-col-btn" id="js-settings-btn">
                     <div class="tt-list-btn">
                         <a href="#" class="tt-btn-icon">
-                            设置 &nbsp;
+                            我的设置 &nbsp;
                             <svg class="tt-icon">
                                 <use xlink:href="#icon-settings_fill"></use>
                             </svg>
@@ -131,47 +132,23 @@
             </div>
             <div class="tab-content">
                 <div class="tab-pane tt-indent-none show active" id="tt-tab-03" role="tabpanel">
-                    <!--回复-->
                      <div class="tt-topic-list">
                         <div class="tt-list-header">
                             <div class="tt-col-topic">帖子</div>
-                            <div class="tt-col-value">发布时间</div>
+                            <div class="tt-col-category">发布时间</div>
                         </div>
-                        <div class="tt-item">
-                            <div class="tt-col-avatar">
-                               <svg class="tt-icon">
-                                  <use xlink:href="#icon-ava-d"></use>
-                                </svg>
-                            </div>
-                            <div class="tt-col-description">
-                                <h6 class="tt-title"><a href="#">
-                                    Does Envato act against the authors of Envato markets?
-                                </a></h6>
-                                <div class="row align-items-center no-gutters hide-desktope">
-                                    <div class="col-9">
-                                        <ul class="tt-list-badge">
-                                            <li class="show-mobile"><a href="#"><span class="tt-color06 tt-badge">movies</span></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-3 ml-auto show-mobile">
-                                        <div class="tt-value">5 Jan,19</div>
-                                    </div>
-                                </div>
-                                <div class="tt-content">
-                                    I really liked new badge - T-shirt. Will there be new contests with new badges for AudioJungle?
-                                </div>
-                            </div>
-                            <div class="tt-col-category"></div>
-                            <div class="tt-col-value-large hide-mobile">5 Jan,19</div>
-                        </div>
+                         <!--回复-->
+                         <div id="commentList">
 
-                        <div class="tt-row-btn">
-                            <button type="button" class="btn-icon js-topiclist-showmore">
-                                <svg class="tt-icon">
-                                  <use xlink:href="#icon-load_lore_icon"></use>
-                                </svg>
-                            </button>
-                        </div>
+                         </div>
+                         <!--显示下一页-->
+                         <div class="tt-row-btn">
+                             <button type="button" class="btn-icon js-topiclist-showmore" id="nextPage" value="0" onclick="getComments()">
+                                 <svg class="tt-icon">
+                                     <use xlink:href="#icon-load_lore_icon"></use>
+                                 </svg>
+                             </button>
+                         </div>
                     </div>
                 </div>
 
@@ -285,12 +262,7 @@
             return Promise.reject(error);
         }
     )
-    // 获取一页回复
 
-    // 跳转到个人帖子页
-    function toSingleThreads(){
-        location.href = "page-single_threads.html";
-    }
 </script>
 <svg width="0" height="0" class="hidden">
 	 <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" id="facebook-f-brands">

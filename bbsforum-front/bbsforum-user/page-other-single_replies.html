@@ -15,9 +15,26 @@
     <script src="js/config.js"></script>
     <script src="js/global_functions.js"></script>
     <script src="js/other_UserInfo.js"></script>
-    <script src="js/page-other-single_threads.js"></script>
+    <script src="js/page-other-single_replies.js"></script>
 </head>
-<body onload="getTopics();checkLoginState();showInfo()">
+<body onload="checkLoginState();showInfo();getComments()">
+<!-- tt-mobile menu -->
+<nav class="panel-menu" id="mobile-menu">
+    <ul>
+
+    </ul>
+    <div class="mm-navbtn-names">
+        <div class="mm-closebtn">
+            Close
+            <div class="tt-icon">
+                <svg>
+                    <use xlink:href="#icon-cancel"></use>
+                </svg>
+            </div>
+        </div>
+        <div class="mm-backbtn">Back</div>
+    </div>
+</nav>
 <header id="tt-header">
     <div class="container">
         <div class="row tt-row no-gutters" id="tt-header-login">
@@ -105,50 +122,28 @@
             <div class="tt-wrapper-inner">
                 <ul class="nav nav-tabs pt-tabs-default" role="tablist">
 
-                    <li class="nav-item show">
-                        <a class="nav-link active" data-toggle="tab" href="#tt-tab-02" role="tab"><span>帖子</span></a>
+                    <li class="nav-item" onclick="toOtherSingleThreads()">
+                        <a class="nav-link" data-toggle="tab" href="#tt-tab-02" role="tab"><span>帖子</span></a>
                     </li>
-                    <li class="nav-item" onclick="toOtherSingleReplies()">
-                        <a src="page-single_replies" class="nav-link" data-toggle="tab" href="#tt-tab-03" role="tab" ><span>回复</span></a>
+                    <li class="nav-item show">
+                        <a class="nav-link active" data-toggle="tab" href="#tt-tab-03" role="tab"><span>回复</span></a>
                     </li>
                 </ul>
             </div>
             <div class="tab-content">
-                <div class="tab-pane tt-indent-none show active" id="tt-tab-02" role="tabpanel">
-                    <div id="container">
-                        <div class="tt-topic-list">
-                            <div class="tt-list-header">
-                                <div class="tt-col-topic">帖子</div>
-                                <div class="tt-col-category">分类</div>
-                                <div class="tt-col-value hide-mobile">回复</div>
-                                <div class="tt-col-value hide-mobile">浏览</div>
-                                <div class="tt-col-category">发布时间</div>
-                            </div>
-                            <!--显示帖子-->
-                            <div class="tt-topic-list" id="topicList">
-
-                            </div>
-                            <!--显示下一页-->
-                            <div class="tt-row-btn">
-                                <button type="button" class="btn-icon js-topiclist-showmore" id="nextPage" value="0" onclick="getTopics()">
-                                    <svg class="tt-icon">
-                                        <use xlink:href="#icon-load_lore_icon"></use>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="tab-pane tt-indent-none" id="tt-tab-03" role="tabpanel">
+                <div class="tab-pane tt-indent-none show active" id="tt-tab-03" role="tabpanel">
                     <div class="tt-topic-list">
                         <div class="tt-list-header">
-                            <div class="tt-col-topic">Topic</div>
-                            <div class="tt-col-category">Category</div>
-                            <div class="tt-col-value">Activity</div>
+                            <div class="tt-col-topic">帖子</div>
+                            <div class="tt-col-category">发布时间</div>
                         </div>
+                        <!--回复-->
+                        <div id="commentList">
+
+                        </div>
+                        <!--显示下一页-->
                         <div class="tt-row-btn">
-                            <button type="button" class="btn-icon js-topiclist-showmore">
+                            <button type="button" class="btn-icon js-topiclist-showmore" id="nextPage" value="0" onclick="getComments()">
                                 <svg class="tt-icon">
                                     <use xlink:href="#icon-load_lore_icon"></use>
                                 </svg>
@@ -157,472 +152,6 @@
                     </div>
                 </div>
 
-                <div class="tab-pane" id="tt-tab-06" role="tabpanel">
-                    <div class="tt-wrapper-inner">
-                        <div class="tt-categories-list">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color01 tt-badge">politics</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <a href="#" class="tt-btn-icon">
-                                                <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color02 tt-badge">video</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 368</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">movies</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">new movies</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">marvel movies</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">netflix</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">prime</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color03 tt-badge">exchange</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 381</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color04 tt-badge">pets</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 98</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color05 tt-badge">music</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 28</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color06 tt-badge">movies</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 74</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color15 tt-badge">nature</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color07 tt-badge">video games</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color08 tt-badge">youtube</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color09 tt-badge">social</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color10 tt-badge">science</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color11 tt-badge">entertainment</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color04 tt-badge">pets</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color05 tt-badge">music</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="tt-item">
-                                        <div class="tt-item-header">
-                                            <ul class="tt-list-badge">
-                                                <li><a href="#"><span class="tt-color06 tt-badge">movies</span></a></li>
-                                            </ul>
-                                            <h6 class="tt-title"><a href="#">Threads - 1,245</a></h6>
-                                        </div>
-                                        <div class="tt-item-layout">
-                                            <div class="tt-innerwrapper">
-                                                Lets discuss about whats happening around the world politics.
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <h6 class="tt-title">Similar TAGS</h6>
-                                                <ul class="tt-list-badge">
-                                                    <li><a href="#"><span class="tt-badge">world politics</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">human rights</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">trump</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">climate change</span></a></li>
-                                                    <li><a href="#"><span class="tt-badge">foreign policy</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="tt-innerwrapper">
-                                                <a href="#" class="tt-btn-icon">
-                                                    <i class="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="tt-row-btn">
-                                        <button type="button" class="btn-icon js-topiclist-showmore">
-                                            <svg class="tt-icon">
-                                                <use xlink:href="#icon-load_lore_icon"></use>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -708,131 +237,6 @@
     </span>
 </a>
 
-<div class="modal fade" id="modalAdvancedSearch" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="tt-modal-advancedSearch">
-                <div class="tt-modal-title">
-                    <i class="pt-icon">
-                        <svg>
-                            <use xlink:href="#icon-advanced_search"></use>
-                        </svg>
-                    </i>
-                    Advanced Search
-                    <a class="pt-close-modal" href="#" data-dismiss="modal">
-                        <svg class="icon">
-                            <use xlink:href="#icon-cancel"></use>
-                        </svg>
-                    </a>
-                </div>
-                <form class="form-default">
-                    <div class="form-group">
-                        <i class="pt-customInputIcon">
-                            <svg class="tt-icon">
-                                <use xlink:href="#icon-search"></use>
-                            </svg>
-                        </i>
-                        <input type="text" name="name" class="form-control pt-customInputSearch" id="searchForum" placeholder="Search all forums">
-                    </div>
-                    <div class="form-group">
-                        <label for="searchName">Posted by</label>
-                        <input type="text" name="name" class="form-control" id="searchName" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <label for="searchCategory">In Category</label>
-                        <input type="text" name="name" class="form-control" id="searchCategory" placeholder="Add Category">
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="searcCheckBox01" name="checkbox">
-                        <label for="searcCheckBox01">
-                            <span class="check"></span>
-                            <span class="box"></span>
-                            <span class="tt-text">Include all tags</span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Only return topics/posts that...</label>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="searcCheckBox02" name="checkbox">
-                            <label for="searcCheckBox02">
-                                <span class="check"></span>
-                                <span class="box"></span>
-                                <span class="tt-text">I liked</span>
-                            </label>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="searcCheckBox03" name="checkbox">
-                            <label for="searcCheckBox03">
-                                <span class="check"></span>
-                                <span class="box"></span>
-                                <span class="tt-text">are in my messages</span>
-                            </label>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="searcCheckBox04" name="checkbox">
-                            <label for="searcCheckBox04">
-                                <span class="check"></span>
-                                <span class="box"></span>
-                                <span class="tt-text">I’ve read</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" id="searchTop">
-                            <option>any</option>
-                            <option>value 01</option>
-                            <option>value 02</option>
-                            <option>value 03</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="searchaTopics">Where topics</label>
-                        <select class="form-control" id="searchaTopics">
-                            <option>any</option>
-                            <option>value 01</option>
-                            <option>value 02</option>
-                            <option>value 03</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="searchAdvTime">Posted</label>
-                        <div class="row">
-                            <div class="col-6">
-                                <select class="form-control">
-                                    <option>any</option>
-                                    <option>value 01</option>
-                                    <option>value 02</option>
-                                    <option>value 03</option>
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <input type="text" name="name" class="form-control" id="searchAdvTime" placeholder="dd-mm-yyyy">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="minPostCount">Minimum Post Count</label>
-                        <select class="form-control" id="minPostCount">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option selected>10</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <a href="#" class="btn btn-secondary btn-block">Search</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 <script src="js/bundle.js"></script>
 <script>
     const baseURL = window.config.ip;
