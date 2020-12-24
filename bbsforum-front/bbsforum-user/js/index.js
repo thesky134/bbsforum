@@ -14,7 +14,7 @@ function getTopics(){
     }).then((response)=>{
         let result = response.data;
         let topics = result.data.posts;
-        if (topics.length <= 10){
+        if (topics.length < 15){
             document.getElementById("bottom").style.display = "";
         }
         let topicList = document.getElementById("topicList");
@@ -81,7 +81,6 @@ function getTopics(){
                 }
             }
         }
-        checkState();
     }).catch(()=>{
         console.log("error");
     })

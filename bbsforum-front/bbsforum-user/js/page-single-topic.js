@@ -19,6 +19,7 @@ function getTopicView(){
         let createDate = topic.createDate;
         let showTime = createDate.slice(0, createDate.indexOf('T'));
         let headPicSrc = baseURL+'/image/'+picture;
+        let uid = topic.userId;
 
         // 获取父元素节点
         let headPicDiv = document.getElementById("theadPicDiv");
@@ -35,7 +36,11 @@ function getTopicView(){
         let showContent = document.createElement("div");
         let showCreateTime = document.createElement("i");
         // 元素节点中添加数据和HTML
-        showUsername.innerHTML = `<a href="#">`+username+`</a>`;
+        showUsername.innerHTML = `<a href="page-other-single_threads.html">`+username+`</a>`;
+        showUsername.id = uid;
+        showUsername.onclick = function (){
+            toOtherSingleCenter(this.id);
+        }
         if (category === "积分悬赏"){
             showCategory.innerHTML = `<span class="tt-color03 tt-badge">`+category+` : `+reward+` 积分</span>`;
         }else {
@@ -51,12 +56,12 @@ function getTopicView(){
         showContentDiv.appendChild(showContent);
         showCreateTimeDiv.appendChild(showCreateTime);
         headPicContainer.className = "headPicContainer";
-        headPicContainer.id = "theadPicContainer";
-        headPicContainer.onclick = function (){
-            toOtherSingleCenter();
-        }
+        headPicContainer.id = uid;
         headPicContainer.innerHTML = `<img class="headPic" src=`+headPicSrc+`>`;
         headPicDiv.appendChild(headPicContainer);
+        headPicContainer.onclick = function (){
+            toOtherSingleCenter(this.id);
+        }
         getAllSum();
         getCommentsHot();
     }).catch(()=>{

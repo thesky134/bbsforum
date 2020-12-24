@@ -22,6 +22,9 @@ function getComments(){
     }).then((response)=>{
         let result = response.data;
         let comments = result.data.comments;
+        if (comments.length < 15){
+            document.getElementById("bottom").style.display = "";
+        }
         let commentList = document.getElementById("commentList");
         for (let i=0; i<comments.length;i++){
             let picture = comments[i].picture;

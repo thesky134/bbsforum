@@ -1,3 +1,3 @@
 window.config = {
-    ip: 'http://222.204.56.50:8083'
+    ip: 'http://thesky341.top:8083'
 }

@@ -23,6 +23,9 @@ function getTopics(){
     }).then((response)=>{
         let result = response.data;
         let topics = result.data.posts;
+        if (topics.length < 15){
+            document.getElementById("bottom").style.display = "";
+        }
         let topicList = document.getElementById("topicList");
         for(let i=0; i<topics.length; i++) {
             let topic = document.createElement("div");
@@ -36,6 +39,7 @@ function getTopics(){
             let showTime = createTime.slice(0, createTime.indexOf('T'));
             let uid = topics[i].userId; // userId
             let pid = topics[i].id  // postId
+            let isHidden = topics[i].hidden;
             topic.innerHTML = `<div id="`+uid+`" class="tt-col-avatar" onclick="toOtherSingleCenter(this.id)">
                                                 <div class="headPicContainer">
                                                     <img class="headPic" src="` + headPic + `"/>
@@ -52,6 +56,8 @@ function getTopics(){
                                                 <a href="page-single-topic.html">` + topics[i].title + `</a>
                                             </h6>
                                         </div>
+                                        <div class="tt-col-value hide-mobile" style="display: none;font-size: small" id="publish`+pid+`">已发布</div>
+                                        <div class="tt-col-value hide-mobile" style="display: none;font-size: small" id="private`+pid+`">待发布</div>
                                         <div class="tt-col-category">
                                             <span class="tt-color04 tt-badge" id="category`+pid+`">` + topics[i].category + `</span>
                                         </div>
@@ -77,6 +83,12 @@ function getTopics(){
             // 是否属于积分悬赏
             if (topics[i].category === "积分悬赏"){
                 categorySpan.innerHTML = topics[i].category+" : "+topics[i].reward;
+            }
+            // 是否发布
+            if (isHidden === true){
+                document.getElementById("private"+pid.toString()).style.display = "";
+            }else {
+                document.getElementById("publish"+pid.toString()).style.display = "";
             }
             // 是否修改过，显示修改时间
             if (topics[i].modifyTime !== null){

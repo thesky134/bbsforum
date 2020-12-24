@@ -23,6 +23,9 @@ function getTopics(){
     }).then((response)=>{
         let result = response.data;
         let topics = result.data.posts;
+        if (topics.length < 15){
+            document.getElementById("bottom").style.display = "";
+        }
         let topicList = document.getElementById("topicList");
         for(let i=0; i<topics.length; i++) {
             let topic = document.createElement("div");
@@ -72,8 +75,6 @@ function getTopics(){
             let topIcon = document.getElementById("topIcon"+pid.toString());
             let excellentIcon = document.getElementById("excellentIcon"+pid.toString());
             let categorySpan = document.getElementById("category"+pid.toString());
-            let publish = document.getElementById("publish"+pid.toString());
-            let private = document.getElementById("private"+pid.toString());
             // 是否置顶
             if (topics[i].top){
                 topic.className = "tt-item tt-itemselect";
