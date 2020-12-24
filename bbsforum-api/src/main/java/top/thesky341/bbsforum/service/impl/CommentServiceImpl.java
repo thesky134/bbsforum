@@ -43,4 +43,9 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> getCommentListByPagination(Pagination pagination) {
         return commentMapper.getCommentListByPagination(pagination);
     }
+
+    @Override
+    public void setCommentDeleted(int id) {
+        commentMapper.setCommentDeleted(id);
+    }
 }

@@ -31,6 +31,7 @@ public class PostVo {
     private boolean bad;
     private boolean like;
     private int reward;
+    private boolean hidden;
     private CommentVo comment;
 
     public PostVo() {
@@ -50,6 +51,15 @@ public class PostVo {
         setPicture(post.getUser().getPicture());
         setUserId(post.getUser().getId());
         setReward(post.getReward());
+        setHidden(post.isHidden());
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
     public CommentVo getComment() {
@@ -243,6 +253,7 @@ public class PostVo {
                 ", bad=" + bad +
                 ", like=" + like +
                 ", reward=" + reward +
+                ", hidden=" + hidden +
                 ", comment=" + comment +
                 '}';
     }
