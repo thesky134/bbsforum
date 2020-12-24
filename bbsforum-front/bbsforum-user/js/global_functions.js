@@ -94,9 +94,7 @@ function getPosition(){
 function logout(){
     localStorage.removeItem("token");
     localStorage.removeItem("myUid");
-    localStorage.removeItem("tid");
     localStorage.removeItem("uid");
-    localStorage.removeItem("cid");
     localStorage.removeItem("chara");
 }
 // 获取帖子id

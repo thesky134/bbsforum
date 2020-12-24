@@ -163,30 +163,30 @@
             <div class="col-md-6 col-lg-4"><div class="tt-item">
                 <div class="tt-item-header">
                     <ul class="tt-list-badge">
-                        <li><a href="page-single-topic.html">
+                        <li><a href="page-single-topic.html" onclick="setTid()">
                             <span class="tt-color06 tt-badge">帖子详情页</span></a>
                         </li>
                     </ul>
                 </div>
                 <div class="tt-item-layout">
                     <div class="innerwrapper">
-                        查看一个帖子<br>
-                        注：需先从首页进入一个具体帖子方可查看</div>
+                        查看一个帖子的详细情况
+                    </div>
                 </div>
             </div></div>
             <!--论坛的分类详情页-->
             <div class="col-md-6 col-lg-4"><div class="tt-item">
                 <div class="tt-item-header">
                     <ul class="tt-list-badge">
-                        <li><a href="page-categories-single.html">
+                        <li><a href="page-categories-single.html" onclick="setCid()">
                             <span class="tt-color07 tt-badge">分类详情页</span></a>
                         </li>
                     </ul>
                 </div>
                 <div class="tt-item-layout">
                     <div class="innerwrapper">
-                        查看分类下的帖子<br>
-                        注：需先从分类页进入一次具体分类方可查看</div>
+                        查看一个分类下的所有帖子
+                    </div>
                 </div>
             </div></div>
             <!--论坛的个人中心-帖子页-->
@@ -201,7 +201,7 @@
                 <div class="tt-item-layout">
                     <div class="innerwrapper">
                         查看用户自己的帖子<br>
-                        注：<br>1. 需登录后从右上角的头像或用户名进入方可查看 <br>
+                        注：<br>1. 需登录，然后从右上角的头像或用户名进入查看 <br>
                         2. 个人信息设置需登录后在“个人中心-帖子”或“个人中心-回复”查看
                     </div>
                 </div>
@@ -218,7 +218,7 @@
                 <div class="tt-item-layout">
                     <div class="innerwrapper">
                         查看用户自己发过的回复<br>
-                        注：<br>1. 需登录后从右上角的头像或用户名进入方可查看<br>
+                        注：<br>1. 需登录，然后从右上角的头像或用户名进入查看<br>
                         2. 个人信息设置需登录后在“个人中心-帖子”或“个人中心-回复”查看
                     </div>
                 </div>
@@ -239,6 +239,18 @@
             return Promise.reject(error);
         }
     )
+    // 设置帖子id
+    function setTid (){
+        if (localStorage.tid === undefined){
+            localStorage.tid = 1;
+        }
+    }
+    //
+    function setCid (){
+        if (localStorage.cid === undefined){
+            localStorage.cid = 1;
+        }
+    }
 </script>
 <svg width="0" height="0" class="hidden">
     <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" id="facebook-f-brands">
