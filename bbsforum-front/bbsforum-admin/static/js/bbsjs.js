@@ -1,5 +1,5 @@
 window.config = {
-    baseURL: 'http://192.168.43.155:8083'
+    baseURL: 'http://thesky341.top:8083'
 }
 
 axios.interceptors.request.use(
