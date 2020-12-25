@@ -291,7 +291,7 @@ function updatePasswd(oldPasswd, newPasswd) {
         showPasswdMessage.style.cssText = "font-size: 10px; color: #ff0000";
         showPasswdMessage.innerText = message;
         passwdDiv.appendChild(showPasswdMessage);
-        alert("message");
+        alert(message);
     }).catch(() => {
         console.log("error");
     })
