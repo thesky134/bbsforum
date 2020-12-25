@@ -106,3 +106,51 @@ function getUserId(id){
     let uid = id;
     localStorage.uid = uid;
 }
+// 判断用户是否登录1
+function checkStateAlert1() {
+    let loginState = false;
+    let uid = null;
+    axios({
+        method: 'POST',
+        url: baseURL+'/user/manage/checkloginstate',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((response)=>{
+        let result = response.data;
+        loginState = result.data.loginState;
+        uid = result.data.userId;
+        localStorage.myUid = uid;
+        if(loginState){
+            location.href = "page-single_threads.html";
+        }else{
+            alert("用户未登录！");
+        }
+    }).catch(()=>{
+        console.log("error");
+    })
+}
+// 判断用户是否登录2
+function checkStateAlert2() {
+    let loginState = false;
+    let uid = null;
+    axios({
+        method: 'POST',
+        url: baseURL+'/user/manage/checkloginstate',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((response)=>{
+        let result = response.data;
+        loginState = result.data.loginState;
+        uid = result.data.userId;
+        localStorage.myUid = uid;
+        if(loginState){
+            location.href = "page-single_replies.html";
+        }else{
+            alert("用户未登录！");
+        }
+    }).catch(()=>{
+        console.log("error");
+    })
+}
