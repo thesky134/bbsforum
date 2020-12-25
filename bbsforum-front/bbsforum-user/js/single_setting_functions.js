@@ -280,8 +280,6 @@ function updatePasswd(oldPasswd, newPasswd) {
     }).then((response) => {
         let result = response.data;
         let message = result.message;
-        let token = result.token;
-        localStorage.token = token;
         let passwdDiv = document.getElementById("passwdDiv");
         if (document.getElementById("showPasswdMessage")) {
             passwdDiv.removeChild(document.getElementById("showPasswdMessage"));
